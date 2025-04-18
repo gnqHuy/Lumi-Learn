@@ -19,5 +19,6 @@
         public ICollection<FeedBack> FeedBacks { get; set; } // Maybe both ?? or just Student
         public ICollection<QuizResult> QuizResults { get; set; } // Student
         public ICollection<NotificationUser> NotificationUsers { get; set; } // Student ?
+        public ICollection<SearchHistory> SearchHistories { get; set; }
     }
 }

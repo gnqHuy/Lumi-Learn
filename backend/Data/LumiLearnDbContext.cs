@@ -20,12 +20,6 @@ namespace LumiLearn.Data
             modelBuilder.Entity<CourseNotification>()
                 .HasKey(cn => new { cn.CourseId, cn.NotificationId });
 
-            /*modelBuilder.Entity<CourseNotification>()
-                .HasOne(cn => cn.Notification)
-                .WithOne(n => n.CourseNotification)
-                .HasForeignKey<CourseNotification>(cn => cn.NotificationId);*/
-
-
             base.OnModelCreating(modelBuilder); 
         }
 
@@ -44,6 +38,7 @@ namespace LumiLearn.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationUser> NotificationUsers { get; set; }
         public DbSet<CourseNotification> CourseNotifications { get; set; }
+        public DbSet<SearchHistory> SearchHistories { get; set; }
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace LumiLearn.Domains
+﻿using System.Text.Json.Serialization;
+
+namespace LumiLearn.Domains
 {
     public class User
     {
@@ -8,10 +10,11 @@
         public string? Phone { get; set; }
         public DateTime? Birthday { get; set; }
         public string? Name { get; set; }
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string PasswordHash { get; set; }
 
         // Navigation Properties
+        [JsonIgnore]
         public Role Role { get; set; }
 
         public ICollection<Course> CourseTaughts { get; set; } // Teacher

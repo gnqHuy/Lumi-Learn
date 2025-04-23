@@ -125,10 +125,11 @@ namespace LumiLearn.Controllers
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Username), // Owner
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT Id
+                //new Claim(JwtRegisteredClaimNames.Sub, user.Username), // Owner
+                //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT Id
                 new Claim(ClaimTypes.Role, user.Role.Name),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username), // Throw away some day, just need NameIdentifier to store Id
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()) // User Id
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("lumiLearn_super_super_superSecret_key")); // same in Progam.cs

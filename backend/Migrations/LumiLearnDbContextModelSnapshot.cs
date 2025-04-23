@@ -52,28 +52,27 @@ namespace LumiLearn.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Thumbnail")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("TopicId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorId");
-
                     b.HasIndex("TopicId");
+
+                    b.HasIndex("InstructorId", "Title")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -349,12 +348,9 @@ namespace LumiLearn.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("thumbnail")
-                        .HasColumnType("longtext");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("LumiLearn.Domains.User", b =>

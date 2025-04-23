@@ -27,7 +27,7 @@ namespace LumiLearn.Controllers
             return Ok(roles);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:Guid}")]
         public async Task<ActionResult<Role>> GetRoleById(Guid id)
         {
             var role = await dbContext.Roles.FindAsync(id);
@@ -60,7 +60,7 @@ namespace LumiLearn.Controllers
                 Name = name,
             };
 
-            dbContext.Roles.Add(role);
+            await dbContext.Roles.AddAsync(role);
             await dbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetRoleById), new { id = role.Id }, role);
         }

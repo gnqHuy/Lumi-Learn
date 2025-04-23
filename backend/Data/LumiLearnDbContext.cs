@@ -20,13 +20,17 @@ namespace LumiLearn.Data
             modelBuilder.Entity<CourseNotification>()
                 .HasKey(cn => new { cn.CourseId, cn.NotificationId });
 
+            modelBuilder.Entity<Course>()
+                .HasIndex(c => new { c.InstructorId, c.Title })
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder); 
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
         public DbSet<Lesson> Lessons { get; set; }

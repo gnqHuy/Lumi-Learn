@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 
 const getHost = (): string | undefined => {
     const debuggerHost = Constants.expoConfig?.hostUri ?? Constants.manifest?.debuggerHost;
-    if (!debuggerHost) return undefined;
+    if (!debuggerHost) return `http://localhost:5001`; // use for web
     return `http://${debuggerHost.split(':')[0]}:5001`;
   };
 

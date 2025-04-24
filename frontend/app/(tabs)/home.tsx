@@ -19,7 +19,7 @@ const HomePage = () => {
       };
 
       logIn(request).then((res) => {
-        setText(res.data.authToken);
+        setText(res.data.user.username);
       }).catch((err) => {
         setText(err.message);
       })

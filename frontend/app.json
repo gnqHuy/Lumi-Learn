@@ -36,6 +36,9 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "experimental": {
+      "router": "expo-router"
     }
   }
 }

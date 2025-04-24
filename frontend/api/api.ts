@@ -1,10 +1,17 @@
 import useAuthStore, { AuthState, AuthStore } from '@/zustand/authStore';
 import axios, { InternalAxiosRequestConfig } from 'axios';
+import Constants from 'expo-constants';
+
+const getHost = (): string | undefined => {
+    const debuggerHost = Constants.expoConfig?.hostUri ?? Constants.manifest?.debuggerHost;
+    if (!debuggerHost) return undefined;
+    return `http://${debuggerHost.split(':')[0]}:5001`;
+  };
 
 const api = axios.create({
-    baseURL: process.env.API_BASE_URL ?? 'https://localhost:5001/',
+    baseURL: getHost(),
     responseType: 'json',
-    timeout: 20000,
+    timeout: 5000,
 });
 
 export const setupAxios = (authState: AuthState | null) => {

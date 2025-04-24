@@ -1,4 +1,6 @@
-﻿namespace LumiLearn.Domains
+﻿using System.Text.Json.Serialization;
+
+namespace LumiLearn.Domains
 {
     public class Course
     {
@@ -11,6 +13,7 @@
 
         // Navigation Properties
         public Topic Topic { get; set; }
+        [JsonIgnore]
         public User Instructor { get; set; }
 
         public ICollection<Enrollment> Enrollments { get; set; }

@@ -6,8 +6,8 @@ import useAuthStore from '@/zustand/authStore';
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
-    const username = 'ducanhdao';
-    const password = '12345678';
+    const username = 'teacher';
+    const password = 'string';
     const [text, setText] = useState('');
     const authState = useAuthStore((state) => state.authState);
     const saveAuthState = useAuthStore((state) => state.saveAuthState);
@@ -19,7 +19,7 @@ const HomePage = () => {
       };
 
       logIn(request).then((res) => {
-        setText('API called.')
+        setText(res.data.authToken);
       }).catch((err) => {
         setText(err.message);
       })

@@ -8,5 +8,7 @@
         public string? Description { get; set; }
         public string? Thumbnail { get; set; }
         public string Topic { get; set; }
+        public double Rating { get; set; }
+        public int NumberOfRatings { get; set; }
     }
 }

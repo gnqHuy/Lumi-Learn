@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.Data;
 using System.Security.Claims;
 
@@ -26,8 +27,6 @@ namespace LumiLearn.Controllers
         public async Task<IActionResult> GetAllCourses()
         {
             var courses = await dbContext.Courses
-                .Include(c => c.Instructor)
-                .Include(c => c.Topic)
                 .Select(c => new CourseDto
                 {
                     Id = c.Id,
@@ -35,7 +34,9 @@ namespace LumiLearn.Controllers
                     Title = c.Title,
                     Description = c.Description,
                     Thumbnail = c.Thumbnail,
-                    Topic = c.Topic.Name
+                    Topic = c.Topic.Name,
+                    Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                    NumberOfRatings = c.Feedbacks.Count
                 })
                 .ToListAsync();
 
@@ -46,26 +47,26 @@ namespace LumiLearn.Controllers
         public async Task<ActionResult<CourseDto>> GetCourseDetail(Guid id)
         {
             var course = await dbContext.Courses
-                .Include(c => c.Instructor)
-                .Include(c => c.Topic)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .Where(c => c.Id == id)
+                .Select(c => new CourseDto
+                {
+                    Id = c.Id,
+                    Instructor = c.Instructor.Name ?? c.Instructor.Username,
+                    Title = c.Title,
+                    Description = c.Description,
+                    Thumbnail = c.Thumbnail,
+                    Topic = c.Topic.Name,
+                    Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                    NumberOfRatings = c.Feedbacks.Count
+                })
+                .FirstOrDefaultAsync();
 
             if(course == null)
             {
                 return NotFound();
             }
 
-            var courseDto = new CourseDto
-            {
-                Id = course.Id,
-                Instructor = course.Instructor.Name ?? course.Instructor.Username,
-                Title = course.Title,
-                Description = course.Description,
-                Thumbnail = course.Thumbnail,
-                Topic = course.Topic.Name
-            };
-
-            return Ok(courseDto);
+            return Ok(course);
         }
 
         // Get My Course ? Teacher ? Student -> Role
@@ -80,7 +81,17 @@ namespace LumiLearn.Controllers
             {
                 var courses = await dbContext.Enrollments
                     .Where(e => e.StudentId == userId)
-                    .Select(e => e.Course)
+                    .Select(e => new CourseDto
+                    {
+                        Id = e.Course.Id,
+                        Instructor = e.Course.Instructor.Name ?? e.Course.Instructor.Username,
+                        Title = e.Course.Title,
+                        Description = e.Course.Description,
+                        Thumbnail = e.Course.Thumbnail,
+                        Topic = e.Course.Topic.Name,
+                        Rating = e.Course.Feedbacks.Any() ? Math.Round(e.Course.Feedbacks.Average(f => f.Rating), 2) : 0,
+                        NumberOfRatings = e.Course.Feedbacks.Count
+                    })
                     .ToListAsync();
                 return Ok(courses);
             }
@@ -88,6 +99,17 @@ namespace LumiLearn.Controllers
             {
                 var courses = await dbContext.Courses
                     .Where(c => c.InstructorId == userId)
+                    .Select(c => new CourseDto
+                    {
+                        Id = c.Id,
+                        Instructor = c.Instructor.Name ?? c.Instructor.Username,
+                        Title = c.Title,
+                        Description = c.Description,
+                        Thumbnail = c.Thumbnail,
+                        Topic = c.Topic.Name,
+                        Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                        NumberOfRatings = c.Feedbacks.Count
+                    })
                     .ToListAsync();
 
                 return Ok(courses);
@@ -136,7 +158,7 @@ namespace LumiLearn.Controllers
                 Title = request.Title,
                 Description = request.Description,
                 Thumbnail = request.Thumbnail,
-                TopicId = topic.Id
+                TopicId = topic.Id,
             };
 
             await dbContext.Courses.AddAsync(course);
@@ -151,7 +173,9 @@ namespace LumiLearn.Controllers
                 Title = course.Title,
                 Description = course.Description,
                 Thumbnail = course.Thumbnail,
-                Topic = topic.Name
+                Topic = topic.Name,
+                Rating = 0,
+                NumberOfRatings = 0
             };
 
             return CreatedAtAction(nameof(GetCourseDetail), new { id = course.Id }, courseDto);

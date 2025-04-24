@@ -24,6 +24,9 @@ namespace LumiLearn.Data
                 .HasIndex(c => new { c.InstructorId, c.Title })
                 .IsUnique();
 
+            modelBuilder.Entity<Feedback>()
+                .HasKey(f => new {f.UserId, f.CourseId});
+
             base.OnModelCreating(modelBuilder); 
         }
 
@@ -32,7 +35,7 @@ namespace LumiLearn.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<FeedBack> FeedBacks { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<FlashCardSet> FlashCardSets { get; set; }
         public DbSet<FlashCard> FlashCards { get; set; }

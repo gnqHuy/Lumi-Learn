@@ -17,7 +17,7 @@ namespace LumiLearn.Domains
         public User Instructor { get; set; }
 
         public ICollection<Enrollment> Enrollments { get; set; }
-        public ICollection<FeedBack> FeedBacks { get; set; }
+        public ICollection<Feedback> Feedbacks { get; set; }
         public ICollection<Lesson> Lessons { get; set; }
         public ICollection<CourseNotification> CourseNotifications { get; set; }
     }

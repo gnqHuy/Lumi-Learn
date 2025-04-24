@@ -104,6 +104,8 @@ namespace LumiLearn.Controllers
 
             dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync();
+
+            var authToken = GenerateJwtToken(user);
             return Ok(new RegisterRespone
             {
                 User = new UserDto
@@ -116,7 +118,7 @@ namespace LumiLearn.Controllers
                     Name = user.Name,
                     Username = user.Username
                 },
-                Message = "Register Successfully!!!"
+                AuthToken = authToken
             });
         }
 

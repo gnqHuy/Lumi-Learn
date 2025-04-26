@@ -18,7 +18,7 @@ namespace LumiLearn.Controllers
 
         // GET: api/lessons
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CreateLessonDto>>> GetLessonsByCourseId(Guid courseId)
+        public async Task<ActionResult<IEnumerable<LessonDto>>> GetLessonsByCourseId(Guid courseId)
         {
             var lessons = await _context.Lessons
                 .AsNoTracking()
@@ -36,7 +36,7 @@ namespace LumiLearn.Controllers
 
         // GET: api/lessons/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<CreateLessonDto>> GetLessonById(Guid id)
+        public async Task<ActionResult<LessonDto>> GetLessonById(Guid id)
         {
             var lesson = await _context.Lessons
                 .AsNoTracking()
@@ -44,7 +44,7 @@ namespace LumiLearn.Controllers
             if (lesson == null)
                 return NotFound();
 
-            return Ok(new CreateLessonDto
+            return Ok(new LessonDto
             {
                 CourseId = lesson.CourseId,
                 Title = lesson.Title,
@@ -53,7 +53,7 @@ namespace LumiLearn.Controllers
 
         // POST: api/lessons
         [HttpPost]
-        public async Task<ActionResult<CreateLessonDto>> CreateNewLesson(CreateLessonDto request)
+        public async Task<ActionResult<LessonDto>> CreateNewLesson(LessonDto request)
         {
             if (string.IsNullOrWhiteSpace(request.Title))
                 return BadRequest("Title is required.");
@@ -71,7 +71,7 @@ namespace LumiLearn.Controllers
             _context.Lessons.Add(lesson);
             await _context.SaveChangesAsync();
 
-            var dto = new CreateLessonDto
+            var dto = new LessonDto
             {
                 CourseId = lesson.CourseId,
                 Title = lesson.Title,
@@ -82,7 +82,7 @@ namespace LumiLearn.Controllers
 
         // PUT: api/lessons/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateLesson(Guid id, [FromBody] CreateLessonDto request)
+        public async Task<IActionResult> UpdateLesson(Guid id, [FromBody] LessonDto request)
         {
             if (string.IsNullOrWhiteSpace(request.Title))
                 return BadRequest("Title is required.");

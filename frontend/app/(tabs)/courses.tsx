@@ -3,7 +3,7 @@ import React from 'react'
 
 const CoursesPage = () => {
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className="flex-1 items-center justify-center bg-black">
       <Text className="text-5xl text-blue-500 font-bold">courses</Text>
     </View>
   )

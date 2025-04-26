@@ -53,7 +53,7 @@ namespace LumiLearn.Controllers
 
         // POST: api/lessons
         [HttpPost]
-        public async Task<ActionResult<CreateLessonDto>> CreateNewLesson([FromBody] CreateLessonDto request)
+        public async Task<ActionResult<CreateLessonDto>> CreateNewLesson(CreateLessonDto request)
         {
             if (string.IsNullOrWhiteSpace(request.Title))
                 return BadRequest("Title is required.");

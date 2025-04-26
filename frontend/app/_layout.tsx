@@ -1,4 +1,5 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
+import React, { useEffect, useState } from "react";
 import "./global.css";
 import { setupAxios } from "@/api/api";
 import useAuthStore from "@/zustand/authStore";
@@ -8,11 +9,14 @@ export default function RootLayout() {
   setupAxios(authState);
 
   return (
-        <Stack>
-          <Stack.Screen 
-            name="(tabs)"
-            options={{ headerShown: false }}
+    <>
+      <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)"
           />
-        </Stack>
+          <Stack.Screen name="(auth)"
+          />
+      </Stack>
+      {/* {redirectPath ?? <Redirect href={redirectPath}/>} */}
+    </>
   );
 }

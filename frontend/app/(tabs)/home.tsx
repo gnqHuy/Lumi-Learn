@@ -10,19 +10,10 @@ const HomePage = () => {
     const password = 'string';
     const [text, setText] = useState('');
     const authState = useAuthStore((state) => state.authState);
-    const saveAuthState = useAuthStore((state) => state.saveAuthState);
+    const logOut = useAuthStore((state) => state.logOut);
 
     const handleOnClick = () => {
-      const request = {
-        username: username,
-        password: password
-      };
-
-      logIn(request).then((res) => {
-        setText(res.data.user.username);
-      }).catch((err) => {
-        setText(err.message);
-      })
+      logOut();
     }
 
     useEffect(() => {
@@ -35,7 +26,7 @@ const HomePage = () => {
     <View className="flex-1 items-center justify-center">
       <Text className="text-5xl text-blue-500 font-bold">home</Text>
       <Button
-            title="Test"
+            title="Logout"
             onPress={handleOnClick}
         />
         <Text className="text-5xl text-blue-500 font-bold">{text}</Text>

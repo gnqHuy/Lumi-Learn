@@ -23,7 +23,7 @@ const CourseJoined = ({dummyDataCourses, images}: CourseJoinedProps) => {
 
         {/* courses */}
         <ScrollView 
-            className = "relative left-[5%] mt-[1rem]" 
+            className = "relative left-[3%] mt-[1rem]" 
             horizontal={true} showsHorizontalScrollIndicator={false} 
             contentContainerStyle={{ paddingRight: 32 }}
         >

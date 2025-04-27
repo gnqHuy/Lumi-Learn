@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import React from "react";
+import { Redirect } from "expo-router";
 
-export default function() {
+const Index = () => {
     return (
-        <View className="flex-1 items-center justify-center">
-            <Text className="text-5xl text-blue-500 font-bold">Hello</Text>
-        </View>
-    )
+        <Redirect href="/(tabs)/home"/>
+    );
 }
+
+export default Index;

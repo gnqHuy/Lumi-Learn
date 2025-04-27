@@ -26,7 +26,7 @@ const login = () => {
             setPasswordErrorMessage("Please enter your password");
         }
 
-        if (usernameInput.length == 0 || passwordInput.length == 0) {
+        if (usernameError || passwordError) {
             return;
         }
 
@@ -56,7 +56,7 @@ const login = () => {
     }
 
     if (authState?.user != null) {
-        return <Redirect href="/(tabs)/home"/>;
+        return <Redirect href="/(tabs)/notification"/>;
     }
 
   return (

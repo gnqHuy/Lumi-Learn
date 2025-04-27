@@ -2,6 +2,7 @@
 using LumiLearn.Domains;
 using LumiLearn.Dtos.Lesson;
 using LumiLearn.Dtos.Quiz;
+using LumiLearn.Dtos.QuizDetailDto;
 using LumiLearn.Dtos.Quizz;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,19 +36,39 @@ namespace LumiLearn.Controllers
             return Ok(quizzes);
         }
 
+        // GET: api/quizzes/{quizId}
+        [HttpGet("{quizId:guid}")]
+        public async Task<ActionResult<QuizDetailDto>> GetQuizDetail(Guid quizId)
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<Quiz>> GetQuizzById(Guid id)
         {
-            var quiz = await _context.Quizzes.AsNoTracking().FirstOrDefaultAsync(l => l.Id == id);
-            if (quiz == null) 
-                return NotFound();
-            return Ok(new QuizDto
+            var quiz = await _context.Quizzes
+                .AsNoTracking()
+                .Where(q => q.Id == quizId)
+                .Select(q => new QuizDetailDto
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Questions = q.Questions.Select(question => new QuizQuestionDto
+                    {
+                        Id = question.Id,
+                        Content = question.Content,
+                        AnswerOptions = question.AnswerOptions.Select(option => new QuestionAnswerOptionDto
+                        {
+                            Id = option.Id,
+                            Content = option.Content,
+                        }).ToList()
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            if (quiz == null)
             {
-                LessonId = quiz.LessonId,
-                Title = quiz.Title,
-            });
+                return NotFound();
+            }
+
+            return Ok(quiz);
         }
+
 
         [HttpPost]
         public async Task<ActionResult<QuizDto>> CreateNewQuiz([FromBody] QuizDto quizDto)
@@ -74,7 +95,7 @@ namespace LumiLearn.Controllers
                 Title = quiz.Title,
             };
 
-            return CreatedAtAction(nameof(GetQuizzById), new { quiz.LessonId, id = quiz.Id }, dto);
+            return CreatedAtAction(nameof(GetQuizDetail), new { quiz.LessonId, id = quiz.Id }, dto);
         }
 
         // PUT: api/quizzes/{id}

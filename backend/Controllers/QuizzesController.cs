@@ -1,6 +1,7 @@
 ﻿using LumiLearn.Data;
 using LumiLearn.Domains;
 using LumiLearn.Dtos.Lesson;
+using LumiLearn.Dtos.Quiz;
 using LumiLearn.Dtos.Quizz;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,16 +18,24 @@ namespace LumiLearn.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Quiz>>> GetAllQuizzesByLessonId(Guid lessonId)
+        public async Task<ActionResult<IEnumerable<GetQuizReponseDto>>> GetAllQuizzesByLessonId(Guid lessonId)
         {
             var quizzes = await _context.Quizzes
                 .AsNoTracking()
-                .Where(f => f.LessonId == lessonId)
+                .Where(q => q.LessonId == lessonId)
+                .Select(q => new GetQuizReponseDto
+                {
+                    Id = q.Id,
+                    Title = q.Title
+                })
                 .ToListAsync();
 
             return Ok(quizzes);
         }
+
+
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<Quiz>> GetQuizzById(Guid id)
         {

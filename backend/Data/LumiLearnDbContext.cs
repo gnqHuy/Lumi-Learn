@@ -42,6 +42,7 @@ namespace LumiLearn.Data
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerOption> AnswerOptions { get; set; }
+        public DbSet<QuizResult> QuizResult { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationUser> NotificationUsers { get; set; }
         public DbSet<CourseNotification> CourseNotifications { get; set; }

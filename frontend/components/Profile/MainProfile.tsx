@@ -4,8 +4,10 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 
 interface MainProfileProps {
     setupDisplayInformation: (display: boolean) => void;
+    setupDisplayChangePassword: (display: boolean) => void;
+    setupDisplayChangeTheme: (display: boolean) => void;
 }
-const MainProfile = ({setupDisplayInformation}: MainProfileProps) => {
+const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme}: MainProfileProps) => {
   return (
     <View className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
@@ -26,10 +28,10 @@ const MainProfile = ({setupDisplayInformation}: MainProfileProps) => {
                     <Text className = "text-xl">Information</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
-                <View className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg" onPress={() => setupDisplayChangePassword(true)}>
                     <Text className = "text-xl">Change password</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
-                </View>
+                </Pressable>
             </View>
         </View>
 
@@ -56,10 +58,10 @@ const MainProfile = ({setupDisplayInformation}: MainProfileProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <View className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-lg" onPress={() => setupDisplayChangeTheme(true)}>
                     <Text className = "text-xl">Change</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
-                </View>
+                </Pressable>
             </View>
         </View>
 

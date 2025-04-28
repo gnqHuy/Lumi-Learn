@@ -4,11 +4,15 @@ import MainProfile from '@/components/Profile/MainProfile';
 import UserInformation from '@/components/Profile/UserInformation';
 import ChangePassword from '@/components/Profile/ChangePassword';
 import ChangeTheme from '@/components/Profile/ChangeTheme';
+import Policy from '@/components/Profile/Policy';
+import Helps from '@/components/Profile/Helps';
 
 const ProfilePage = () => {
   const [displayInformation, setDisplayInformation] = useState(false);
   const [displayChangePassword, setDisplayChangePassword] = useState(false);
   const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
+  const [displayPolicy, setDisplayPolicy] = useState(false);
+  const [displayHelp, setDisplayHelp] = useState(false);
 
   const setupDisplayInformation = (display: boolean) => {
     setDisplayInformation(display);
@@ -21,15 +25,25 @@ const ProfilePage = () => {
   const setupDisplayChangeTheme = (display: boolean) => {
     setDisplayChangeTheme(display);
   }
+
+  const setupDisplayPolicy = (display: boolean) => {
+    setDisplayPolicy(display);
+  }
+
+  const setupDisplayHelp = (display: boolean) => {
+    setDisplayHelp(display);
+  }
   return (
     <View>
       <View>
-        {(displayInformation === false && displayChangePassword === false) && 
+        {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false) && 
           <View>
             <MainProfile 
               setupDisplayInformation={setupDisplayInformation}
               setupDisplayChangePassword={setDisplayChangePassword}
               setupDisplayChangeTheme={setupDisplayChangeTheme}
+              setupDisplayPolicy={setupDisplayPolicy}
+              setupDisplayHelp={setupDisplayHelp}
             />
           </View>
         }
@@ -54,6 +68,18 @@ const ProfilePage = () => {
                   setupDisplayChangeTheme={setupDisplayChangeTheme}
               />
           </View>
+        }
+
+        {displayPolicy === true && 
+          <Policy 
+            setupDisplayPolicy={setupDisplayPolicy}
+          />
+        }
+
+        {displayHelp === true && 
+          <Helps 
+            setupDisplayHelp={setupDisplayHelp}
+          />
         }
       </View>
       {/* overlay */}

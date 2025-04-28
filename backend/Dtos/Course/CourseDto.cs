@@ -10,5 +10,6 @@
         public string Topic { get; set; }
         public double Rating { get; set; }
         public int NumberOfRatings { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

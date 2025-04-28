@@ -1,6 +1,8 @@
 ﻿using LumiLearn.Data;
 using LumiLearn.Domains;
 using LumiLearn.Dtos.FlashcardSet;
+using LumiLearn.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +13,12 @@ namespace LumiLearn.Controllers
     public class FlashcardSetsController : ControllerBase
     {
         private readonly LumiLearnDbContext _context;
+        private readonly INotificationRepository notificationRepository;
 
-        public FlashcardSetsController(LumiLearnDbContext context)
+        public FlashcardSetsController(LumiLearnDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            this.notificationRepository = notificationRepository;
         }
 
         // GET: api/FlashcardSets?lessonId=...
@@ -37,10 +41,11 @@ namespace LumiLearn.Controllers
 
         // POST: api/FlashcardSets
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public async Task<ActionResult> CreateNewFlashcardSet([FromBody] FlashcardSetDto request)
         {
-            var lessonExists = await _context.Lessons.AnyAsync(l => l.Id == request.LessonId);
-            if (!lessonExists)
+            var lessonExists = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == request.LessonId);
+            if (lessonExists == null)
             {
                 return BadRequest("Invalid Lesson ID");
             }
@@ -54,6 +59,16 @@ namespace LumiLearn.Controllers
 
             _context.FlashCardSets.Add(newSet);
             await _context.SaveChangesAsync();
+
+            _ = Task.Run(async () =>
+            {
+                await notificationRepository
+                .SendNotificationWhenCreateLessonResource(
+                    lessonExists,
+                    Enums.CourseNotificationType.FlashCardSet,
+                    newSet.Title
+                );
+            }).ConfigureAwait(false);
 
             return CreatedAtAction(nameof(GetFlashcardSetsByLessonId), new { lessonId = newSet.LessonId }, request);
         }

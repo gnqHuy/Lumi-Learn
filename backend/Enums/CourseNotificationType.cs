@@ -4,6 +4,5 @@
     {
         FlashCardSet = 0,
         Quiz = 1,
-        Lesson = 2,
     }
 }

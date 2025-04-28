@@ -115,7 +115,7 @@ const HomePage = () => {
     }
 
   return (
-    <View>
+    <View className = "">
       <View className="h-full mt-[2rem]">
         {/* username */}
         {displaySearch === false ? 

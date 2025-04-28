@@ -1,10 +1,29 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import MainProfile from '@/components/Profile/MainProfile';
+import UserInformation from '@/components/Profile/UserInformation';
 
 const ProfilePage = () => {
+  const [displayInformation, setDisplayInformation] = useState(false);
+
+  const setupDisplayInformation = (display: boolean) => {
+    setDisplayInformation(display);
+  }
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-5xl text-blue-500 font-bold">profile</Text>
+    <View>
+      {displayInformation === false && 
+        <View>
+          <MainProfile 
+            setupDisplayInformation={setupDisplayInformation}
+          />
+        </View>
+      }
+
+      {displayInformation === true && 
+        <UserInformation 
+            setupDisplayInformation={setupDisplayInformation}
+        />
+      }
     </View>
   )
 };

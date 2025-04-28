@@ -6,8 +6,10 @@ interface MainProfileProps {
     setupDisplayInformation: (display: boolean) => void;
     setupDisplayChangePassword: (display: boolean) => void;
     setupDisplayChangeTheme: (display: boolean) => void;
+    setupDisplayPolicy: (display: boolean) => void;
+    setupDisplayHelp: (display: boolean) => void;
 }
-const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme}: MainProfileProps) => {
+const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp}: MainProfileProps) => {
   return (
     <View className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
@@ -41,14 +43,14 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <View className = "w-[90%] border-solid border-black border-[2px] border-b-[1px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-tr-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-b-[1px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-tr-lg" onPress={() => setupDisplayPolicy(true)}>
                     <Text className = "text-xl">Policy</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
-                </View>
-                <View className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg">
+                </Pressable>
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg" onPress={() => setupDisplayHelp(true)}>
                     <Text className = "text-xl">Helps</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
-                </View>
+                </Pressable>
             </View>
         </View>
 

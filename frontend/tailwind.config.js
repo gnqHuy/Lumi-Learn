@@ -8,10 +8,20 @@ module.exports = {
         slideUpToHalf: {
           '0%': { transform: 'translateY(100%)', opacity: '0' },
           '100%': { transform: 'translateY(0%)', opacity: '1' },
+        }, 
+        slideLeftFromRight: {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0%)', opacity: '1' },
+        }, 
+        slideRightFromLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0%)', opacity: '1' },
         }
       },
       animation: {
         slideUpToHalf: 'slideUpToHalf 0.5s ease-out forwards',
+        slideLeftFromRight: 'slideLeftFromRight 0.5s ease-out forwards',
+        slideRightFromLeft: 'slideRightFromLeft 0.5s ease-out forwards',
       }
     },
   },

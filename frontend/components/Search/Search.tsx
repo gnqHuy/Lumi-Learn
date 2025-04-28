@@ -15,7 +15,7 @@ const Search = ({dummyRecentSearches, setupDummyRecentSearches}: SearchProps) =>
         setupDummyRecentSearches(deleted);
     }
   return (
-    <View className = "relative left-[4%]">
+    <View className = "relative left-[4%] animate-slideLeftFromRight">
         {/* header */}
         <View className = "mt-[2rem]">
             <Text className = "text-xl font-bold">Topic you may like</Text>

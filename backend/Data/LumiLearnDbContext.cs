@@ -27,6 +27,9 @@ namespace LumiLearn.Data
             modelBuilder.Entity<Feedback>()
                 .HasKey(f => new {f.UserId, f.CourseId});
 
+            modelBuilder.Entity<SearchHistory>()
+                .HasKey(sh => new { sh.UserId, sh.Content });
+
             base.OnModelCreating(modelBuilder); 
         }
 

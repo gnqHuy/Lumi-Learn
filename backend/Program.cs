@@ -1,4 +1,5 @@
 using LumiLearn.Data;
+using LumiLearn.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -75,6 +76,9 @@ builder.Services.AddSwaggerGen(option =>
 // Add Services
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddScoped<INotificationRepository, NotificationsRepository>();
+builder.Services.AddScoped<ISearchHistoriesReposity, SearchHistoriesRepository>();
 
 // Add Cors
 builder.Services.AddCors(options =>

@@ -21,20 +21,6 @@ namespace LumiLearn.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEnrollments()
-        {
-            var enrollments = await dbContext.Enrollments
-                .Select(e => new EnrollmentDto
-                {
-                    StudentId = e.StudentId,
-                    CourseId = e.CourseId,
-                })
-                .ToListAsync();
-
-            return Ok(enrollments);
-        }
-
-        [HttpGet("{courseId:Guid}")]
         public async Task<IActionResult> GetEnrollmentByCourseId(Guid courseId)
         {
             var enrollments = await dbContext.Enrollments
@@ -84,7 +70,7 @@ namespace LumiLearn.Controllers
                 CourseId = newEnrollment.CourseId,
             };
 
-            return CreatedAtAction(nameof(GetEnrollments), enrollmentDto);
+            return CreatedAtAction(nameof(GetEnrollmentByCourseId), enrollmentDto);
         }
 
         [HttpDelete]

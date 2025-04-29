@@ -4,6 +4,7 @@ using LumiLearn.Dtos.Lesson;
 using LumiLearn.Dtos.Quiz;
 using LumiLearn.Dtos.QuizDetailDto;
 using LumiLearn.Dtos.Quizz;
+using LumiLearn.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,12 @@ namespace LumiLearn.Controllers
     public class QuizzesController : Controller
     {
         private readonly LumiLearnDbContext _context;
+        private readonly INotificationRepository notificationRepository;
 
-        public QuizzesController(LumiLearnDbContext context)
+        public QuizzesController(LumiLearnDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            this.notificationRepository = notificationRepository;
         }
 
         [HttpGet]
@@ -76,8 +79,11 @@ namespace LumiLearn.Controllers
             if (string.IsNullOrWhiteSpace(quizDto.Title))
                 return BadRequest("Title is required.");
 
-            if (!await _context.Lessons.AnyAsync(c => c.Id == quizDto.LessonId))
-                return NotFound("Course not found.");
+            var lessonExists = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == quizDto.LessonId);
+            if (lessonExists == null)
+            {
+                return BadRequest("Invalid Lesson ID");
+            }
 
             var quiz = new Quiz
             {
@@ -95,7 +101,17 @@ namespace LumiLearn.Controllers
                 Title = quiz.Title,
             };
 
-            return CreatedAtAction(nameof(GetQuizDetail), new { quiz.LessonId, id = quiz.Id }, dto);
+            _ = Task.Run(async () =>
+            {
+                await notificationRepository
+                .SendNotificationWhenCreateLessonResource(
+                    lessonExists,
+                    Enums.CourseNotificationType.Quiz,
+                    quiz.Title
+                );
+            }).ConfigureAwait(false);
+
+            return CreatedAtAction(nameof(GetQuizDetail), new { quizId = quiz.Id }, dto);
         }
 
         // PUT: api/quizzes/{id}

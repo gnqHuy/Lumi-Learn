@@ -1,10 +1,91 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import MainProfile from '@/components/Profile/MainProfile';
+import UserInformation from '@/components/Profile/UserInformation';
+import ChangePassword from '@/components/Profile/ChangePassword';
+import ChangeTheme from '@/components/Profile/ChangeTheme';
+import Policy from '@/components/Profile/Policy';
+import Helps from '@/components/Profile/Helps';
 
 const ProfilePage = () => {
+  const [displayInformation, setDisplayInformation] = useState(false);
+  const [displayChangePassword, setDisplayChangePassword] = useState(false);
+  const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
+  const [displayPolicy, setDisplayPolicy] = useState(false);
+  const [displayHelp, setDisplayHelp] = useState(false);
+
+  const setupDisplayInformation = (display: boolean) => {
+    setDisplayInformation(display);
+  }
+
+  const setupDisplayChangePassword = (display: boolean) => {
+    setDisplayChangePassword(display);
+  }
+
+  const setupDisplayChangeTheme = (display: boolean) => {
+    setDisplayChangeTheme(display);
+  }
+
+  const setupDisplayPolicy = (display: boolean) => {
+    setDisplayPolicy(display);
+  }
+
+  const setupDisplayHelp = (display: boolean) => {
+    setDisplayHelp(display);
+  }
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-5xl text-blue-500 font-bold">profile</Text>
+    <View>
+      <View>
+        {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false) && 
+          <View>
+            <MainProfile 
+              setupDisplayInformation={setupDisplayInformation}
+              setupDisplayChangePassword={setDisplayChangePassword}
+              setupDisplayChangeTheme={setupDisplayChangeTheme}
+              setupDisplayPolicy={setupDisplayPolicy}
+              setupDisplayHelp={setupDisplayHelp}
+            />
+          </View>
+        }
+
+        {displayInformation === true && 
+          <UserInformation 
+              setupDisplayInformation={setupDisplayInformation}
+          />
+        }
+
+        {displayChangePassword === true && 
+          <View>
+              <ChangePassword 
+                  setupDisplayChangePassword={setupDisplayChangePassword}
+              />
+          </View>
+        }
+
+        {displayChangeTheme === true && 
+          <View className = "absolute top-[70vh] z-[50]">
+              <ChangeTheme 
+                  setupDisplayChangeTheme={setupDisplayChangeTheme}
+              />
+          </View>
+        }
+
+        {displayPolicy === true && 
+          <Policy 
+            setupDisplayPolicy={setupDisplayPolicy}
+          />
+        }
+
+        {displayHelp === true && 
+          <Helps 
+            setupDisplayHelp={setupDisplayHelp}
+          />
+        }
+      </View>
+      {/* overlay */}
+      {displayChangeTheme === true && 
+        <Pressable className = "bg-gray-600 absolute left-0 top-0 w-[100vw] h-[100vh] z-[10] opacity-50" onPress={() => setDisplayChangeTheme(false)}></Pressable>
+      }
     </View>
   )
 };

@@ -11,6 +11,7 @@ import CourseJoined from '@/components/Home/CourseJoined';
 import SuggestedCourse from '@/components/Home/SuggestedCourse';
 import Search from '@/components/Search/Search';
 import Entypo from '@expo/vector-icons/Entypo';
+import SearchFilter from '@/components/Search/SearchFilter';
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -20,7 +21,11 @@ const HomePage = () => {
     const authState = useAuthStore((state) => state.authState);
     const saveAuthState = useAuthStore((state) => state.saveAuthState);
 
+    // state display search
     const [displaySearch, setDisplaySearch] = useState(false);
+
+    // state display search filter
+    const [displaySearchFilter, setDisplaySearchFilter] = useState(false);
 
     const [dummyRecentSearches, setDummyRecentSearches] = useState([
       "Math 11", 
@@ -104,8 +109,14 @@ const HomePage = () => {
         setDummyRecentSearches(newRecentSearches);
     }
 
+    // disable search filter
+    const disableSearchFilter = () => {
+      setDisplaySearchFilter(false);
+    }
+
   return (
-    <View className="h-full">
+    <View className = "">
+      <View className="h-full mt-[2rem]">
         {/* username */}
         {displaySearch === false ? 
             <View className = "relative left-[5%] mt-[2rem]">
@@ -119,19 +130,21 @@ const HomePage = () => {
         {/* search bar and sort */}
         <View className = "flex-row">
             {/* search bar */}
-            <Pressable className = "relative left-[4%] mt-[1rem] bg-gray-300 rounded-full w-[80%]" onPress={() => setDisplaySearch(true)}>
+            <Pressable className = "relative left-[4%] mt-[1rem] bg-gray-300 rounded-full w-[80%] z-[10]" onPress={() => setDisplaySearch(true)}>
                 <TextInput 
                     placeholder = "Find courses here"
-                    className = "bg-gray-300 rounded-full py-[0.8rem] pl-[3rem] w-full"
+                    className = "bg-gray-300 rounded-full py-[1rem] pl-[3rem] w-full"
                     onFocus={() => setDisplaySearch(true)}
                     editable = {displaySearch === false ? false : true}
+                    placeholderTextColor={"black"}
+                    onPress={() => setDisplaySearch(true)}
                 />
-                <EvilIcon name = "search" size = {30} className = "absolute left-[0.5rem] top-[0.45rem]" />
+                <EvilIcon name = "search" size = {30} className = "absolute left-[0.5rem] top-[0.7rem]" />
             </Pressable>
             {/* sort  */}
-            <View className = "bg-gray-300 rounded-full w-[10%] h-[3rem] mt-[1.2rem] ml-[8%]">
+            <Pressable className = "bg-gray-300 rounded-full w-[10%] h-[3rem] mt-[1.2rem] ml-[8%]" onPress={() => setDisplaySearchFilter(true)}>
               <Image source={require("../../assets/images/filter.png")} className = "relative left-3 w-[1.5rem] h-[1.5rem] top-3" />
-            </View>
+            </Pressable>
         </View>
 
         {/* Course joined */}
@@ -150,12 +163,27 @@ const HomePage = () => {
             />
         }
 
+        {/* search */}
         {displaySearch === true && 
             <Search 
                 dummyRecentSearches={dummyRecentSearches}
                 setupDummyRecentSearches={setupDummyRecentSearches}
             />
         }
+
+        {/* search filter */}
+        {displaySearchFilter === true && 
+            <View className = "absolute left-0 top-[30%] z-[50]">
+              <SearchFilter 
+                  disableSearchFilter={disableSearchFilter}
+              />
+            </View>
+        }
+      </View>
+      {/* overlay */}
+      {displaySearchFilter === true && 
+        <Pressable className = "bg-gray-600 absolute left-0 top-0 w-[100vw] h-[100vh] z-[10] opacity-50" onPress={() => setDisplaySearchFilter(false)}></Pressable>
+      }
     </View>
   )
 };

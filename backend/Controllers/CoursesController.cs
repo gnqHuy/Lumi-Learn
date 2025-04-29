@@ -1,13 +1,17 @@
 ﻿using LumiLearn.Data;
 using LumiLearn.Domains;
 using LumiLearn.Dtos.Course;
+using LumiLearn.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace LumiLearn.Controllers
 {
@@ -16,10 +20,12 @@ namespace LumiLearn.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly LumiLearnDbContext dbContext;
+        private readonly ISearchHistoriesReposity searchHistoriesReposity;
 
-        public CoursesController(LumiLearnDbContext lumiLearnDbContext)
+        public CoursesController(LumiLearnDbContext lumiLearnDbContext, ISearchHistoriesReposity searchHistoriesReposity)
         {
             dbContext = lumiLearnDbContext;
+            this.searchHistoriesReposity = searchHistoriesReposity;
         }
 
         [HttpGet]
@@ -35,7 +41,8 @@ namespace LumiLearn.Controllers
                     Thumbnail = c.Thumbnail,
                     Topic = c.Topic.Name,
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
-                    NumberOfRatings = c.Feedbacks.Count
+                    NumberOfRatings = c.Feedbacks.Count,
+                    Timestamp = c.Timestamp,
                 })
                 .ToListAsync();
 
@@ -56,7 +63,8 @@ namespace LumiLearn.Controllers
                     Thumbnail = c.Thumbnail,
                     Topic = c.Topic.Name,
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
-                    NumberOfRatings = c.Feedbacks.Count
+                    NumberOfRatings = c.Feedbacks.Count,
+                    Timestamp = c.Timestamp,
                 })
                 .FirstOrDefaultAsync();
 
@@ -71,14 +79,15 @@ namespace LumiLearn.Controllers
         // Get My Course ? Teacher ? Student -> Role
         [HttpGet("mine")]
         [Authorize]
-        public async Task<IActionResult> GetMyCourses()
+        public async Task<ActionResult<List<CourseDto>>> GetMyCourses()
         {
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if(role == "Student")
+            if (role == "Student")
             {
-                var courses = await dbContext.Enrollments
+
+                var coursesDto = await dbContext.Enrollments
                     .Where(e => e.StudentId == userId)
                     .Select(e => new CourseDto
                     {
@@ -89,14 +98,16 @@ namespace LumiLearn.Controllers
                         Thumbnail = e.Course.Thumbnail,
                         Topic = e.Course.Topic.Name,
                         Rating = e.Course.Feedbacks.Any() ? Math.Round(e.Course.Feedbacks.Average(f => f.Rating), 2) : 0,
-                        NumberOfRatings = e.Course.Feedbacks.Count
+                        NumberOfRatings = e.Course.Feedbacks.Count,
+                        Timestamp = e.Course.Timestamp,
                     })
                     .ToListAsync();
-                return Ok(courses);
+
+                return Ok(coursesDto);
             }
             else if (role == "Teacher")
             {
-                var courses = await dbContext.Courses
+                var coursesDto = await dbContext.Courses
                     .Where(c => c.InstructorId == userId)
                     .Select(c => new CourseDto
                     {
@@ -107,14 +118,110 @@ namespace LumiLearn.Controllers
                         Thumbnail = c.Thumbnail,
                         Topic = c.Topic.Name,
                         Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
-                        NumberOfRatings = c.Feedbacks.Count
+                        NumberOfRatings = c.Feedbacks.Count,
+                        Timestamp = c.Timestamp,
                     })
                     .ToListAsync();
 
-                return Ok(courses);
+                return Ok(coursesDto);
             }
 
             return Forbid();
+        }
+
+        /*[HttpGet("search")]
+        [Authorize]
+        public async Task<ActionResult<ListCourseRespone>> SearchCourses(string keyword, int page = 1, int pageSize = 10)
+        {
+            IQueryable<Course> query = dbContext.Courses;
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return BadRequest("Search field cannot be null");
+            }
+
+            query = query.Where(c => c.Title.ToLower().Contains(keyword.ToLower()));
+            var totalResults = await query.CountAsync();
+
+            int totalPages = (int)Math.Ceiling((double)totalResults / pageSize);
+            // Nên làm kiểu gì ở đây nhỉ ? Hay lại chia mỗi cái filter 1 request ?? Khá tốn kém vì frontend có thể làm điều đấy cho nhanh
+            // Trả về rating các thứ rồi, nhưng lại có page và pageSize ? Có nên trả về tất cả rồi phân trang ở frontend ?
+            // Phân trang ở fe thì khi đổi filter các thứ cũng sẽ là tức thời chứ không phải gửi req (bởi vì vẫn là các Course đấy)
+            var courses = await query.Skip((page - 1) * (pageSize))
+                 .Take(pageSize)
+                 .Select(c => new CourseDto
+                 {
+                     Id = c.Id,
+                     Instructor = c.Instructor.Name ?? c.Instructor.Username,
+                     Title = c.Title,
+                     Description = c.Description,
+                     Thumbnail = c.Thumbnail,
+                     Topic = c.Topic.Name,
+                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                     NumberOfRatings = c.Feedbacks.Count,
+                     Timestamp = c.Timestamp,
+                 })
+                 .ToListAsync();
+
+            // Add to Search Histories
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            _ = Task.Run(async () =>
+            {
+                await searchHistoriesReposity.CreateSearchHistory(
+                    userId,
+                    keyword
+                );
+            }).ConfigureAwait(false);
+
+            return Ok(new ListCourseRespone
+            {
+                Courses = courses,
+                Page = page,
+                PageSize = 10,
+                TotalPages = totalPages,
+                TotalCourses = totalResults
+            });
+        }*/
+
+        // Search Course By Title and Filter ?
+        [HttpGet("search")]
+        [Authorize]
+        public async Task<ActionResult<List<CourseDto>>> SearchCourses(string keyword)
+        {
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return BadRequest("Search field cannot be null");
+            }
+
+            var courseDtos = await dbContext.Courses
+                .Where(c => c.Title.ToLower().Contains(keyword.ToLower())) // Handle at frontend
+                .Select(c => new CourseDto
+                {
+                    Id = c.Id,
+                    Instructor = c.Instructor.Name ?? c.Instructor.Username,
+                    Title = c.Title,
+                    Description = c.Description,
+                    Thumbnail = c.Thumbnail,
+                    Topic = c.Topic.Name,
+                    Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                    NumberOfRatings = c.Feedbacks.Count,
+                    Timestamp = c.Timestamp,
+                })
+                .ToListAsync();
+
+            // Add to Search Histories
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            _ = Task.Run(async () =>
+            {
+                await searchHistoriesReposity.CreateSearchHistory(
+                    userId,
+                    keyword
+                );
+            }).ConfigureAwait(false);
+
+            return Ok(courseDtos);
         }
 
         [HttpPost]
@@ -123,7 +230,7 @@ namespace LumiLearn.Controllers
         {
             if (request.Topic == null || request.Title == null)
             {
-                return BadRequest("Missing Some Props");
+                return BadRequest("Missing Some Props"); // No need because request required
             }
 
             // Check the Unique InstructorId and Title
@@ -158,6 +265,7 @@ namespace LumiLearn.Controllers
                 Description = request.Description,
                 Thumbnail = request.Thumbnail,
                 TopicId = topic.Id,
+                Timestamp = DateTime.Now,
             };
 
             await dbContext.Courses.AddAsync(course);
@@ -174,7 +282,8 @@ namespace LumiLearn.Controllers
                 Thumbnail = course.Thumbnail,
                 Topic = topic.Name,
                 Rating = 0,
-                NumberOfRatings = 0
+                NumberOfRatings = 0,
+                Timestamp = course.Timestamp,
             };
 
             return CreatedAtAction(nameof(GetCourseDetail), new { id = course.Id }, courseDto);
@@ -239,6 +348,7 @@ namespace LumiLearn.Controllers
                 }
                 course.TopicId = topic.Id;
             }
+            course.Timestamp = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
 

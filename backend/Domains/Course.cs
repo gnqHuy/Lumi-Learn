@@ -10,6 +10,7 @@ namespace LumiLearn.Domains
         public string? Description { get; set; }
         public string? Thumbnail { get; set; }
         public Guid TopicId { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.Now;
 
         // Navigation Properties
         public Topic Topic { get; set; }

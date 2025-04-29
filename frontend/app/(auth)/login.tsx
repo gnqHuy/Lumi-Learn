@@ -43,6 +43,7 @@ const login = () => {
             saveAuthState(authState);
             setUsernameError(false);
             setPasswordError(false);
+            console.log(res.data.authToken);
         }).catch((err) => {
             if (err.response?.status == 404) {
                 setUsernameError(true);

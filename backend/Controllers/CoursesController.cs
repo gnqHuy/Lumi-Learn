@@ -1,10 +1,13 @@
 ﻿using LumiLearn.Data;
 using LumiLearn.Domains;
 using LumiLearn.Dtos.Course;
+using LumiLearn.Dtos.FlashcardSet;
 using LumiLearn.Dtos.Lesson;
+using LumiLearn.Dtos.Quiz;
 using LumiLearn.Dtos.FlashcardSet;
 using LumiLearn.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

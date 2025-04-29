@@ -138,7 +138,7 @@ const signup = () => {
                         </Text>
                     )}
                 </View>
-                <View id='role-input'>
+                <View id='role-input' className='z-[100]'>
                     <Text 
                         className={roleError ? 
                             'text-sm ml-1 mb-2 color-red-600'

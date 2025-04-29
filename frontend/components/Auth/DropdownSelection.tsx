@@ -33,7 +33,7 @@ const DropdownSelection = (props: DropdownProps) => {
         </TouchableHighlight>
         {isOpen && (
             <View 
-                className="absolute top-14 left-0 w-full z-20 rounded-xl overflow-hidden border border-slate-300"
+                className="absolute top-14 left-0 w-full rounded-xl overflow-hidden border border-slate-300"
                 pointerEvents='auto'
             >
                 <FlatList
@@ -42,9 +42,9 @@ const DropdownSelection = (props: DropdownProps) => {
                     renderItem={({ item }) => (
                         <TouchableHighlight 
                             onPress={() => handleSelect(item)}
-                            underlayColor={"rgba(0,0,0,0.1)"}
+                            // underlayColor={"rgba(0,0,0,0.1)"}
                         >
-                            <View className="w-full z-20 px-3 py-4 border-b border-b-slate-200">
+                            <View className="w-full bg-white px-3 py-4 border-b border-b-slate-200">
                                 <Text className="text-base color-slate-700">{item}</Text>
                             </View>
                         </TouchableHighlight>

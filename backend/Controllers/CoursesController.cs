@@ -1,6 +1,8 @@
 ﻿using LumiLearn.Data;
 using LumiLearn.Domains;
 using LumiLearn.Dtos.Course;
+using LumiLearn.Dtos.Lesson;
+using LumiLearn.Dtos.FlashcardSet;
 using LumiLearn.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using LumiLearn.Dtos.Quiz;
 
 namespace LumiLearn.Controllers
 {
@@ -47,6 +50,69 @@ namespace LumiLearn.Controllers
                 .ToListAsync();
 
             return Ok(courses);
+        }
+
+        [HttpGet("Overview/{id:Guid}")]
+        public async Task<ActionResult<CourseOverview>> GetCourseOverview(Guid id)
+        {
+            var course = await dbContext.Courses.FindAsync(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = await dbContext.Users.FindAsync(course.InstructorId);
+            var topic = await dbContext.Topics.FindAsync(course.TopicId);
+            var feedbacks = await dbContext.Feedbacks.Where(f => f.CourseId == id).Select(f => f.Rating).ToListAsync();
+            var lessons = await dbContext.Lessons.Where(l => l.CourseId == id).ToListAsync();
+
+            var lessonsOverview = new List<LessonOverview>();
+
+            foreach(var lesson in lessons)
+            {
+                var quizzes = await dbContext.Quizzes.Where(q => q.LessonId == lesson.Id)
+                    .Select(q => new QuizzOverview
+                    {
+                        Id = q.Id,
+                        LessonId = q.LessonId,
+                        Title = q.Title,
+                    }).ToListAsync();
+
+                var flashcardSets = await dbContext.FlashCardSets.Where(fs => fs.LessonId == lesson.Id)
+                    .Select(fs => new FlashcardSetOverview
+                    {
+                        Id = fs.Id,
+                        LessonId = fs.LessonId,
+                        Title = fs.Title,
+                    }).ToListAsync();
+
+                var lessonOverview = new LessonOverview
+                {
+                    Id = lesson.Id,
+                    CourseId = lesson.CourseId,
+                    Title = lesson.Title,
+                    FlashcardSets = flashcardSets,
+                    Quizzes = quizzes,
+                };
+
+                lessonsOverview.Add(lessonOverview);
+            }
+
+            var result = new CourseOverview
+            {
+                Id = course.Id,
+                Instructor = instructor.Name ?? instructor.Username,
+                Title = course.Title,
+                Description = course.Description,
+                Thumbnail = course.Thumbnail,
+                Topic = topic.Name,
+                Rating = feedbacks.Count() > 0 ? Math.Round(feedbacks.Average(), 2) : 0,
+                NumberOfRatings = feedbacks.Count(),
+                Lessons = lessonsOverview
+            };
+
+            return Ok(result);
         }
 
         [HttpGet("{id:Guid}")]

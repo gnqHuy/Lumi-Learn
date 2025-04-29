@@ -2,7 +2,7 @@
 
 namespace LumiLearn.Dtos.Course
 {
-    public class CourseDto
+    public class CourseOverview
     {
         public Guid Id { get; set; }
         public string Instructor { get; set; }
@@ -12,6 +12,6 @@ namespace LumiLearn.Dtos.Course
         public string Topic { get; set; }
         public double Rating { get; set; }
         public int NumberOfRatings { get; set; }
-        public DateTime Timestamp { get; set; }
+        public IEnumerable<LessonOverview> Lessons { get; set; }
     }
 }

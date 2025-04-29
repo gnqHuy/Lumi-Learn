@@ -1,6 +1,6 @@
 import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight } from 'react-native'
 import React, { useState } from 'react'
-import useAuthStore from '@/zustand/authStore';
+import useAuthStore, { AuthState } from '@/zustand/authStore';
 import { logIn } from '@/api/authApi';
 import { Redirect, useRouter } from 'expo-router';
 
@@ -36,10 +36,14 @@ const login = () => {
         };
 
         logIn(request).then((res) => {
-            const authState = res.data;
+            const authState: AuthState = {
+                user: res.data.user,
+                accessToken: res.data.authToken
+            };
             saveAuthState(authState);
             setUsernameError(false);
             setPasswordError(false);
+            console.log(res.data.authToken);
         }).catch((err) => {
             if (err.response?.status == 404) {
                 setUsernameError(true);

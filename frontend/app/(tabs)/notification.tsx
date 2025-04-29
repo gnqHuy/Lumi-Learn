@@ -24,7 +24,6 @@ const NotificationPage = () => {
             title="Logout"
             onPress={handleOnClick}
         />
-        <Text className="text-5xl text-blue-500 font-bold">{text}</Text>
     </View>
   )
 };

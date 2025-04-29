@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	9.1.0
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,6 @@ CREATE TABLE `quizresult` (
 
 LOCK TABLES `quizresult` WRITE;
 /*!40000 ALTER TABLE `quizresult` DISABLE KEYS */;
-INSERT INTO `quizresult` VALUES ('090e0c7d-6a15-4bcf-8e84-894d1f73c865','028039df-2399-48a2-bb62-86c98039161f','89c9b6fd-9ffb-4089-a6f8-19900490b193',85.71),('3c174fcc-2d60-4899-a19b-767896996c31','6d378aa7-1e5d-4e5a-9c08-a17bd1a62a15','89c9b6fd-9ffb-4089-a6f8-19900490b193',71.43),('887c7505-ddca-484e-8e42-a0d0a59c55fd','028039df-2399-48a2-bb62-86c98039161f','89c9b6fd-9ffb-4089-a6f8-19900490b193',71.43),('ac0b4c83-5f18-45a1-8587-0784bbcc6435','6d378aa7-1e5d-4e5a-9c08-a17bd1a62a15','89c9b6fd-9ffb-4089-a6f8-19900490b193',71.42857142857143);
 /*!40000 ALTER TABLE `quizresult` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-28  1:11:38
+-- Dump completed on 2025-04-30  0:34:33

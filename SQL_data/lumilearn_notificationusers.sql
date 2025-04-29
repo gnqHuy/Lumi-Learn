@@ -16,30 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `quizzes`
+-- Table structure for table `notificationusers`
 --
 
-DROP TABLE IF EXISTS `quizzes`;
+DROP TABLE IF EXISTS `notificationusers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `quizzes` (
-  `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `LessonId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `IX_Quizzes_LessonId` (`LessonId`),
-  CONSTRAINT `FK_Quizzes_Lessons_LessonId` FOREIGN KEY (`LessonId`) REFERENCES `lessons` (`Id`) ON DELETE CASCADE
+CREATE TABLE `notificationusers` (
+  `UserId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `NotificationId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `IsRead` tinyint(1) NOT NULL,
+  PRIMARY KEY (`UserId`,`NotificationId`),
+  KEY `IX_NotificationUsers_NotificationId` (`NotificationId`),
+  CONSTRAINT `FK_NotificationUsers_Notifications_NotificationId` FOREIGN KEY (`NotificationId`) REFERENCES `notifications` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_NotificationUsers_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `quizzes`
+-- Dumping data for table `notificationusers`
 --
 
-LOCK TABLES `quizzes` WRITE;
-/*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES ('90c5b659-aff3-4a65-a614-1e8eda4e66f3','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('ce735a43-ad7b-4a34-adba-1ec5459bf437','Quiz3','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('dc707edd-0227-4ace-9f85-c2b9c4bfaa1b','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533');
-/*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
+LOCK TABLES `notificationusers` WRITE;
+/*!40000 ALTER TABLE `notificationusers` DISABLE KEYS */;
+INSERT INTO `notificationusers` VALUES ('028039df-2399-48a2-bb62-86c98039161f','2d2d3156-26ad-431d-b8bd-1e484965aaad',0),('028039df-2399-48a2-bb62-86c98039161f','3cddf7bb-e606-4bb5-b6b4-c4b802692758',0),('028039df-2399-48a2-bb62-86c98039161f','4e98a496-fa54-4cb7-92c9-1202115dc18f',0),('028039df-2399-48a2-bb62-86c98039161f','5246f604-dd0a-4b8d-bfcc-b8d41620cbc6',0),('028039df-2399-48a2-bb62-86c98039161f','b97b9cc9-f438-4dfb-9ccc-1666166211e7',0),('581d5ef4-6f59-4abe-b876-f8fc5d18b542','4dbbec76-f858-4a60-98af-77909359455e',0);
+/*!40000 ALTER TABLE `notificationusers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -12,6 +12,7 @@ import SuggestedCourse from '@/components/Home/SuggestedCourse';
 import Search from '@/components/Search/Search';
 import Entypo from '@expo/vector-icons/Entypo';
 import SearchFilter from '@/components/Search/SearchFilter';
+import AntDesign from '@expo/vector-icons/AntDesign';
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -115,7 +116,7 @@ const HomePage = () => {
     }
 
   return (
-    <View className = "">
+    <View className = "flex-1">
       <View className="h-full mt-[2rem]">
         {/* username */}
         {displaySearch === false ? 
@@ -128,22 +129,22 @@ const HomePage = () => {
         }
         
         {/* search bar and sort */}
-        <View className = "flex-row">
+        <View className = "flex-row w-full justify-between gap-3 px-4">
             {/* search bar */}
-            <Pressable className = "relative left-[4%] mt-[1rem] bg-gray-300 rounded-full w-[80%] z-[10]" onPress={() => setDisplaySearch(true)}>
-                <TextInput 
+            <Pressable className = "flex-row gap-3 p-3 h-max bg-gray-300 rounded-full w-5/6 z-[10]" onPress={() => setDisplaySearch(true)}>
+                <EvilIcon name = "search" size = {30} className = "" />
+                <TextInput
                     placeholder = "Find courses here"
-                    className = "bg-gray-300 rounded-full py-[1rem] pl-[3rem] w-full"
+                    className = "bg-gray-300 rounded-full py-3 pl-3"
                     onFocus={() => setDisplaySearch(true)}
                     editable = {displaySearch === false ? false : true}
                     placeholderTextColor={"black"}
                     onPress={() => setDisplaySearch(true)}
                 />
-                <EvilIcon name = "search" size = {30} className = "absolute left-[0.5rem] top-[0.7rem]" />
             </Pressable>
-            {/* sort  */}
-            <Pressable className = "bg-gray-300 rounded-full w-[10%] h-[3rem] mt-[1.2rem] ml-[8%]" onPress={() => setDisplaySearchFilter(true)}>
-              <Image source={require("../../assets/images/filter.png")} className = "relative left-3 w-[1.5rem] h-[1.5rem] top-3" />
+            {/* filter  */}
+            <Pressable className = "flex items-center justify-center p-3 bg-gray-300 rounded-full w-max h-max z-[10] mt-[1.2rem]" onPress={() => setDisplaySearchFilter(true)}>
+              <AntDesign name='filter' size={24}/>
             </Pressable>
         </View>
 
@@ -173,7 +174,7 @@ const HomePage = () => {
 
         {/* search filter */}
         {displaySearchFilter === true && 
-            <View className = "absolute left-0 top-[30%] z-[50]">
+            <View className = "absolute left-0 bottom-16 z-[50]">
               <SearchFilter 
                   disableSearchFilter={disableSearchFilter}
               />
@@ -182,7 +183,7 @@ const HomePage = () => {
       </View>
       {/* overlay */}
       {displaySearchFilter === true && 
-        <Pressable className = "bg-gray-600 absolute left-0 top-0 w-[100vw] h-[100vh] z-[10] opacity-50" onPress={() => setDisplaySearchFilter(false)}></Pressable>
+        <Pressable className = "bg-gray-600 absolute left-0 top-0 w-full h-full z-[10] opacity-50" onPress={() => setDisplaySearchFilter(false)}></Pressable>
       }
     </View>
   )

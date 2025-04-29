@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	9.1.0
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,7 +38,7 @@ CREATE TABLE `flashcardsets` (
 
 LOCK TABLES `flashcardsets` WRITE;
 /*!40000 ALTER TABLE `flashcardsets` DISABLE KEYS */;
-INSERT INTO `flashcardsets` VALUES ('88b55f4b-a523-4f1b-befd-85345ae2b7f4','Me Quang Huy','86d1fc3a-1cf4-4934-b32e-2fb47bed0851'),('a8bcdf0a-f864-4c71-8f97-ffcc4fb3e2a0','Key Terms of the Geneva Accords','86d1fc3a-1cf4-4934-b32e-2fb47bed0851'),('bd22324d-7d29-43d6-910c-fb7c63790cd4','Events of April 30, 1975','86d1fc3a-1cf4-4934-b32e-2fb47bed0851'),('d1a32567-c694-474d-8288-c1656070e546','Doi Moi Policy Principles','86d1fc3a-1cf4-4934-b32e-2fb47bed0851');
+INSERT INTO `flashcardsets` VALUES ('485790d5-8f9b-43ff-b588-080b369cafa7','FlashCardSet Test With Notifi','41ed8834-019b-4e9c-a07a-52730871fc77'),('522da7a5-7795-4701-b394-33d578cab9b9','FS1','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('5e1be25f-7724-48bd-9fc2-04c9b8582bc5','FCS5','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('621efdd1-a141-4b6d-acc7-be607287f452','FCS3','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('6616255f-57d4-4e1d-9106-1b4b2c08902a','FCS1','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('7f0d2dd7-4239-419b-9da3-572afabc8af3','FS3','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('b93a70c4-fbd9-4ae4-8c4d-20b567047c6d','FCS4','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('c073d117-3fd3-4900-97fa-da4f86b98d3f','FCS2','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('e681f6ed-c074-4b07-8a25-0834d4c202e5','Why Noti Not Working','41ed8834-019b-4e9c-a07a-52730871fc77'),('f477f2e7-f4e9-4aa1-88a9-e0cc8d59b9b2','FS2','531fd38d-b268-4c81-9ecb-b4477a0ba533');
 /*!40000 ALTER TABLE `flashcardsets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-28  1:11:39
+-- Dump completed on 2025-04-30  0:34:33

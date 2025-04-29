@@ -16,30 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `quizzes`
+-- Table structure for table `__efmigrationshistory`
 --
 
-DROP TABLE IF EXISTS `quizzes`;
+DROP TABLE IF EXISTS `__efmigrationshistory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `quizzes` (
-  `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `LessonId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `IX_Quizzes_LessonId` (`LessonId`),
-  CONSTRAINT `FK_Quizzes_Lessons_LessonId` FOREIGN KEY (`LessonId`) REFERENCES `lessons` (`Id`) ON DELETE CASCADE
+CREATE TABLE `__efmigrationshistory` (
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`MigrationId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `quizzes`
+-- Dumping data for table `__efmigrationshistory`
 --
 
-LOCK TABLES `quizzes` WRITE;
-/*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES ('90c5b659-aff3-4a65-a614-1e8eda4e66f3','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('ce735a43-ad7b-4a34-adba-1ec5459bf437','Quiz3','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('dc707edd-0227-4ace-9f85-c2b9c4bfaa1b','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533');
-/*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
+LOCK TABLES `__efmigrationshistory` WRITE;
+/*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
+INSERT INTO `__efmigrationshistory` VALUES ('20250425160659_Init','8.0.15'),('20250426080401_UpdateNotification','8.0.15'),('20250428062718_Update','8.0.15'),('20250428071015_AddQuizResult','8.0.15');
+/*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30  0:34:33
+-- Dump completed on 2025-04-30  0:34:34

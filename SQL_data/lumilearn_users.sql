@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('028039df-2399-48a2-bb62-86c98039161f','d8dfc3cc-1365-4b30-ae4e-a68bd038f1f2','stringza',NULL,NULL,NULL,'string','$2a$11$Yev4XcoQdgDF/MrZQtexjuaDZMpbouNr9tPEaRmmsb1LYYmWqXi7G'),('581d5ef4-6f59-4abe-b876-f8fc5d18b542','d8dfc3cc-1365-4b30-ae4e-a68bd038f1f2',NULL,NULL,NULL,NULL,'student','$2a$11$wT4qoJvixCUtd3ow/qhhuORCZL5t7yVGvni4E6qv0hCSfCrD4Bzka'),('6d378aa7-1e5d-4e5a-9c08-a17bd1a62a15','13d0797e-0632-4a33-b2a3-64dfbef6bc3f','dotrongbinhhh','string','2025-04-23 14:41:32.506000','string','teacher','$2a$11$XGgPf.Yv9jLy3bm.h1EIZOvvFxjBNrurto8sETlZAOm0PpFk3lyYa'),('7d5797c1-bfab-43a6-a004-d45c0d92fbe6','13d0797e-0632-4a33-b2a3-64dfbef6bc3f',NULL,NULL,NULL,NULL,'dotrongbinhf','$2a$11$JVCvN2DcIUhuZ9UDFeCUGeDi1XsDfE5zEb4h9S25WQDtPtRLW6qSG');
+INSERT INTO `users` VALUES ('028039df-2399-48a2-bb62-86c98039161f','d8dfc3cc-1365-4b30-ae4e-a68bd038f1f2','string','string','2025-04-28 05:02:35.321000','string','string','$2a$11$Yev4XcoQdgDF/MrZQtexjuaDZMpbouNr9tPEaRmmsb1LYYmWqXi7G'),('581d5ef4-6f59-4abe-b876-f8fc5d18b542','d8dfc3cc-1365-4b30-ae4e-a68bd038f1f2',NULL,NULL,NULL,NULL,'student','$2a$11$wT4qoJvixCUtd3ow/qhhuORCZL5t7yVGvni4E6qv0hCSfCrD4Bzka'),('6d378aa7-1e5d-4e5a-9c08-a17bd1a62a15','13d0797e-0632-4a33-b2a3-64dfbef6bc3f','string','string','2025-04-28 05:02:35.321000','teacher','teacher','$2a$11$XGgPf.Yv9jLy3bm.h1EIZOvvFxjBNrurto8sETlZAOm0PpFk3lyYa'),('7d5797c1-bfab-43a6-a004-d45c0d92fbe6','13d0797e-0632-4a33-b2a3-64dfbef6bc3f',NULL,NULL,NULL,NULL,'dotrongbinhf','$2a$11$JVCvN2DcIUhuZ9UDFeCUGeDi1XsDfE5zEb4h9S25WQDtPtRLW6qSG');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-25 23:05:20
+-- Dump completed on 2025-04-30  0:34:34

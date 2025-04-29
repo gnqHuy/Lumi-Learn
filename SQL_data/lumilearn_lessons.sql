@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	9.1.0
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,7 +38,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES ('7bef5611-6b2d-4f80-8358-f8c329b661d2','Economic Growth in the 21st Century','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('86d1fc3a-1cf4-4934-b32e-2fb47bed0851','Prelude to Reunification','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('87f12da3-2753-4d3a-8582-3e640b75848e','Challenges of National Integration','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('af3b79c7-68f5-48ad-8fe2-7c3652f2da4d','string','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('cb8d1351-b671-4b7a-8098-3c2a455908f9','Cultural Revival Since Reunification','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('d14614bc-6d4b-406e-bf7b-f38d4e4da9f0','The Fall of Saigon','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('f4253327-7c07-4665-86f1-1236dcb85e2e','Doi Moi Reforms','babe6537-b15e-4191-bf3a-2b3927b8df6d'),('fad01452-d12c-4496-8741-6a78aa1f5e9c','Vietnam\'s Education System Post-1975','babe6537-b15e-4191-bf3a-2b3927b8df6d');
+INSERT INTO `lessons` VALUES ('41ed8834-019b-4e9c-a07a-52730871fc77','Lesson Test With Noti','a1a4a6dc-9ba7-4d79-b1ab-e10766813460'),('531fd38d-b268-4c81-9ecb-b4477a0ba533','L1','4dee65c2-418a-48fe-bb17-f5c6a804bee5');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-28  1:08:32
+-- Dump completed on 2025-04-30  0:34:34

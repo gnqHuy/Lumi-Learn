@@ -16,30 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `quizzes`
+-- Table structure for table `searchhistories`
 --
 
-DROP TABLE IF EXISTS `quizzes`;
+DROP TABLE IF EXISTS `searchhistories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `quizzes` (
-  `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `LessonId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `IX_Quizzes_LessonId` (`LessonId`),
-  CONSTRAINT `FK_Quizzes_Lessons_LessonId` FOREIGN KEY (`LessonId`) REFERENCES `lessons` (`Id`) ON DELETE CASCADE
+CREATE TABLE `searchhistories` (
+  `UserId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `Content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `SearchedAt` datetime(6) NOT NULL,
+  PRIMARY KEY (`UserId`,`Content`),
+  CONSTRAINT `FK_SearchHistories_Users_UserId` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `quizzes`
+-- Dumping data for table `searchhistories`
 --
 
-LOCK TABLES `quizzes` WRITE;
-/*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` VALUES ('90c5b659-aff3-4a65-a614-1e8eda4e66f3','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('ce735a43-ad7b-4a34-adba-1ec5459bf437','Quiz3','531fd38d-b268-4c81-9ecb-b4477a0ba533'),('dc707edd-0227-4ace-9f85-c2b9c4bfaa1b','Quiz1','531fd38d-b268-4c81-9ecb-b4477a0ba533');
-/*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
+LOCK TABLES `searchhistories` WRITE;
+/*!40000 ALTER TABLE `searchhistories` DISABLE KEYS */;
+INSERT INTO `searchhistories` VALUES ('028039df-2399-48a2-bb62-86c98039161f','dotr','2025-04-28 13:45:54.164968'),('028039df-2399-48a2-bb62-86c98039161f','zz','2025-04-28 13:45:34.878602'),('028039df-2399-48a2-bb62-86c98039161f','zzzzz','2025-04-28 13:40:53.901373');
+/*!40000 ALTER TABLE `searchhistories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

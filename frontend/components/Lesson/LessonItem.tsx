@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView } from 'react-native'
+import { View, Text, Pressable, ScrollView, TouchableHighlight } from 'react-native'
 import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { LessonOverview } from '@/types/lesson';
@@ -70,17 +70,20 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         className='flex-col gap-3 px-2'
                     >
                         {[lesson.flashcardSets.map((flashcardSet, index) => (
-                            <Pressable
+                            <TouchableHighlight
                                 id='flashcard-set'
                                 key={index}
-                                className='flex-row gap-2 w-full px-3 py-4 border border-gray-400 rounded-lg items-center bg-white'
+                                className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
                                 onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
+                                underlayColor={'rgba(0,0,0,0.08)'}
                             >
-                                <AntDesign name='filetext1' size={22}></AntDesign>
-                                <Text id='flashcard-set-title' className='text-base'>
-                                    {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
-                                </Text>
-                            </Pressable>
+                                <View className='flex-row gap-2 items-center'>
+                                    <AntDesign name='filetext1' size={22}></AntDesign>
+                                    <Text id='flashcard-set-title' className='text-base'>
+                                        {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
                         ))]}
                     </View>
                 </ScrollView>
@@ -96,17 +99,20 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         className='flex-col gap-3 px-2'
                     >
                         {[lesson.quizzes.map((quiz, index) => (
-                            <Pressable
+                            <TouchableHighlight
                                 id='quiz'
                                 key={index}
-                                className='flex-row gap-2 w-full px-3 py-4 border border-gray-400 rounded-lg items-center bg-white'
+                                className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
                                 onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
+                                underlayColor={'rgba(0,0,0,0.08)'}
                             >
-                                <AntDesign name='barschart' size={22}></AntDesign>
-                                <Text id='quiz-title' className='text-base'>
-                                    {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
-                                </Text>
-                            </Pressable>
+                                <View className='flex-row gap-2 items-center'>
+                                    <AntDesign name='barschart' size={22}></AntDesign>
+                                    <Text id='quiz-title' className='text-base'>
+                                        {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
                         ))]}
                     </View>
                 </ScrollView>

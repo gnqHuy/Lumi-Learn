@@ -1,7 +1,8 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableHighlight } from 'react-native'
 import React from 'react'
 import { QuizResult } from '@/types/quizResult'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export type QuizResultProps = {
     quizTitle: string;
@@ -9,6 +10,8 @@ export type QuizResultProps = {
 }
 
 const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) => {
+    const router = useRouter();
+    const { courseId } = useLocalSearchParams();
     return (
         <View
             id='quiz-result-screen'
@@ -78,6 +81,14 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                     </View>
                 </View>
             </View>
+            <TouchableHighlight
+                id='submit-button'
+                className='mt-16 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
+                onPress={() => router.navigate(`/(tabs)/courses/${courseId}`)}
+                underlayColor={"rgba(0,0,0,0.25)"}
+            >
+                <Text className='text-lg text-white font-semibold'>Back to course</Text>
+            </TouchableHighlight>
         </View>
     )
 }

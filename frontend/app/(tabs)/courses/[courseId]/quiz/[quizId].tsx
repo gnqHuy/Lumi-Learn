@@ -12,7 +12,7 @@ import { SubmitQuiz } from '@/api/quizResultApi'
 import QuizResultScreen from '@/components/Quizz/QuizResult'
 
 const QuizPage = () => {
-    const { quizId } = useLocalSearchParams();
+    const { quizId, courseId } = useLocalSearchParams();
     const [ quizDetail, setQuizDetail ] = useState<QuizDetailDto>();
     const [ currentIndex, setCurrentIndex ] = useState(0);
     const [ selectedOptions, setSelectedOptions ] = useState<Record<string, string | null>>({});
@@ -28,6 +28,7 @@ const QuizPage = () => {
     const currentQuestion = quizDetail?.questions[currentIndex];
 
     useEffect(() => {
+        console.log(courseId);
         GetQuizDetail(quizId as string).then((res) => {
             setQuizDetail(res.data);
         }).catch((err) => {
@@ -85,7 +86,6 @@ const QuizPage = () => {
 
     const submitQuiz = () => {
         SubmitQuiz(quizSubmission).then((res) => {
-            console.log(res.data);
             setShowQuizResult(true);
             setQuizResult(res.data);
         }).catch((err) => {
@@ -105,6 +105,7 @@ const QuizPage = () => {
                 className='flex-row mt-14 px-2 w-full'
             >
                 <Pressable
+                    className='z-10'
                     onPress={() => { 
                         router.back();
                     }}

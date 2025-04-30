@@ -63,7 +63,6 @@ namespace LumiLearn.Controllers
             double totalQuestions = submission.Answers.Count;
             double correctAnswers = 0;
             double wrongAnswers = 0;
-            
 
             foreach (var answer in submission.Answers)
             {
@@ -96,6 +95,7 @@ namespace LumiLearn.Controllers
 
             return Ok(new
             {
+                Id = quizResult.Id,
                 TotalQuestions = totalQuestions,
                 CorrectAnswers = correctAnswers,
                 WrongAnswers = wrongAnswers,

@@ -17,6 +17,7 @@
     public class QuestionAnswerOptionDto
     {
         public Guid Id { get; set; }
+        public bool IsCorrect { get; set; }
         public string Content { get; set; }
     }
 }

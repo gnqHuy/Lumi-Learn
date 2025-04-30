@@ -80,6 +80,31 @@ namespace LumiLearn.Controllers
             return CreatedAtAction(nameof(GetAnswerOptionById), new { id = option.Id }, dto);
         }
 
+        [HttpPost("Range")]
+        public async Task<ActionResult<IEnumerable<AnswerOption>>> CreateAnswerOptions(IEnumerable<CreateAnswerOptionRequestDto> dto)
+        {
+            if (!await _context.Questions.AnyAsync(q => q.Id == dto.ElementAt(0).QuestionId))
+                return NotFound("Question not found.");
+
+            var options = new List<AnswerOption>();
+
+            foreach(var item in dto)
+            {
+                options.Add(new AnswerOption
+                {
+                    Id = Guid.NewGuid(),
+                    Content = item.Content,
+                    IsCorrect = item.IsCorrect,
+                    QuestionId = item.QuestionId
+                });
+            }
+
+            await _context.AnswerOptions.AddRangeAsync(options);
+            await _context.SaveChangesAsync();
+
+            return Ok(options);
+        }
+
         // PUT: api/answeroptions/{id}
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateAnswerOption(Guid id, [FromBody] AnswerOptionDto dto)

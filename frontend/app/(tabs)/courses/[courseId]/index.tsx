@@ -10,16 +10,16 @@ import LessonList from '@/components/Lesson/LessonList';
 
 const CourseOverviewPage = () => {
     const [ courseOverview, setCourseOverview ] = useState<CourseOverview | undefined>(undefined);
-    const { id } = useLocalSearchParams();
+    const { courseId } = useLocalSearchParams();
     const router = useRouter();
 
     useEffect(() => {
-        getCourseOverview(id as string).then((res) => {
+        getCourseOverview(courseId as string).then((res) => {
             setCourseOverview(res.data);
         }).catch((err) => {
             console.log(err);
         })
-    }, [id])
+    }, [courseId])
     return (
         <View
             id='course-overview-screen'

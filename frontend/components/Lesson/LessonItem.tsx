@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { LessonOverview } from '@/types/lesson';
 import index from '@/app/(tabs)/courses';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export type LessonItemProps = {
     lesson: LessonOverview,
@@ -13,12 +14,19 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ isPressed, setIsPressed ] = useState(false);
     const [ hasContent, setHasContent ] = useState(true);
+    const { courseId } = useLocalSearchParams();
+    const router = useRouter();
 
     const handleExtendItem = () => {
         setIsOpen(!isOpen);
         if (lesson.flashcardSets.length == 0 && lesson.quizzes.length == 0) {
             setHasContent(false);
         }
+    }
+
+    const trim = (str: string, maxLength: number) => {
+        if (str.length < maxLength) return str;
+        return str.substring(0, maxLength - 3) + '...';
     }
 
     return (
@@ -62,16 +70,17 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         className='flex-col gap-3 px-2'
                     >
                         {[lesson.flashcardSets.map((flashcardSet, index) => (
-                            <View
+                            <Pressable
                                 id='flashcard-set'
                                 key={index}
                                 className='flex-row gap-2 w-full px-3 py-4 border border-gray-400 rounded-lg items-center bg-white'
+                                onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
                             >
                                 <AntDesign name='filetext1' size={22}></AntDesign>
                                 <Text id='flashcard-set-title' className='text-base'>
-                                    Flashcard set {index + 1}: {flashcardSet.title}
+                                    {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
                                 </Text>
-                            </View>
+                            </Pressable>
                         ))]}
                     </View>
                 </ScrollView>
@@ -87,16 +96,17 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         className='flex-col gap-3 px-2'
                     >
                         {[lesson.quizzes.map((quiz, index) => (
-                            <View
+                            <Pressable
                                 id='quiz'
                                 key={index}
                                 className='flex-row gap-2 w-full px-3 py-4 border border-gray-400 rounded-lg items-center bg-white'
+                                onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
                             >
                                 <AntDesign name='barschart' size={22}></AntDesign>
                                 <Text id='quiz-title' className='text-base'>
-                                    Quiz {index + 1}: {quiz.title}
+                                    {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
                                 </Text>
-                            </View>
+                            </Pressable>
                         ))]}
                     </View>
                 </ScrollView>

@@ -44,32 +44,44 @@ namespace LumiLearn.Controllers
         public async Task<ActionResult<QuizDetailDto>> GetQuizDetail(Guid quizId)
 
         {
-            var quiz = await _context.Quizzes
-                .AsNoTracking()
-                .Where(q => q.Id == quizId)
-                .Select(q => new QuizDetailDto
-                {
-                    Id = q.Id,
-                    Title = q.Title,
-                    Questions = q.Questions.Select(question => new QuizQuestionDto
-                    {
-                        Id = question.Id,
-                        Content = question.Content,
-                        AnswerOptions = question.AnswerOptions.Select(option => new QuestionAnswerOptionDto
-                        {
-                            Id = option.Id,
-                            Content = option.Content,
-                        }).ToList()
-                    }).ToList()
-                })
-                .FirstOrDefaultAsync();
+            var quiz = await _context.Quizzes.FindAsync(quizId);
 
             if (quiz == null)
             {
                 return NotFound();
             }
 
-            return Ok(quiz);
+            var questions = await _context.Questions.Where(q => q.QuizId == quizId).ToListAsync();
+            var questionsDto = new List<QuizQuestionDto>();
+
+            foreach(var question in questions)
+            {
+                var answerOptions = await _context.AnswerOptions.Where(a => a.QuestionId == question.Id)
+                    .Select(a => new QuestionAnswerOptionDto
+                    {
+                        Id = a.Id,
+                        IsCorrect = a.IsCorrect,
+                        Content = a.Content,
+                    }).ToListAsync();
+
+                var questionDto = new QuizQuestionDto
+                {
+                    Id = question.Id,
+                    Content = question.Content,
+                    AnswerOptions = answerOptions
+                };
+
+                questionsDto.Add(questionDto);
+            }
+
+            var quizDetailDto = new QuizDetailDto
+            {
+                Id = quiz.Id,
+                Title = quiz.Title,
+                Questions = questionsDto
+            };
+
+            return Ok(quizDetailDto);
         }
 
 

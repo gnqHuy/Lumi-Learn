@@ -4,7 +4,11 @@ import { Stack } from 'expo-router'
 
 const CourseDetailLayout = () => {
     return (
-        <Stack screenOptions={{ headerShown: false }}/>
+        <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='index'/>
+            <Stack.Screen name='quiz'/>
+            <Stack.Screen name='flashcardset'/>
+        </Stack>
     )
 }
 

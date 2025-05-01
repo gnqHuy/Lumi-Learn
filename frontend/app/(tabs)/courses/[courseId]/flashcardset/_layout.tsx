@@ -5,7 +5,7 @@ import { Stack } from 'expo-router'
 const FlashcardSetLayout = () => {
     return (
         <Stack screenOptions={{ headerShown: false}}>
-            <Stack.Screen name='[id]'/>
+            <Stack.Screen name='[flashcardSetId]'/>
         </Stack>
     )
 }

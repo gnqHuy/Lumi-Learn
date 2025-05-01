@@ -18,14 +18,31 @@ namespace LumiLearn.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FlashCard>>> GetFlashCards([FromQuery] Guid flashCardSetId)
+        public async Task<ActionResult> GetFlashCards([FromQuery] Guid flashCardSetId)
         {
+            var flashcardSet = await _context.FlashCardSets.FindAsync(flashCardSetId);
+
+            if (flashcardSet == null)
+            {
+                return NotFound();
+            }
+
             var flashCards = await _context.FlashCards
                 .AsNoTracking()
                 .Where(f => f.FlashCardSetId == flashCardSetId)
+                .Select(f => new FlashCardDto
+                {
+                    FlashCardSetId = f.FlashCardSetId,
+                    Term = f.Term,
+                    Definition = f.Definition,
+                })
                 .ToListAsync();
 
-            return Ok(flashCards);
+            return Ok(new
+            {
+                title = flashcardSet.Title,
+                flashCards = flashCards
+            });
         }
 
         [HttpPost]
@@ -43,6 +60,30 @@ namespace LumiLearn.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Flashcard created successfully." });
+        }
+
+        [HttpPost("Range")]
+        public async Task<ActionResult<IEnumerable<FlashCard>>> CreateFlashCards([FromBody] IEnumerable<FlashCardDto> flashCardDtos)
+        {
+            var flashcards = new List<FlashCard>();
+
+            foreach(var flashcardDto in flashCardDtos)
+            {
+                var flashcard = new FlashCard
+                {
+                    Id = Guid.NewGuid(),
+                    Term = flashcardDto.Term,
+                    Definition = flashcardDto.Definition,
+                    FlashCardSetId = flashcardDto.FlashCardSetId
+                };
+
+                flashcards.Add(flashcard);
+            }
+
+            await _context.FlashCards.AddRangeAsync(flashcards);
+            await _context.SaveChangesAsync();
+
+            return Ok(flashcards);
         }
 
         [HttpPut("{id}")]

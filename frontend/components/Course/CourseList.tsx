@@ -21,7 +21,7 @@ const CourseList = ({ courses }: CourseListProps) => {
             >
                 <View
                     id='course-list'
-                    className='w-full flex flex-col items-center px-6 gap-5'
+                    className='w-full flex flex-col items-center gap-5'
                 >
                     {courses.map((course, index) => (
                         <CourseItem {...course} key={course.id}/>

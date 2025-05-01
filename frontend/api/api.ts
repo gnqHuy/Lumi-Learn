@@ -11,7 +11,7 @@ const getHost = (): string | undefined => {
 const api = axios.create({
     baseURL: getHost(),
     responseType: 'json',
-    timeout: 5000,
+    timeout: 10000,
 });
 
 export const setupAxios = (authState: AuthState | null) => {

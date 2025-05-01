@@ -8,3 +8,9 @@ export type LessonOverview = {
     flashcardSets: FlashcardSetOverview[];
     quizzes: QuizzOverview[];
 };
+
+export type CreateLessonRequest = {
+    id: string;
+    title: string;
+    courseId: string
+}

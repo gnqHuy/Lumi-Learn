@@ -77,7 +77,8 @@ namespace LumiLearn.Controllers
                 Title = lesson.Title,
             };
 
-            return CreatedAtAction(nameof(GetLessonById), new { request.CourseId, id = lesson.Id }, dto);
+            //return CreatedAtAction(nameof(GetLessonById), new { request.CourseId, id = lesson.Id }, dto);
+            return Ok(dto);
         }
 
         // PUT: api/lessons/{id}

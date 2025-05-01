@@ -38,7 +38,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
             >
                 <View
                     id='quiz-score'
-                    className='w-[46%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
+                    className='w-[48%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
                     style = {{boxShadow: "0px 3px 8px rgba(0,0,0,0.1)"}}
                 >
                     <FontAwesome name='bar-chart' size={24} color={'orange'}/>
@@ -49,7 +49,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                 </View>
                 <View
                     id='total-questions'
-                    className='w-[46%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
+                    className='w-[48%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
                     style = {{boxShadow: "0px 3px 8px rgba(0,0,0,0.1)"}}
                 >
                     <FontAwesome name='list-ul' size={24} color={'blue'}/>
@@ -60,7 +60,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                 </View>
                 <View
                     id='correct-answer'
-                    className='w-[46%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
+                    className='w-[48%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
                     style = {{boxShadow: "0px 3px 8px rgba(0,0,0,0.1)"}}
                 >
                     <FontAwesome name='check' size={24} color={'green'}/>
@@ -71,7 +71,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                 </View>
                 <View
                     id='wrong-answer'
-                    className='w-[46%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
+                    className='w-[48%] flex-row pl-5 py-3 gap-4 bg-white items-center rounded-xl'
                     style = {{boxShadow: "0px 3px 8px rgba(0,0,0,0.1)"}}
                 >
                     <FontAwesome name='remove' size={24} color={'red'}/>

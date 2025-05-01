@@ -137,11 +137,19 @@ const QuizPage = () => {
             />
     
             <View className="flex-row w-full justify-between mt-6">
-                <TouchableOpacity onPress={prev} className="flex-row gap-2 items-center bg-gray-400 pl-3 pr-8 py-3 rounded-xl">
+                <TouchableOpacity 
+                    onPress={prev} 
+                    className="flex-row gap-2 items-center bg-gray-400 pl-3 pr-8 py-3 rounded-xl"
+                    activeOpacity={0.55}
+                >
                     <Entypo name='chevron-left' size={14} color={'white'}/>
                     <Text className="text-white font-semibold text-base">Prev</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={next} className="flex-row gap-2 items-center bg-gray-400 pl-8 pr-3 py-3 rounded-xl">
+                <TouchableOpacity 
+                    onPress={next} 
+                    className="flex-row gap-2 items-center bg-gray-400 pl-8 pr-3 py-3 rounded-xl"
+                    activeOpacity={0.55}
+                >
                     <Text className="text-white font-semibold text-base">Next</Text>
                     <Entypo name='chevron-right' size={14} color={'white'}/>
                 </TouchableOpacity>
@@ -149,8 +157,9 @@ const QuizPage = () => {
             {userHasCompletedQuiz() ? 
             <TouchableOpacity
                 id='submit-button'
-                className='mt-16 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
+                className='absolute bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
                 onPress={() => submitQuiz()}
+                activeOpacity={0.55}
             >
                 <Text className='text-lg text-white font-semibold'>Submit quiz</Text>
             </TouchableOpacity>

@@ -77,7 +77,7 @@ const FlashcardSetPage = () => {
             const threshold = width / 5;
 
             translateX.value = event.translationX;
-            translateY.value = Math.abs(event.translationX / 2);
+            translateY.value = event.translationY;
 
             if (event.translationX < -threshold) {
                 runOnJS(setIsKnown)(false);
@@ -97,19 +97,19 @@ const FlashcardSetPage = () => {
 
             if (event.translationX < -threshold) {
                 const currentLearningCount = learningCount + 1;
+                runOnJS(nextCard)();
                 translateX.value = withTiming(-width, {duration: 400}, () => {
                     runOnJS(setLearningCount)(currentLearningCount);
                     runOnJS(addToLearning)();
-                    runOnJS(nextCard)();
                     rotateY.value = 0;
                     translateX.value = 0;
                     translateY.value = 0;
                 });
             } else if (event.translationX > threshold) {
                 const currentKnowCount = knowCount + 1;
+                runOnJS(nextCard)();
                 translateX.value = withTiming(width, {duration: 400}, () => {
                     runOnJS(setKnowCount)(currentKnowCount);
-                    runOnJS(nextCard)();
                     rotateY.value = 0;
                     translateX.value = 0;
                     translateY.value = 0;
@@ -184,7 +184,7 @@ const FlashcardSetPage = () => {
     }
 
     const textStyle = () => {
-        let style = "text-xl font-semibold text-black text-center";
+        let style = "text-xl text-black text-center";
 
         if(isKnown) {
             style = "text-4xl font-bold text-green-500 text-center";
@@ -198,7 +198,7 @@ const FlashcardSetPage = () => {
     return (
         <>
             {!isCompleted ? 
-                <GestureHandlerRootView className="flex-1 bg-orange-300">
+                <View className="flex-1 bg-orange-300">
                     <View className="w-full h-full bg-white px-6 py-4">
                         <View className="flex-row mt-14 px-2 w-full">
                             <Pressable className="z-10" onPress={() => router.back()}>
@@ -210,16 +210,16 @@ const FlashcardSetPage = () => {
                         </View>
 
                         <View className="flex-row justify-between items-center px-2 mt-4">
-                            <View className="w-10 h-10 rounded-full bg-orange-200 border-2 border-orange-500 items-center justify-center">
-                                <Text className="text-orange-700">
+                            <View className={`w-10 h-10 rounded-full border-2 border-orange-500 ${isLearning ? 'bg-orange-500' : ''} items-center justify-center`}>
+                                <Text className={`font-extrabold text-lg ${isLearning ? 'text-gray-100' : 'text-orange-500'}`}>
                                     {learningCount}
                                 </Text>
                             </View>
                             <Text className="text-black text-base">
                                 {index + 1}/{flashcards.length} 
                             </Text>
-                            <View className="w-10 h-10 rounded-full bg-green-200 border-2 border-green-600 items-center justify-center">
-                                <Text className="text-green-700">
+                            <View className={`w-10 h-10 rounded-full border-2 border-green-500 ${isKnown ? 'bg-green-500' : ''} items-center justify-center`}>
+                                <Text className={`font-extrabold text-lg ${isKnown ? 'text-gray-100' : 'text-green-500'}`}>
                                     {knowCount}
                                 </Text>
                             </View>
@@ -234,7 +234,7 @@ const FlashcardSetPage = () => {
                                     style={[frontStyle]}
                                     className={flashcardStyle()}
                                 >
-                                    <Text className={textStyle()}>
+                                    <Text className={`font-semibold ${textStyle()}`}>
                                         {getTextSafe(currentCard?.term)}
                                     </Text>
                                 </Animated.View>
@@ -254,7 +254,7 @@ const FlashcardSetPage = () => {
                             Swipe right to mark Know
                         </Text>
                     </View>
-                </GestureHandlerRootView>
+                </View>
                 : <View
                     className='absolute h-screen w-screen bg-white z-100'
                 >

@@ -11,3 +11,10 @@ export type CourseOverview = {
     numberOfRatings: number;
     lessons: LessonOverview[];
 };
+
+export type CreateCourseRequest = {
+    title: string;
+    description: string;
+    thumbnail: string;
+    topic: string;
+}

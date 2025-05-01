@@ -1,8 +1,11 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
 import { getMyCourses } from '@/api/courseApi'
+import useAuthStore from '@/zustand/authStore'
+import CreateCourseModal from '@/components/Course/CreateCourseModal'
+import { useRouter } from 'expo-router'
 
 const coursesDummyData: CourseItemProps[] = [
     {
@@ -55,8 +58,15 @@ const coursesDummyData: CourseItemProps[] = [
     },
 ];
 
-const index = () => {
+const MyCourseScreen = () => {
     const [ courses, setCourses ] = useState<CourseItemProps[]>(coursesDummyData);
+    const [ isCourseModalOpen, setIsCourseModalOpen ] = useState(false);
+    const user = useAuthStore((state) => state.authState?.user);
+    const router = useRouter();
+
+    const isTeacher = () => {
+        return user?.role == "Teacher";
+    }
 
     useEffect(() => {
         getMyCourses().then((res) => {
@@ -67,6 +77,7 @@ const index = () => {
                 instructorName: course.instructor,
             }));
 
+            // setCourses(prev => [...mappedCourses, ...coursesDummyData]);
             setCourses(mappedCourses);
         }).catch((err) => {
             console.log(err);
@@ -74,8 +85,23 @@ const index = () => {
     }, []);
 
     return (
-        <CourseList courses={courses}/>
+        <View
+            id='my-course-screen'
+            className='flex-col flex-1 items-center px-6'
+        >
+            <CourseList courses={courses}/>
+            {isTeacher() ? 
+            <TouchableOpacity
+                id='submit-button'
+                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-500 rounded-xl'
+                onPress={() => router.navigate('/(tabs)/courses/createCourse')}
+                activeOpacity={0.55}
+            >
+                <Text className='text-lg text-white font-semibold'>Create new course</Text>
+            </TouchableOpacity>
+            : <></>}
+        </View>
     )
 }
 
-export default index
+export default MyCourseScreen

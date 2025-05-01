@@ -15,7 +15,8 @@ const AnswerOption: React.FC<Props> = ({ option, isSelected, onSelect }) => {
                 onSelect(option.id);
             }}
             className={`w-full border rounded-xl p-4 mb-2 ${isSelected ? 'border-black bg-gray-200' : 'border-gray-300'}`}
-            >
+            activeOpacity={0.35}
+        >
             <Text className="text-base">{option.content}</Text>
         </TouchableOpacity>
     );

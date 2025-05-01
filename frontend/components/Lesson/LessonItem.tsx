@@ -2,8 +2,9 @@ import { View, Text, Pressable, ScrollView, TouchableHighlight } from 'react-nat
 import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { LessonOverview } from '@/types/lesson';
-import index from '@/app/(tabs)/courses';
+import MyCourseScreen from '@/app/(tabs)/courses';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import useAuthStore from '@/zustand/authStore';
 
 export type LessonItemProps = {
     lesson: LessonOverview,
@@ -15,7 +16,12 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
     const [ isPressed, setIsPressed ] = useState(false);
     const [ hasContent, setHasContent ] = useState(true);
     const { courseId } = useLocalSearchParams();
+    const user = useAuthStore((state) => state.authState?.user);
     const router = useRouter();
+
+    const isTeacher = () => {
+        return user?.role == "Teacher";
+    }
 
     const handleExtendItem = () => {
         setIsOpen(!isOpen);
@@ -54,70 +60,112 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                     <AntDesign name="down" size={18} />
                 )}
             </Pressable>
-            {(isOpen && hasContent) && (
             <View
                 id='lesson-content'
-                className='flex-col gap-3 pb-4 items-center w-full'
+                className='flex-col gap-3 items-center w-full'
             >
-                <ScrollView
-                    id='flashcard-set-scroll-view'
-                    horizontal={false}
-                    showsVerticalScrollIndicator={false}
-                    className='relative w-full'
+                {(isOpen && hasContent) && (
+                <View 
+                    id='student-content'
+                    className='w-full flex-col gap-3 pb-4'
                 >
-                    <View
-                        id='flashcard-sets'
-                        className='flex-col gap-3 px-2'
+                    <ScrollView
+                        id='flashcard-set-scroll-view'
+                        horizontal={false}
+                        showsVerticalScrollIndicator={false}
+                        className='relative w-full'
                     >
-                        {[lesson.flashcardSets.map((flashcardSet, index) => (
-                            <TouchableHighlight
-                                id='flashcard-set'
-                                key={index}
-                                className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
-                                onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
-                                underlayColor={'rgba(0,0,0,0.08)'}
-                            >
-                                <View className='flex-row gap-2 items-center'>
-                                    <AntDesign name='filetext1' size={22}></AntDesign>
-                                    <Text id='flashcard-set-title' className='text-base'>
-                                        {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
-                                    </Text>
-                                </View>
-                            </TouchableHighlight>
-                        ))]}
-                    </View>
-                </ScrollView>
+                        <View
+                            id='flashcard-sets'
+                            className='flex-col gap-3 px-2'
+                        >
+                            {[lesson.flashcardSets.map((flashcardSet, index) => (
+                                <TouchableHighlight
+                                    id='flashcard-set'
+                                    key={index}
+                                    className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
+                                    onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
+                                    underlayColor={'rgba(0,0,0,0.08)'}
+                                >
+                                    <View className='flex-row gap-2 items-center'>
+                                        <AntDesign name='filetext1' size={22}></AntDesign>
+                                        <Text id='flashcard-set-title' className='text-base'>
+                                            {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
+                                        </Text>
+                                    </View>
+                                </TouchableHighlight>
+                            ))]}
+                        </View>
+                    </ScrollView>
 
+                    <ScrollView
+                        id='quizzes-scroll-view'
+                        horizontal={false}
+                        showsVerticalScrollIndicator={false}
+                        className='relative w-full'
+                    >
+                        <View
+                            id='quizzes'
+                            className='flex-col gap-3 px-2'
+                        >
+                            {[lesson.quizzes.map((quiz, index) => (
+                                <TouchableHighlight
+                                    id='quiz'
+                                    key={index}
+                                    className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
+                                    onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
+                                    underlayColor={'rgba(0,0,0,0.08)'}
+                                >
+                                    <View className='flex-row gap-2 items-center'>
+                                        <AntDesign name='barschart' size={22}></AntDesign>
+                                        <Text id='quiz-title' className='text-base'>
+                                            {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
+                                        </Text>
+                                    </View>
+                                </TouchableHighlight>
+                            ))]}
+                        </View>
+                    </ScrollView>
+                </View>)}
+                {isTeacher() && isOpen ? 
                 <ScrollView
-                    id='quizzes-scroll-view'
+                    id='buttons-scroll-view'
                     horizontal={false}
                     showsVerticalScrollIndicator={false}
-                    className='relative w-full'
+                    className='w-full pb-4'
                 >
                     <View
-                        id='quizzes'
+                        id='buttons'
                         className='flex-col gap-3 px-2'
                     >
-                        {[lesson.quizzes.map((quiz, index) => (
-                            <TouchableHighlight
-                                id='quiz'
-                                key={index}
-                                className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
-                                onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
-                                underlayColor={'rgba(0,0,0,0.08)'}
-                            >
-                                <View className='flex-row gap-2 items-center'>
-                                    <AntDesign name='barschart' size={22}></AntDesign>
-                                    <Text id='quiz-title' className='text-base'>
-                                        {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
-                                    </Text>
-                                </View>
-                            </TouchableHighlight>
-                        ))]}
+                        <TouchableHighlight
+                            id='create-flashcard-set-button'
+                            className='w-full px-3 py-4 rounded-lg bg-gray-400'
+                            onPress={() => {}}
+                            underlayColor={'rgba(0,0,0,0.2)'}
+                        >
+                            <View className='flex-row justify-center items-center'>
+                                <Text className='text-base font-semibold text-white'>
+                                    Create flashcard set
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            id='create-quiz-button'
+                            className='w-full px-3 py-4 rounded-lg bg-gray-400'
+                            onPress={() => {}}
+                            underlayColor={'rgba(0,0,0,0.2)'}
+                        >
+                            <View className='flex-row justify-center items-center'>
+                                <Text className='text-base font-semibold text-white'>
+                                    Create quiz
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
                     </View>
                 </ScrollView>
+                : <></>}
             </View>
-            )}
         </View>
     )
 }

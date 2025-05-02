@@ -18,7 +18,7 @@ const CourseItem = (props: CourseItemProps) => {
             className={`w-full flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-gray-50'}`}
             style = {{boxShadow: "0px 2px 8px rgba(0,0,0,0.15)"}}
             onPress={() => {
-                router.navigate(`/(tabs)/courses/${props.id}`);
+                router.push(`/(tabs)/courses/${props.id}`);
             }}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}

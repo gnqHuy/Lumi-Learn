@@ -1,5 +1,5 @@
 import { User } from '@/types/user';
-import zustand, { create } from 'zustand';
+import { create } from 'zustand';
 
 export type AuthState = {
     user: User | null,

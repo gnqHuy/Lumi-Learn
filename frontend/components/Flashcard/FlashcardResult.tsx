@@ -63,7 +63,7 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
             <TouchableHighlight
                 id='submit-button'
                 className='mt-16 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
-                onPress={() => router.navigate(`/(tabs)/courses/${courseId}`)}
+                onPress={() => router.push(`/(tabs)/courses/${courseId}`)}
                 underlayColor={"rgba(0,0,0,0.25)"}
             >
                 <Text className='text-lg text-white font-semibold'>

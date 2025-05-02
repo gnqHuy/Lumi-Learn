@@ -126,6 +126,64 @@ namespace LumiLearn.Controllers
             return CreatedAtAction(nameof(GetQuizDetail), new { quizId = quiz.Id }, dto);
         }
 
+        [HttpPost("WithContent")]
+        public async Task<ActionResult> CreateQuizWithContent(CreateQuizRequest request)
+        {
+            var lessonExists = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == request.LessonId);
+            if (lessonExists == null)
+            {
+                return BadRequest("Invalid Lesson ID");
+            }
+
+            var quiz = new Quiz
+            {
+                Id = Guid.NewGuid(),
+                LessonId = request.LessonId,
+                Title = request.Title,
+            };
+
+            _context.Quizzes.Add(quiz);
+            await _context.SaveChangesAsync();
+
+            _ = Task.Run(async () =>
+            {
+                await notificationRepository
+                .SendNotificationWhenCreateLessonResource(
+                    lessonExists,
+                    Enums.CourseNotificationType.Quiz,
+                    quiz.Title
+                );
+            }).ConfigureAwait(false);
+
+            foreach(var question in request.Questions)
+            {
+                var questionToCreate = new Question
+                {
+                    Id = Guid.NewGuid(),
+                    Content = question.Content,
+                    QuizId = quiz.Id,
+                };
+
+                await _context.Questions.AddAsync(questionToCreate);
+
+                foreach(var answerOption in question.AnswerOptions)
+                {
+                    var answerOptionToCreate = new AnswerOption
+                    {
+                        Id = Guid.NewGuid(),
+                        QuestionId = questionToCreate.Id,
+                        Content = answerOption.Content,
+                        IsCorrect = answerOption.IsCorrect,
+                    };
+
+                    await _context.AnswerOptions.AddAsync(answerOptionToCreate);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         // PUT: api/quizzes/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateQuiz(Guid id, [FromBody] QuizDto quizDto)

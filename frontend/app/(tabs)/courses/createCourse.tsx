@@ -56,7 +56,7 @@ const CreateCoursePage = () => {
 
         createCourse(createCourseRequest).then((res) => {
             const courseId = res.data.id;
-            router.navigate(`/(tabs)/courses/${courseId}`);
+            router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);
         })
@@ -159,7 +159,6 @@ const CreateCoursePage = () => {
                             )}
                         </View>
 
-                        {/* Create Button */}
                         <TouchableOpacity
                             className="bg-gray-400 py-5 rounded-xl items-center w-full"
                             onPress={handleCreateCourse}
@@ -168,7 +167,6 @@ const CreateCoursePage = () => {
                             <Text className="text-white font-semibold">Create course</Text>
                         </TouchableOpacity>
 
-                        {/* Cancel Button */}
                         <TouchableOpacity
                             className="bg-gray-200 border border-black py-5 rounded-xl items-center w-full"
                             onPress={() => router.back()}

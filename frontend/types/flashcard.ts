@@ -10,3 +10,8 @@ export type FlashcardDto = {
     definition: string,
     flashcardSetId: string
 }
+
+export type CreateFlashcardRequest = {
+    term: string;
+    definition: string;
+};

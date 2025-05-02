@@ -200,13 +200,18 @@ const FlashcardSetPage = () => {
             {!isCompleted ? 
                 <View className="flex-1 bg-orange-300">
                     <View className="w-full h-full bg-white px-6 py-4">
-                        <View className="flex-row mt-14 px-2 w-full">
+                        <View 
+                            id="top-nav"
+                            className="flex-row mt-14 mb-4 items-center px-2 w-full"
+                        >
                             <Pressable className="z-10" onPress={() => router.back()}>
                                 <AntDesign name="arrowleft" size={24} />
                             </Pressable>
-                            <Text className="absolute left-0 right-0 text-center text-xl font-semibold">
-                                Flashcard Set: {flashcardSetTitle}
-                            </Text>
+                            <View className="absolute left-0 right-0 items-center">
+                                <Text className="w-2/3 text-center text-xl font-semibold">
+                                    Flashcard Set: {flashcardSetTitle}
+                                </Text>
+                            </View>
                         </View>
 
                         <View className="flex-row justify-between items-center px-2 mt-4">

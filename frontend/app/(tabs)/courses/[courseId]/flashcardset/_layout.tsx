@@ -6,6 +6,7 @@ const FlashcardSetLayout = () => {
     return (
         <Stack screenOptions={{ headerShown: false}}>
             <Stack.Screen name='[flashcardSetId]'/>
+            <Stack.Screen name='create'/>
         </Stack>
     )
 }

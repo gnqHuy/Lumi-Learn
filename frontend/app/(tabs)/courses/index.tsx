@@ -94,7 +94,7 @@ const MyCourseScreen = () => {
             <TouchableOpacity
                 id='submit-button'
                 className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-500 rounded-xl'
-                onPress={() => router.navigate('/(tabs)/courses/createCourse')}
+                onPress={() => router.push('/(tabs)/courses/createCourse')}
                 activeOpacity={0.55}
             >
                 <Text className='text-lg text-white font-semibold'>Create new course</Text>

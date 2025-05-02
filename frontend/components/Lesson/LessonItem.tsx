@@ -141,7 +141,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         <TouchableHighlight
                             id='create-flashcard-set-button'
                             className='w-full px-3 py-4 rounded-lg bg-gray-400'
-                            onPress={() => {}}
+                            onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/create`)}
                             underlayColor={'rgba(0,0,0,0.2)'}
                         >
                             <View className='flex-row justify-center items-center'>
@@ -153,7 +153,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         <TouchableHighlight
                             id='create-quiz-button'
                             className='w-full px-3 py-4 rounded-lg bg-gray-400'
-                            onPress={() => {}}
+                            onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/create`)}
                             underlayColor={'rgba(0,0,0,0.2)'}
                         >
                             <View className='flex-row justify-center items-center'>

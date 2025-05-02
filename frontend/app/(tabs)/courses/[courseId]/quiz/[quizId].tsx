@@ -157,7 +157,7 @@ const QuizPage = () => {
             {userHasCompletedQuiz() ? 
             <TouchableOpacity
                 id='submit-button'
-                className='absolute bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
+                className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
                 onPress={() => submitQuiz()}
                 activeOpacity={0.55}
             >

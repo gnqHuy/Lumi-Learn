@@ -44,7 +44,7 @@ const CourseOverviewPage = () => {
             >
                 <Pressable
                     onPress={() => { 
-                        router.navigate(`/(tabs)/courses`);
+                        router.push('/(tabs)/courses');
                     }}
                 >
                     <AntDesign name='arrowleft' size={24}/>

@@ -6,6 +6,7 @@ const QuizLayout = () => {
     return (
         <Stack screenOptions={{ headerShown: false}}>
             <Stack.Screen name='[quizId]'/>
+            <Stack.Screen name='create'/>
         </Stack>
     )
 }

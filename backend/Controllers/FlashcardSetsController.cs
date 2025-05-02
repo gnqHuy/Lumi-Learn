@@ -72,6 +72,55 @@ namespace LumiLearn.Controllers
 
             return CreatedAtAction(nameof(GetFlashcardSetsByLessonId), new { lessonId = newSet.LessonId }, request);
         }
+
+        [HttpPost("WithContent")]
+        public async Task<ActionResult> CreateFlashcardSetWithContent(CreateFlashcardSetRequest request)
+        {
+            var lessonExists = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == request.LessonId);
+            if (lessonExists == null)
+            {
+                return BadRequest("Invalid Lesson ID");
+            }
+
+            var newSet = new FlashCardSet
+            {
+                Id = Guid.NewGuid(),
+                Title = request.Title,
+                LessonId = request.LessonId
+            };
+
+            await _context.FlashCardSets.AddAsync(newSet);
+            await _context.SaveChangesAsync();
+
+            _ = Task.Run(async () =>
+            {
+                await notificationRepository
+                .SendNotificationWhenCreateLessonResource(
+                    lessonExists,
+                    Enums.CourseNotificationType.FlashCardSet,
+                    newSet.Title
+                );
+            }).ConfigureAwait(false);
+
+            var flashcards = new List<FlashCard>();
+
+            foreach (var item in request.Flashcards)
+            {
+                var flashcard = new FlashCard
+                {
+                    Id = Guid.NewGuid(),
+                    Term = item.Term,
+                    Definition = item.Definition,
+                    FlashCardSetId = newSet.Id,
+                };
+                flashcards.Add(flashcard);
+            }
+
+            await _context.FlashCards.AddRangeAsync(flashcards);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
         // PUT: api/FlashcardSets/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateFlashcardSet(Guid id, [FromBody] FlashcardSetDto request)

@@ -93,9 +93,11 @@ const login = () => {
                     <TextInput
                         id='username-input-field'
                         placeholder='Please enter your username'
+                        placeholderTextColor={"#9CA3AF"}
                         className={usernameError ? 
-                            'w-full px-3 py-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full px-3 py-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                        style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setUsernameInput(text);
                             setUsernameError(false);
@@ -118,9 +120,11 @@ const login = () => {
                     <TextInput
                         id='password-input-field'
                         placeholder='Please enter your password'
+                        placeholderTextColor={"#9CA3AF"}
                         className={passwordError ? 
-                            'w-full px-3 py-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full px-3 py-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                        style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setPasswordInput(text);
                             setPasswordError(false);

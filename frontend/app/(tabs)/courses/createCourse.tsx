@@ -97,9 +97,11 @@ const CreateCoursePage = () => {
                             </Text>
                             <TextInput
                                 placeholder="Enter course title"
-                                className={`w-full px-3 py-4 rounded-xl text-3xl font-semibold text-center bg-transparent border-b-2 ${
+                                placeholderTextColor={"#9CA3AF"}
+                                className={`w-full p-4 rounded-xl text-3xl font-semibold bg-transparent border-b-2 ${
                                     titleError ? 'border-red-500' : 'border-gray-400'
                                 }`}
+                                style={{ textAlignVertical: 'center' }}
                                 value={titleInput}
                                 onChangeText={(text) => {
                                     setTitleInput(text);
@@ -122,9 +124,11 @@ const CreateCoursePage = () => {
                             </Text>
                             <TextInput
                                 placeholder="Enter course description"
-                                className={`w-full px-3 py-4 rounded-xl text-xl font-normal bg-transparent border-b-2 ${
+                                placeholderTextColor={"#9CA3AF"}
+                                className={`w-full p-4 rounded-xl text-xl font-normal bg-transparent border-b-2 ${
                                     descriptionError ? 'border-red-500' : 'border-gray-400'
                                 }`}
+                                style={{ textAlignVertical: 'center' }}
                                 value={descriptionInput}
                                 onChangeText={(text) => {
                                     setDescriptionInput(text);

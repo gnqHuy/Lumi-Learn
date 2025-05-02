@@ -73,10 +73,12 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
                                 Lesson title
                             </Text>
                             <TextInput
-                                placeholder="Enter course title"
-                                className={`w-full px-3 py-4 rounded-xl bg-transparent border ${
+                                placeholder="Enter lesson title"
+                                placeholderTextColor={"#9CA3AF"}
+                                className={`w-full p-4 rounded-xl bg-transparent border ${
                                     titleError ? 'border-red-500' : 'border-gray-600'
                                 }`}
+                                style={{ textAlignVertical: 'center' }}
                                 value={titleInput}
                                 onChangeText={(text) => {
                                     setTitleInput(text);

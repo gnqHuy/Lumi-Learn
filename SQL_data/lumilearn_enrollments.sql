@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,7 +38,7 @@ CREATE TABLE `enrollments` (
 
 LOCK TABLES `enrollments` WRITE;
 /*!40000 ALTER TABLE `enrollments` DISABLE KEYS */;
-INSERT INTO `enrollments` VALUES ('4dee65c2-418a-48fe-bb17-f5c6a804bee5','028039df-2399-48a2-bb62-86c98039161f'),('843e0642-af39-4358-9e84-a2022767aaf3','028039df-2399-48a2-bb62-86c98039161f'),('a1a4a6dc-9ba7-4d79-b1ab-e10766813460','028039df-2399-48a2-bb62-86c98039161f'),('a1a4a6dc-9ba7-4d79-b1ab-e10766813460','581d5ef4-6f59-4abe-b876-f8fc5d18b542');
+INSERT INTO `enrollments` VALUES ('4dee65c2-418a-48fe-bb17-f5c6a804bee5','028039df-2399-48a2-bb62-86c98039161f'),('843e0642-af39-4358-9e84-a2022767aaf3','028039df-2399-48a2-bb62-86c98039161f'),('a1a4a6dc-9ba7-4d79-b1ab-e10766813460','028039df-2399-48a2-bb62-86c98039161f'),('a1a4a6dc-9ba7-4d79-b1ab-e10766813460','581d5ef4-6f59-4abe-b876-f8fc5d18b542'),('d28fee64-62ae-4e1c-9b08-20c128558659','028039df-2399-48a2-bb62-86c98039161f');
 /*!40000 ALTER TABLE `enrollments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30  0:34:33
+-- Dump completed on 2025-05-02  9:19:49

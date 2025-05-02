@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,7 +38,7 @@ CREATE TABLE `lessons` (
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES ('41ed8834-019b-4e9c-a07a-52730871fc77','Lesson Test With Noti','a1a4a6dc-9ba7-4d79-b1ab-e10766813460'),('531fd38d-b268-4c81-9ecb-b4477a0ba533','L1','4dee65c2-418a-48fe-bb17-f5c6a804bee5');
+INSERT INTO `lessons` VALUES ('24253e72-6d76-44d6-af27-f4f626cc4e31','Academy','d28fee64-62ae-4e1c-9b08-20c128558659'),('244c9091-3b1d-4ebb-9381-ddd76d05c091','Hokage','d28fee64-62ae-4e1c-9b08-20c128558659'),('2ae2ed27-ecb5-4e9a-8f33-7d07cbc644a7','a','8102c509-e3e6-4d83-b77a-5b365f8f0f91'),('2b715312-aaa8-4aff-a1b1-1ee77e7998be','a','8102c509-e3e6-4d83-b77a-5b365f8f0f91'),('38afb0f4-e1b9-495f-ad67-9f628a04d72e','b','8102c509-e3e6-4d83-b77a-5b365f8f0f91'),('41ed8834-019b-4e9c-a07a-52730871fc77','Lesson Test With Noti','a1a4a6dc-9ba7-4d79-b1ab-e10766813460'),('531fd38d-b268-4c81-9ecb-b4477a0ba533','L1','4dee65c2-418a-48fe-bb17-f5c6a804bee5'),('7ba89728-ab5b-4ed7-bc69-5ada9ecda318','Jonin','d28fee64-62ae-4e1c-9b08-20c128558659'),('95ce6cba-e569-4524-ba16-d1201a5c06f8','Genin','d28fee64-62ae-4e1c-9b08-20c128558659'),('b8c1d5a8-a642-43d0-a056-e6066098bf60','Chunin','d28fee64-62ae-4e1c-9b08-20c128558659');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30  0:34:34
+-- Dump completed on 2025-05-02  9:19:49

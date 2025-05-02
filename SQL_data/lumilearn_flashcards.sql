@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,6 +39,7 @@ CREATE TABLE `flashcards` (
 
 LOCK TABLES `flashcards` WRITE;
 /*!40000 ALTER TABLE `flashcards` DISABLE KEYS */;
+INSERT INTO `flashcards` VALUES ('3b226302-da33-4ce0-a642-18cfd862c895','Chakra','The essential energy used by ninja to perform jutsu, created by combining physical and spiritual energies.','7088512f-0125-406d-9f30-6d3371c35cd7'),('4fac9d4c-43c1-49d8-8dfd-72260e985c2b','Shinobi','Another word for ninja; trained warriors who use chakra-based techniques to complete missions.','7088512f-0125-406d-9f30-6d3371c35cd7'),('63c3d736-75ec-43a9-b9ac-0ea1a15b5e6b','Jutsu','Techniques or skills used by shinobi, powered by chakra, and divided into ninjutsu, genjutsu, and taijutsu.','7088512f-0125-406d-9f30-6d3371c35cd7'),('66b53b9a-f912-43b4-87b7-899f0aee9bd0','Ninjutsu','A broad category of jutsu that involves the use of chakra to perform various supernatural effects.','7088512f-0125-406d-9f30-6d3371c35cd7'),('876b9c29-373a-4666-96b8-43e462567870','Tailed Beast','Powerful chakra monsters, each with a number of tails, that can be sealed inside humans as jinchuriki.','7088512f-0125-406d-9f30-6d3371c35cd7'),('8916b007-8d7f-49d0-a1ef-49cb90abeb5d','Taijutsu','Hand-to-hand combat techniques that rely on martial arts skills and physical strength, without chakra.','7088512f-0125-406d-9f30-6d3371c35cd7'),('c27d8ec3-d728-40b4-a17f-eae02b43e722','Summoning Jutsu','A technique allowing a ninja to summon animals or objects to aid in battle by using a blood contract.','7088512f-0125-406d-9f30-6d3371c35cd7'),('d7941429-1c28-4d8b-8aca-d2d9bd21dec6','Kekkei Genkai','Genetic abilities passed down through bloodlines, such as the Sharingan or Byakugan.','7088512f-0125-406d-9f30-6d3371c35cd7'),('ef80aff9-d9d7-47e7-b32c-809458365df0','Genjutsu','Illusion-based techniques that manipulate the opponent’s senses, causing hallucinations or disorientation.','7088512f-0125-406d-9f30-6d3371c35cd7');
 /*!40000 ALTER TABLE `flashcards` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30  0:34:32
+-- Dump completed on 2025-05-02  9:19:51

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { User } from '@/types/user';
 
 interface UserInformationProps {
     setupDisplayInformation: (display: boolean) => void;
+    userProfile: User | undefined
 }
 
-const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
+const UserInformation = ({setupDisplayInformation, userProfile}: UserInformationProps) => {
   return (
     <View className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
@@ -29,7 +31,7 @@ const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
-                    <Text className = "text-xl">ABCD</Text>
+                    <Text className = "text-xl">{userProfile?.username}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>
@@ -41,7 +43,7 @@ const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
-                    <Text className = "text-xl">Nguyen Duc Anh</Text>
+                    <Text className = "text-xl">{userProfile?.name}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>
@@ -53,7 +55,7 @@ const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
-                    <Text className = "text-xl">01/01/2004</Text>
+                    <Text className = "text-xl">{userProfile?.birthday.toString().substring(0,10)}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>
@@ -65,7 +67,7 @@ const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
-                    <Text className = "text-xl">nguyenducanhtest@gmail.com</Text>
+                    <Text className = "text-xl">{userProfile?.email}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>
@@ -77,7 +79,7 @@ const UserInformation = ({setupDisplayInformation}: UserInformationProps) => {
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
-                    <Text className = "text-xl">0123456789</Text>
+                    <Text className = "text-xl">{userProfile?.phone}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>

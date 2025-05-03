@@ -18,3 +18,7 @@ export function createCourse(request: CreateCourseRequest) {
 export function getAllCourses() {
     return api.get(`${URL_PREFIX}/`);
 }
+
+export function searchCourse(keyword: string) {
+    return api.get(`${URL_PREFIX}/search?keyword=${keyword}`)
+}

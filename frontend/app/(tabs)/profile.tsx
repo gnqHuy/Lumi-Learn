@@ -1,11 +1,13 @@
 import { View, Text, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MainProfile from '@/components/Profile/MainProfile';
 import UserInformation from '@/components/Profile/UserInformation';
 import ChangePassword from '@/components/Profile/ChangePassword';
 import ChangeTheme from '@/components/Profile/ChangeTheme';
 import Policy from '@/components/Profile/Policy';
 import Helps from '@/components/Profile/Helps';
+import { User } from '@/types/user';
+import { changePasswordApi, getUserProfile } from '@/api/userApi';
 
 const ProfilePage = () => {
   const [displayInformation, setDisplayInformation] = useState(false);
@@ -13,6 +15,23 @@ const ProfilePage = () => {
   const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
   const [displayPolicy, setDisplayPolicy] = useState(false);
   const [displayHelp, setDisplayHelp] = useState(false);
+
+  // user profile
+  const [userProfile, setUserProfile] = useState<User>({
+    id: '',
+    username: '',
+    name: '',
+    email: '',
+    phone: '',
+    birthday: new Date(),
+    role: '',
+  });
+
+  useEffect(() => {
+    getUserProfile().then((response) => {
+        setUserProfile(response.data);
+    })
+  }, [])
 
   const setupDisplayInformation = (display: boolean) => {
     setDisplayInformation(display);
@@ -51,6 +70,7 @@ const ProfilePage = () => {
         {displayInformation === true && 
           <UserInformation 
               setupDisplayInformation={setupDisplayInformation}
+              userProfile={userProfile}
           />
         }
 

@@ -8,8 +8,9 @@ interface MainProfileProps {
     setupDisplayChangeTheme: (display: boolean) => void;
     setupDisplayPolicy: (display: boolean) => void;
     setupDisplayHelp: (display: boolean) => void;
+    handleLogOut: () => void;
 }
-const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp}: MainProfileProps) => {
+const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp, handleLogOut}: MainProfileProps) => {
   return (
     <View className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
@@ -68,9 +69,9 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
         </View>
 
         {/* logout */}
-        <View className = "mt-[3rem] w-[60%] relative left-[20%] border-solid border-[2px] border-black rounded-lg py-[0.7rem]">
+        <Pressable className = "mt-[3rem] w-[60%] relative left-[20%] border-solid border-[2px] border-black rounded-lg py-[0.7rem]" onPress={handleLogOut}>
             <Text className = "text-xl text-center">Logout</Text>
-        </View>
+        </Pressable>
     </View>
   )
 }

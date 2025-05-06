@@ -8,6 +8,8 @@ import Policy from '@/components/Profile/Policy';
 import Helps from '@/components/Profile/Helps';
 import { User } from '@/types/user';
 import { changePasswordApi, getUserProfile } from '@/api/userApi';
+import useAuthStore from '@/zustand/authStore';
+import { router } from 'expo-router';
 
 const ProfilePage = () => {
   const [displayInformation, setDisplayInformation] = useState(false);
@@ -15,6 +17,10 @@ const ProfilePage = () => {
   const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
   const [displayPolicy, setDisplayPolicy] = useState(false);
   const [displayHelp, setDisplayHelp] = useState(false);
+
+  // zustand auth state and logout
+  const authState = useAuthStore((state) => state.authState);
+  const logOutAuthState = useAuthStore((state) => state.logOut);
 
   // user profile
   const [userProfile, setUserProfile] = useState<User>({
@@ -52,6 +58,16 @@ const ProfilePage = () => {
   const setupDisplayHelp = (display: boolean) => {
     setDisplayHelp(display);
   }
+
+  // logout
+  const handleLogOut = () => {
+      try {
+        logOutAuthState();
+      } catch(err) {
+        console.error(err);
+      }
+      router.push('/(auth)/login');
+  }
   return (
     <View>
       <View>
@@ -63,6 +79,7 @@ const ProfilePage = () => {
               setupDisplayChangeTheme={setupDisplayChangeTheme}
               setupDisplayPolicy={setupDisplayPolicy}
               setupDisplayHelp={setupDisplayHelp}
+              handleLogOut={handleLogOut}
             />
           </View>
         }

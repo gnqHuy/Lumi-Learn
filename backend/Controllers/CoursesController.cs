@@ -37,6 +37,12 @@ namespace LumiLearn.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCourses()
         {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var enrolledCourseIds = await dbContext.Enrollments
+                .Where(e => e.StudentId == userId)
+                .Select(e => e.CourseId)
+                .ToListAsync();
+
             var courses = await dbContext.Courses
                 .Select(c => new CourseDto
                 {
@@ -49,6 +55,7 @@ namespace LumiLearn.Controllers
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
                     NumberOfRatings = c.Feedbacks.Count,
                     Timestamp = c.Timestamp,
+                    IsUserEnrolled = enrolledCourseIds.Contains(c.Id),
                 })
                 .ToListAsync();
 
@@ -69,6 +76,10 @@ namespace LumiLearn.Controllers
             var topic = await dbContext.Topics.FindAsync(course.TopicId);
             var feedbacks = await dbContext.Feedbacks.Where(f => f.CourseId == id).Select(f => f.Rating).ToListAsync();
             var lessons = await dbContext.Lessons.Where(l => l.CourseId == id).ToListAsync();
+
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var isEnrolledCourse = await dbContext.Enrollments
+                .FirstOrDefaultAsync(e => e.StudentId == userId && e.CourseId == id);
 
             var lessonsOverview = new List<LessonOverview>();
 
@@ -112,6 +123,7 @@ namespace LumiLearn.Controllers
                 Topic = topic.Name,
                 Rating = feedbacks.Count() > 0 ? Math.Round(feedbacks.Average(), 2) : 0,
                 NumberOfRatings = feedbacks.Count(),
+                IsUserEnrolled = isEnrolledCourse != null,
                 Lessons = lessonsOverview
             };
 
@@ -169,6 +181,7 @@ namespace LumiLearn.Controllers
                         Rating = e.Course.Feedbacks.Any() ? Math.Round(e.Course.Feedbacks.Average(f => f.Rating), 2) : 0,
                         NumberOfRatings = e.Course.Feedbacks.Count,
                         Timestamp = e.Course.Timestamp,
+                        IsUserEnrolled = true,
                     })
                     .ToListAsync();
 
@@ -189,6 +202,7 @@ namespace LumiLearn.Controllers
                         Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
                         NumberOfRatings = c.Feedbacks.Count,
                         Timestamp = c.Timestamp,
+                        IsUserEnrolled = true, // This course is belong to this user (teacher)
                     })
                     .ToListAsync();
 
@@ -263,6 +277,12 @@ namespace LumiLearn.Controllers
                 return BadRequest("Search field cannot be null");
             }
 
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var enrolledCourseIds = await dbContext.Enrollments
+                .Where(e => e.StudentId == userId)
+                .Select(e => e.CourseId)
+                .ToListAsync();
+
             var courseDtos = await dbContext.Courses
                 .Where(c => c.Title.ToLower().Contains(keyword.ToLower())) // Handle at frontend
                 .Select(c => new CourseDto
@@ -276,12 +296,11 @@ namespace LumiLearn.Controllers
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
                     NumberOfRatings = c.Feedbacks.Count,
                     Timestamp = c.Timestamp,
+                    IsUserEnrolled = enrolledCourseIds.Contains(c.Id)
                 })
                 .ToListAsync();
 
             // Add to Search Histories
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             _ = Task.Run(async () =>
             {
                 await searchHistoriesReposity.CreateSearchHistory(

@@ -18,6 +18,8 @@ import { GetAllTopics } from '@/api/topicApi';
 import { deleteSearchHistoryByContent, getMySearchHistories} from '@/api/searchHistoriesApi';
 import { CourseOverview } from '@/types/course';
 import { CourseItemProps } from '@/components/Course/CourseItem';
+import { getUserProfile } from '@/api/userApi';
+import { User } from '@/types/user';
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -56,6 +58,17 @@ const HomePage = () => {
 
     // trigger the change of search histories
     const [searchTrigger, setSearchTrigger] = useState(false);
+
+    // user profile
+    const [userProfile, setUserProfile] = useState<User>({
+        id: '',
+        username: '',
+        name: '',
+        email: '',
+        phone: '',
+        birthday: new Date(),
+        role: '',
+    });
 
     const handleOnClick = () => {
       const request = {
@@ -102,6 +115,13 @@ const HomePage = () => {
       })
     }, [searchTrigger])
 
+    // get user profile
+    useEffect(() => {
+      getUserProfile().then((response) => {
+        setUserProfile(response.data);
+      }).catch(err => console.error(err));
+    }, [])  
+
     // disable search filter
     const disableSearchFilter = () => {
       setDisplaySearchFilter(false);
@@ -145,7 +165,7 @@ const HomePage = () => {
         {/* username */}
         {displaySearch === false ? 
             <View className = "relative left-[5%] mt-[2rem]">
-              <Text className = "text-3xl font-bold">Nguyen Van A</Text>
+              <Text className = "text-3xl font-bold">{userProfile?.name}</Text>
             </View> : 
             <Pressable onPress={() => {
               setDisplaySearch(false);
@@ -182,18 +202,20 @@ const HomePage = () => {
         </View>
 
         {/* Course joined */}
-        {displaySearch === false && 
-            <CourseJoined 
-              courseJoined={coursesJoined}
-            />
-        }
+        <ScrollView>
+          {displaySearch === false && 
+              <CourseJoined 
+                courseJoined={coursesJoined}
+              />
+          }
 
-        {/* suggested course */}
-        {displaySearch === false && 
-            <SuggestedCourse 
-                courses={allCourses}
-            />
-        }
+          {/* suggested course */}
+          {displaySearch === false && 
+              <SuggestedCourse 
+                  courses={allCourses}
+              />
+          }
+        </ScrollView>
 
         {/* search */}
         {displaySearch === true && 

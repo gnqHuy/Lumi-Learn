@@ -19,8 +19,6 @@ namespace LumiLearn.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Student")]
-        // How about Teacher ?? What is notification of Teacher ???
         public async Task<IActionResult> GetMyNotifications()
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

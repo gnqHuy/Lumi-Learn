@@ -3,6 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import { router } from 'expo-router';
 import React, { useState } from 'react'
 import { Pressable, Text, TextInput, View } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface ChangePasswordProps {
     setupDisplayChangePassword: (display: boolean) => void;
@@ -50,7 +51,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
   }
 
   return (
-    <View className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
             <Text className = "text-center text-3xl font-bold">Change password</Text>
@@ -116,7 +117,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
                 <Text className = "text-xl text-center">Confirm</Text>
             </Pressable>
         </View>
-    </View>
+    </ScrollView>
   )
 }
 

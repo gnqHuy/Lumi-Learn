@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { User } from '@/types/user';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface UserInformationProps {
     setupDisplayInformation: (display: boolean) => void;
@@ -10,7 +11,7 @@ interface UserInformationProps {
 
 const UserInformation = ({setupDisplayInformation, userProfile}: UserInformationProps) => {
   return (
-    <View className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
             <Text className = "text-center text-3xl font-bold">Information</Text>
@@ -84,7 +85,7 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
                 </Pressable>
             </View>
         </View>
-    </View>
+    </ScrollView>
   )
 }
 

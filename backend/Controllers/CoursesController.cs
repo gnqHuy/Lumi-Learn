@@ -321,9 +321,13 @@ namespace LumiLearn.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<ActionResult<CourseDto>> CreateNewCourse(CreateCourseRequest request)
         {
+            if (request.Thumbnail.Length == 0 || request.Thumbnail == null)
+            {
+                return BadRequest(request.Thumbnail.Length);
+            }
             if (request.Topic == null || request.Title == null)
             {
-                return BadRequest("Missing Some Props"); // No need because request required
+                return BadRequest(request); // No need because request required
             }
 
             // Check the Unique InstructorId and Title
@@ -355,6 +359,7 @@ namespace LumiLearn.Controllers
 
             using var stream = new MemoryStream();
             await request.Thumbnail.CopyToAsync(stream);
+            stream.Position = 0;
             var uploadRespone = await s3Services.UploadFileAsync(stream, key, request.Thumbnail.ContentType);
 
             var course = new Course

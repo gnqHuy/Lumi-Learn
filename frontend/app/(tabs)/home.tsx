@@ -36,7 +36,7 @@ const HomePage = () => {
     const [displaySearchFilter, setDisplaySearchFilter] = useState(false);
 
     // courseJoined
-    const [coursesJoined, setCoursesJoined] = useState([]);
+    const [coursesJoined, setCoursesJoined] = useState<CourseItemProps[]>([]);
 
     // all courses
     const [allCourses, setAllCourses] = useState<CourseItemProps[]>([]);
@@ -87,14 +87,28 @@ const HomePage = () => {
       if (authState?.accessToken) {
         setText(authState.accessToken);
       }
-      getMyCourses().then((response) => {
-        setCoursesJoined(response.data);
-      })
       GetAllTopics().then((response) => {
         setSearchingTopics(response.data);
       })
     }, [authState]);
 
+    // get user's courses
+    useEffect(() => {
+      getMyCourses().then((res) => {
+        const mappedCourses: CourseItemProps[] = res.data.map((course: any) => ({
+            id: course.id,
+            imgUrl: course.thumbnail,
+            courseName: course.title,
+            instructorName: course.instructor,
+            isUserEnrolled: course.isUserEnrolled
+          }));
+          setCoursesJoined(mappedCourses);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [])
+
+    // get all courses that user not enrolled
     useEffect(() => {
       getAllCourses().then((res) => {
           const mappedCourses: CourseItemProps[] = res.data.map((course: any) => ({
@@ -102,13 +116,15 @@ const HomePage = () => {
               imgUrl: course.thumbnail,
               courseName: course.title,
               instructorName: course.instructor,
+              isUserEnrolled: course.isUserEnrolled
           }));
-          setAllCourses(mappedCourses);
+          setAllCourses(mappedCourses.filter(course => course.isUserEnrolled === false));
       }).catch((err) => {
           console.log(err);
       });
     }, [])
 
+    // get search histories
     useEffect(() => {
       getMySearchHistories().then((response) => {
         setRecentSearches(response.data);
@@ -215,10 +231,8 @@ const HomePage = () => {
                   courses={allCourses}
               />
           }
-        </ScrollView>
 
-        {/* search */}
-        {displaySearch === true && 
+          {displaySearch === true && 
             <Search 
                 searchingTopics={searchingTopics}
                 recentSearches={recentSearches}
@@ -226,7 +240,8 @@ const HomePage = () => {
                 displaySearchResult = {displaySearchResult}
                 searchedCourses={searchedCourses}
             />
-        }
+          }
+        </ScrollView>
 
         {/* search filter */}
         {displaySearchFilter === true && 

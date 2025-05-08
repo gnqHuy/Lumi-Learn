@@ -1,24 +1,30 @@
 import { View, Text, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router'
+import useCourseStore from '@/zustand/courseStore'
 
 export type CourseItemProps = {
     id: string,
     imgUrl: string | null | undefined,
     courseName: string,
     instructorName: string,
+    isUserEnrolled: boolean
 }
 
 const CourseItem = (props: CourseItemProps) => {
     const [ isPressed, setIsPressed ] = useState(false);
     const router = useRouter();
+
+    // zustand for course
+    const setSelectedCourseId = useCourseStore((state) => state.setSelectedCourseId);
     return (
         <Pressable
             id='course-item-container'
             className={`w-full flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-gray-50'}`}
             style = {{boxShadow: "0px 2px 8px rgba(0,0,0,0.15)"}}
             onPress={() => {
-                router.push(`/(tabs)/courses/${props.id}`);
+                setSelectedCourseId(props.id);
+                props.isUserEnrolled === true ? router.push(`/(tabs)/courses/${props.id}`) : router.push('/(other)/CoursePreview');
             }}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}

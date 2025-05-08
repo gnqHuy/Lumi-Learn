@@ -17,6 +17,8 @@ export default function RootLayout() {
           />
           <Stack.Screen name="(auth)"
           />
+          <Stack.Screen name = "(other)"
+          />
       </Stack>
       {/* {redirectPath ?? <Redirect href={redirectPath}/>} */}
     </GestureHandlerRootView>

@@ -6,6 +6,7 @@ import useCourseStore from '@/zustand/courseStore'
 import { getCourseOverview } from '@/api/courseApi'
 import { CourseOverview } from '@/types/course'
 import { ScrollView } from 'react-native-gesture-handler'
+import { JoinCourseApi } from '@/api/enrollmentApi'
 
 const CoursePreview = () => {
     const selectedCourseId = useCourseStore((state) => state.selectedCourseId);
@@ -18,6 +19,17 @@ const CoursePreview = () => {
             setCourseOverview(response.data);
         }).catch(err => console.error(err))
     }, [])
+
+    // join course
+    const handleJoinCourse = () => {
+        const payload = {
+            courseId: selectedCourseId
+        }
+        JoinCourseApi(payload).then((res) => {
+            console.log('Join course successfully!');
+            router.push('/(tabs)/home');
+        }).catch(err => console.error(err));
+    }
   return (
     <View className = "w-full h-full bg-gray-200">
         <View className = "mt-[4rem]">
@@ -60,7 +72,7 @@ const CoursePreview = () => {
                 </ScrollView>
                 {/* join course */}
                 <View className = "mt-[2rem] ml-[20vw]">
-                    <Pressable className = "w-[60vw] self-start bg-gray-400 py-[0.5rem] rounded-xl">
+                    <Pressable className = "w-[60vw] self-start bg-gray-400 py-[0.5rem] rounded-xl" onPress={handleJoinCourse}>
                         <Text className = "text-lg text-white text-center">Join course</Text>
                     </Pressable>
                 </View>

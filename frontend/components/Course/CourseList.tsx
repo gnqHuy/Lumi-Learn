@@ -11,7 +11,7 @@ const CourseList = ({ courses }: CourseListProps) => {
     return (
         <View
             id='course-screen'
-            className='flex-1 items-center pt-10'
+            className='flex-1 items-center'
         >
             <ScrollView
                 id='course-list-container'

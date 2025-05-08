@@ -8,6 +8,8 @@ export type CourseItemProps = {
     imgUrl: string | undefined,
     courseName: string,
     instructorName: string,
+    timestamp: Date,
+    rating: number,
     isUserEnrolled: boolean
 }
 
@@ -20,7 +22,7 @@ const CourseItem = (props: CourseItemProps) => {
     return (
         <Pressable
             id='course-item-container'
-            className={`w-[98%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-gray-50'}`}
+            className={`w-[98.5%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-gray-50'}`}
             style = {{boxShadow: "0px 4px 6px rgba(0,0,0,0.08)"}}
             onPress={() => {
                 setSelectedCourseId(props.id);

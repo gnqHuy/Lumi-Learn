@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import React from 'react'
-import { Image, Pressable, ScrollView, Text, View } from 'react-native'
+import { Image, Pressable, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import { CourseItemProps } from '../Course/CourseItem'
 
 
@@ -11,28 +11,42 @@ interface CourseJoinedProps {
 
 const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
   return (
-    <View className = "">
+    <View className = "flex-col gap-2 pl-[4%]">
         {/* title */}
-        <View className = "relative left-[5%] mt-[2rem]">
-            <Text className = "text-xl font-bold">Courses you've joined</Text> 
+        <View className = "">
+            <Text className = "text-lg font-semibold">Courses you've joined</Text> 
         </View>
 
         {/* courses */}
         <ScrollView 
-            className = "relative left-[3%] mt-[1rem]" 
+            className = "" 
             horizontal={true} showsHorizontalScrollIndicator={false} 
             contentContainerStyle={{ paddingRight: 32 }}
         >
             <View className = "flex-row gap-4">
             {courseJoined.map((course, index) => {
                 return (
-                    <Pressable className = "w-[12rem] border-solid border-gray-300 border-[1px] rounded-lg h-[8rem]" key = {index} onPress = {() => {
-                        router.push(`/(tabs)/courses/${course.id}`)
-                    }}>
+                    <TouchableOpacity 
+                        className = "p-2 border-solid border-gray-300 border-[1px] rounded-xl" 
+                        key = {index} 
+                        onPress = {() => {
+                            router.push(`/(tabs)/courses/${course.id}`)}
+                        }
+                        activeOpacity={0.6}
+                    >
                         {/* fake thumbnail */}
-                        <View className = "w-[10rem] h-[5rem] bg-white mt-[0.5rem] ml-[1rem]"></View>
-                        <Text className = "relative left-[1rem] top-[0.5rem] font-bold">{course.courseName?.length > 18 ? course.courseName.substring(0, 18) + "..." : course.courseName}</Text>
-                    </Pressable>
+                        <View className='flex-col gap-2'>
+                            <Image
+                                src={course.imgUrl}
+                                width={140}
+                                height={95}
+                                borderRadius={8}
+                            />
+                            <Text className = "ml-1 font-bold">
+                                {course.courseName?.length > 18 ? course.courseName.substring(0, 18) + "..." : course.courseName}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
                 )
             })} 
             </View>

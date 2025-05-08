@@ -18,3 +18,16 @@ export type CreateCourseRequest = {
     thumbnail: File | null;
     topic: string;
 }
+
+export type CourseDto = {
+    id: string;
+    instructor: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    topic: string;
+    rating: number;
+    numberOfRatings: number;
+    timestamp: Date;
+    isUserEnrolled: boolean;
+}

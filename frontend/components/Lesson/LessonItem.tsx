@@ -91,7 +91,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                                     <View className='flex-row gap-2 items-center'>
                                         <AntDesign name='filetext1' size={22}></AntDesign>
                                         <Text id='flashcard-set-title' className='text-base'>
-                                            {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 44)}
+                                            {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 40)}
                                         </Text>
                                     </View>
                                 </TouchableHighlight>

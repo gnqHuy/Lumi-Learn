@@ -106,6 +106,8 @@ const signup = () => {
             <View
                 id='lumilearn-logo'
                 className=''
+                accessible={true}
+                accessibilityLabel="Lumi Learn Logo, Sign Up Page"
             >
                 <Text className='text-4xl pb-6 font-bold color-slate-900'>Logo</Text>
             </View>
@@ -114,7 +116,8 @@ const signup = () => {
                 className='relative flex flex-col gap-5 w-full color-orange-300'
             >
                 <View id='username-input'>
-                    <Text 
+                    <Text
+                        accessible={false}
                         className={usernameError ? 
                             'text-sm ml-1 mb-2 color-red-600'
                             : 'text-sm ml-1 mb-2 color-slate-700'}
@@ -123,6 +126,8 @@ const signup = () => {
                     </Text>
                     <TextInput
                         id='username-input-field'
+                        accessible={true}
+                        accessibilityLabel="Sign Up UserName field"
                         placeholder='Please enter your username'
                         placeholderTextColor={"#9CA3AF"}
                         className={usernameError ? 
@@ -140,7 +145,7 @@ const signup = () => {
                         </Text>
                     )}
                 </View>
-                <View id='role-input' className='z-[100]'>
+                {/* <View id='role-input' className='z-[100]'>
                     <Text 
                         className={roleError ? 
                             'text-sm ml-1 mb-2 color-red-600'
@@ -154,9 +159,10 @@ const signup = () => {
                             Please choose a role
                         </Text>
                     )}
-                </View>
+                </View> */}
                 <View id='password-input'>
                     <Text 
+                        accessible={false}
                         className={passwordError ? 
                             'text-sm ml-1 mb-2 color-red-600'
                             : 'text-sm ml-1 mb-2 color-slate-700'}
@@ -165,6 +171,7 @@ const signup = () => {
                     </Text>
                     <TextInput
                         id='password-input-field'
+                        accessibilityLabel='Sign Up Password field'
                         placeholder='Please enter your password'
                         placeholderTextColor={"#9CA3AF"}
                         className={passwordError ? 
@@ -183,7 +190,8 @@ const signup = () => {
                     )}
                 </View>
                 <View id='confirm-password-input'>
-                    <Text 
+                    <Text
+                        accessible={false}
                         className={confirmPasswordError ? 
                             'text-sm ml-1 mb-2 color-red-600'
                             : 'text-sm ml-1 mb-2 color-slate-700'}
@@ -192,6 +200,7 @@ const signup = () => {
                     </Text>
                     <TextInput
                         id='confirm-password-input-field'
+                        accessibilityLabel='Sign Up Confirm Password field'
                         placeholder='Please re-enter your password'
                         placeholderTextColor={"#9CA3AF"}
                         className={confirmPasswordError ? 
@@ -213,25 +222,33 @@ const signup = () => {
                     className='w-full mt-5 py-4 flex items-center bg-slate-900 rounded-xl'
                     onPress={() => handleSignup()}
                     underlayColor="gray"
+                    accessible={true}
+                    accessibilityLabel="Sign Up"
+                    accessibilityRole="button"
+                    accessibilityHint="Double tap to Sign Up"
                 >
-                    <Text 
+                    <Text
                         id='login-button'
                         className='color-white text-lg font-semibold'
                     >
                         Sign up
                     </Text>
                 </TouchableHighlight>
-                <View className="w-full mt-3 flex items-center">
+                <TouchableHighlight
+                    className="w-full mt-3 flex items-center"
+                    onPress={() => router.push("/(auth)/login")}
+                    accessibilityLabel="Already had an account? Log In"
+                    accessibilityHint="Double Tab to Navigate to the Log In screen"
+                >
                     <Text className="text-sm color-slate-700">
                     Already had an account?{" "}
                     <Text
                         className="font-bold color-blue-500"
-                        onPress={() => router.push("/(auth)/login")}
                     >
                         Log in
                     </Text>
                     </Text>
-                </View>
+                </TouchableHighlight>
             </View>
         </View>
     </View>

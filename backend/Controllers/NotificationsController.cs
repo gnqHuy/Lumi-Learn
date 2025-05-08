@@ -33,6 +33,7 @@ namespace LumiLearn.Controllers
                     Type = nu.Notification.Type,
                     IsRead = nu.IsRead,
                     CreatedAt = nu.Notification.CreatedAt,
+                    Thumbnail = nu.Notification.Thumbnail,
                 })
                 .OrderByDescending(n => n.CreatedAt)
                 .ToListAsync();

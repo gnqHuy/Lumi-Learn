@@ -5,6 +5,9 @@ import { Pill } from './Pill';
 type PillGroupProps = {
     values: string[];
     selected: string[];
+    defaultColor?: string;
+    selectedColor?: string;
+    borderStyle?: string;
     setSelected: (values: string[]) => void;
     multiSelect?: boolean;
     wrap?: boolean;
@@ -13,6 +16,9 @@ type PillGroupProps = {
 export const PillSelection: React.FC<PillGroupProps> = ({
     values,
     selected,
+    defaultColor,
+    selectedColor,
+    borderStyle,
     setSelected,
     multiSelect = false,
     wrap = true,
@@ -41,10 +47,13 @@ export const PillSelection: React.FC<PillGroupProps> = ({
         >
         {values.map((val) => (
             <Pill
-            key={val}
-            value={val}
-            selected={selected.includes(val)}
-            onPress={() => toggleSelection(val)}
+                key={val}
+                value={val}
+                defaultColor={defaultColor}
+                selectedColor={selectedColor}
+                borderStyle={borderStyle}
+                selected={selected.includes(val)}
+                onPress={() => toggleSelection(val)}
             />
         ))}
         </Container>

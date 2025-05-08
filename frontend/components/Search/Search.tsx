@@ -21,7 +21,7 @@ type SearchInfo  = {
 const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses}: SearchProps) => {
     const [option, setOption] = useState(1);
   return (
-    <View>
+    <ScrollView>
         {displaySearchResult === false &&
             <View className = "relative left-[4%] animate-slideLeftFromRight">
                 {/* header */}
@@ -73,7 +73,7 @@ const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySe
                 </ScrollView>
             </View>
         }
-    </View>
+    </ScrollView>
   )
 }
 

@@ -11,8 +11,8 @@ export function getCourseOverview(courseId: string) {
     return api.get(`${URL_PREFIX}/overview/${courseId}`);
 }
 
-export function createCourse(request: CreateCourseRequest) {
-    return api.post(`${URL_PREFIX}`, request);
+export function createCourse(formData: FormData) {
+    return api.post(`${URL_PREFIX}`, formData);
 }
 
 export function getAllCourses() {

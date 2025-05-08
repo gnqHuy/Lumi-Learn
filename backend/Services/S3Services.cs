@@ -14,7 +14,11 @@ namespace LumiLearn.Services
 
         public S3Services(IOptions<AwsCredentials> credentials, IOptions<S3BucketProperties> bucketProperties)
         {
-            _client = new AmazonS3Client(credentials.Value.ACCESS_KEY_ID, credentials.Value.SECRET_ACCESS_KEY);
+            _client = new AmazonS3Client(credentials.Value.ACCESS_KEY_ID, credentials.Value.SECRET_ACCESS_KEY,
+                new AmazonS3Config
+                {
+                    RegionEndpoint = Amazon.RegionEndpoint.APSoutheast2
+                });
             this.bucketProperties = bucketProperties.Value;
         }
 
@@ -32,10 +36,11 @@ namespace LumiLearn.Services
             }
         }
 
-        public async Task<UploadFileResponse> UploadFileAsync(string bucketName, MemoryStream inputStream, string key, string contentType)
+        public async Task<UploadFileResponse> UploadFileAsync(MemoryStream inputStream, string key, string contentType)
         {
             try
             {
+                var bucketName = bucketProperties.BucketName;
                 var request = new PutObjectRequest
                 {
                     BucketName = bucketName,

@@ -13,12 +13,10 @@ namespace LumiLearn.Controllers
     public class ImageController : Controller
     {
         private readonly S3Services s3Services;
-        private readonly S3BucketProperties bucketProperties;
 
         public ImageController(S3Services s3Services, IOptions<S3BucketProperties> properties)
         {
             this.s3Services = s3Services;
-            bucketProperties = properties.Value;
         }
 
         [HttpGet("BucketLocation")]
@@ -31,7 +29,7 @@ namespace LumiLearn.Controllers
 
         [HttpPost("UploadImage")]
         [Authorize]
-        public async Task<UploadFileResponse> UploadImage(string bucketName, IFormFile file)
+        public async Task<UploadFileResponse> UploadImage(IFormFile file)
         {
             if (file.Length == 0 || file == null)
             {
@@ -53,32 +51,7 @@ namespace LumiLearn.Controllers
             {
                 await file.CopyToAsync(stream);
 
-                var response = await s3Services.UploadFileAsync(bucketName, stream, key, contentType);
-                return response;
-            }
-        }
-
-        [HttpPost("Bucket")]
-        public async Task<UploadFileResponse> UploadFile(string bucketName, IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                return new UploadFileResponse
-                {
-                    Error = "No file specified",
-                    HttpStatusCode = 400,
-                    FileURL = null
-                };
-            }
-
-            var key = file.FileName;
-            var contentType = file.ContentType;
-
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                var response = await s3Services.UploadFileAsync(bucketName, stream, contentType, key);
-
+                var response = await s3Services.UploadFileAsync(stream, key, contentType);
                 return response;
             }
         }

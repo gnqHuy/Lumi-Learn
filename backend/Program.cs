@@ -13,7 +13,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.Configure<AwsCredentials>(builder.Configuration.GetSection("AWS"));
+builder.Services.Configure<AwsCredentials>(builder.Configuration.GetSection("AwsCredentials"));
 builder.Services.Configure<S3BucketProperties>(builder.Configuration.GetSection("S3BucketProperties:LumiLearn"));
 builder.Services.AddScoped<S3Services>();
 builder.Services.AddControllers();

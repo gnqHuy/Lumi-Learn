@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, ScrollView as ScrollViewType } from 'react-native';
 import NotificationItem from '@/components/Notification/NotificationItem';
-import { Notification } from '@/types/notification';  
+import { Notification } from '@/types/notification';
 import { GetNotification, markAllNotificationsAsRead } from '@/api/notification';
 
 const isToday = (dateString: string) => {
@@ -17,12 +17,13 @@ const isToday = (dateString: string) => {
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showAllPrevious, setShowAllPrevious] = useState(false);
+  const scrollViewRef = useRef<ScrollViewType>(null);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await GetNotification();
-        setNotifications(response.data);  
+        setNotifications(response.data);
       } catch (error) {
         console.error("Error fetching notifications:", error);
       }
@@ -48,71 +49,95 @@ const NotificationPage = () => {
     }
   };
 
+  const handleMarkSingleAsRead = (notificationId: string) => {
+    setNotifications((prev) =>
+      prev.map((n) =>
+        n.notificationId === notificationId ? { ...n, isRead: true } : n
+      )
+    );
+  };
+
   const todayNotifications = notifications.filter((n) => isToday(n.createdAt));
   const previousNotifications = notifications.filter((n) => !isToday(n.createdAt));
   const visiblePreviousNotifications = showAllPrevious
     ? previousNotifications
     : previousNotifications.slice(0, 10);
 
+  const togglePrevious = () => {
+    const willReduce = showAllPrevious;
+    setShowAllPrevious(!willReduce);
+    if (willReduce) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+      }, 50);
+    }
+  };
+
   return (
     <View className="flex-1 bg-white pt-10">
-      <Text className="text-3xl font-bold text-center mb-4">Notifications</Text>
+      <Text className="text-3xl font-bold ml-4 mb-4 mt-[2rem]">Notifications</Text>
 
-      <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}>
+      <ScrollView
+        ref={scrollViewRef}
+        contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}
+      >
         {todayNotifications.length > 0 && (
-          <View className="w-[90%]">
-          <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-xl font-semibold">Today</Text>
-            <TouchableOpacity
-              className="px-3 py-1 rounded-full"
-              onPress={handleMarkAllAsRead}
-            >
-              <Text className="text-black font-medium text-sm">Mark all as read</Text>
-            </TouchableOpacity>
+          <View className="w-[94%]">
+            <View className="flex-row justify-between items-center mb-2">
+              <Text className="text-lg font-semibold">Today</Text>
+              <TouchableOpacity
+                className="px-3 py-1 rounded-full hover:text-gray-400"
+                onPress={handleMarkAllAsRead}
+              >
+                <Text className="text-gray-900 font-medium text-sm">Mark all as read</Text>
+              </TouchableOpacity>
+            </View>
+
+            {todayNotifications.map((notification) => (
+              <NotificationItem
+                key={notification.notificationId}
+                notification={notification}
+                onDelete={handleDelete}
+                onRead={handleMarkSingleAsRead}
+              />
+            ))}
           </View>
-        
-          {todayNotifications.map((notification) => (
-            <NotificationItem
-              key={notification.notificationId}
-              notification={notification}
-              onDelete={handleDelete}
-            />
-          ))}
-        </View>
         )}
 
         {previousNotifications.length > 0 && (
-          <View className="w-[90%] mt-6">
-          <View className="flex-row justify-between items-center mb-2">
-            <Text className="text-xl font-semibold">Earlier</Text>
-            <TouchableOpacity
-              className="px-3 py-1 rounded-full"
-              onPress={handleMarkAllAsRead}
-            >
-              <Text className="text-black font-medium text-sm">Mark all as read</Text>
-            </TouchableOpacity>
+          <View className="w-[94%] mt-3">
+            <View className="flex-row justify-between items-center mb-2">
+              <Text className="text-lg font-semibold">Earlier</Text>
+              {todayNotifications.length === 0 && (
+                <TouchableOpacity
+                  className="px-3 py-1 rounded-full hover:text-gray-400"
+                  onPress={handleMarkAllAsRead}
+                >
+                  <Text className="text-black font-medium text-sm">Mark all as read</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
+            {visiblePreviousNotifications.map((notification) => (
+              <NotificationItem
+                key={notification.notificationId}
+                notification={notification}
+                onDelete={handleDelete}
+                onRead={handleMarkSingleAsRead}
+              />
+            ))}
+
+            {previousNotifications.length > 10 && (
+              <TouchableOpacity
+                className="mt-2 self-center bg-black px-4 py-2 rounded-full"
+                onPress={togglePrevious}
+              >
+                <Text className="text-white font-semibold">
+                  {showAllPrevious ? 'Reduce' : 'See previous notification'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
-        
-          {visiblePreviousNotifications.map((notification) => (
-            <NotificationItem
-              key={notification.notificationId}
-              notification={notification}
-              onDelete={handleDelete}
-            />
-          ))}
-        
-          {previousNotifications.length > 10 && (
-            <TouchableOpacity
-              className="mt-2 self-center bg-black px-4 py-2 rounded-full"
-              onPress={() => setShowAllPrevious(!showAllPrevious)}
-            >
-              <Text className="text-white font-semibold">
-                {showAllPrevious ? 'Reduce' : 'See previous notification'}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-        
         )}
       </ScrollView>
     </View>

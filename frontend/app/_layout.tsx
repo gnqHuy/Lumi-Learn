@@ -4,6 +4,7 @@ import "./global.css";
 import { setupAxios } from "@/api/api";
 import useAuthStore from "@/zustand/authStore";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "react-native";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -12,6 +13,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
+      <StatusBar barStyle="dark-content"/>
       <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)"
           />

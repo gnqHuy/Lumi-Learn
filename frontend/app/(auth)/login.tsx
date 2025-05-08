@@ -1,4 +1,4 @@
-import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
 import React, { useState } from 'react'
 import useAuthStore, { AuthState } from '@/zustand/authStore';
 import { logIn } from '@/api/authApi';
@@ -72,20 +72,25 @@ const login = () => {
             id='login-container'
             className='flex flex-col items-center p-4 h-fit w-4/5 gap-3'
         >
-            <View
+            <Image
                 id='lumilearn-logo'
-                className=''
-            >
-                <Text className='text-4xl pb-6 font-bold color-slate-900'>Logo</Text>
-            </View>
+                className='mb-8'
+                source={require("../../assets/images/lumiLearnLogoWithText.png")}
+                style={{
+                    height: 120,
+                    resizeMode: 'contain',
+                    alignSelf: 'center',
+                }}
+                accessible={true}
+                accessibilityLabel="Lumi Learn Logo, Login Page"
+            />
             <View
                 id='login-form'
                 className='flex flex-col gap-5 w-full color-orange-300'
             >
                 <View id='username-input'>
                       <Text 
-                        accessible={true}
-                        accessibilityLabel="UserName input field"
+                        accessible={false}
                         className={usernameError ? 
                             'text-sm ml-1 mb-2 color-red-600'
                             : 'text-sm ml-1 mb-2 color-slate-700'}
@@ -95,9 +100,8 @@ const login = () => {
                     <TextInput
                         id='username-input-field'
                         accessible={true}
-                        accessibilityLabel="UserName input field"
-                        accessibilityHint="Double type to start typing"
-                        placeholder='Please enter your username'
+                        accessibilityLabel="Login UserName field"
+                        placeholder="Please enter your username"
                         placeholderTextColor={"#9CA3AF"}
                         className={usernameError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
@@ -115,8 +119,9 @@ const login = () => {
                     )}
                 </View>
                 <View id='password-input'>
-                    <Text 
-                        className={passwordError ? 
+                    <Text
+                        accessible={false}
+                        className={passwordError ?
                             'text-sm ml-1 mb-2 color-red-600'
                             : 'text-sm ml-1 mb-2 color-slate-700'}
                     >
@@ -124,6 +129,7 @@ const login = () => {
                     </Text>
                     <TextInput
                         id='password-input-field'
+                        accessibilityLabel='Login Password field'
                         placeholder='Please enter your password'
                         placeholderTextColor={"#9CA3AF"}
                         className={passwordError ? 
@@ -146,25 +152,32 @@ const login = () => {
                     className='w-full mt-5 py-4 flex items-center bg-slate-900 rounded-xl'
                     onPress={() => handleLogin()}
                     underlayColor="gray"
+                    accessible={true}
+                    accessibilityLabel="Login"
+                    accessibilityRole="button"
+                    accessibilityHint="Double tap to login"
                 >
-                    <Text 
+                    <Text
+                        
                         id='login-button'
                         className='color-white text-lg font-semibold'
                     >
                         Login
                     </Text>
                 </TouchableHighlight>
-                <View className="w-full mt-4 flex items-center">
+                <TouchableHighlight 
+                    className="w-full mt-4 flex items-center"
+                    onPress={() => router.push("/(auth)/signup")}
+                    accessibilityLabel="Don't have an account? Sign up"
+                    accessibilityHint="Double Tab to Navigate to the sign up screen"
+                >
                     <Text className="text-sm color-slate-700">
-                    Don't have an account?{" "}
-                    <Text
-                        className="font-bold color-blue-500"
-                        onPress={() => router.push("/(auth)/signup")}
-                    >
-                        Sign up
+                        Don't have an account?{" "}
+                        <Text className="font-bold color-blue-500">
+                            Sign up
+                        </Text>
                     </Text>
-                    </Text>
-                </View>
+                </TouchableHighlight>
             </View>
         </View>
     </View>

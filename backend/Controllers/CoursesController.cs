@@ -18,6 +18,9 @@ using System.Data;
 using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using LumiLearn.Dtos.Quiz;
+using LumiLearn.Services;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Net.Mime;
 
 namespace LumiLearn.Controllers
 {
@@ -27,11 +30,13 @@ namespace LumiLearn.Controllers
     {
         private readonly LumiLearnDbContext dbContext;
         private readonly ISearchHistoriesReposity searchHistoriesReposity;
+        private readonly S3Services s3Services;
 
-        public CoursesController(LumiLearnDbContext lumiLearnDbContext, ISearchHistoriesReposity searchHistoriesReposity)
+        public CoursesController(LumiLearnDbContext lumiLearnDbContext, ISearchHistoriesReposity searchHistoriesReposity, S3Services s3Services)
         {
             dbContext = lumiLearnDbContext;
             this.searchHistoriesReposity = searchHistoriesReposity;
+            this.s3Services = s3Services;
         }
 
         [HttpGet]
@@ -328,11 +333,11 @@ namespace LumiLearn.Controllers
             var existCourse = await dbContext.Courses
                 .AnyAsync(c => c.InstructorId == instructorId && c.Title == request.Title);
 
-            if(existCourse)
+            if (existCourse)
             {
                 return Conflict("You already create course with this title!");
             }
-            
+
             var topic = await dbContext.Topics.FirstOrDefaultAsync(r => r.Name == request.Topic);
 
             if (topic == null)
@@ -345,13 +350,20 @@ namespace LumiLearn.Controllers
                 await dbContext.Topics.AddAsync(topic);
             }
 
+            var newCourseId = Guid.NewGuid();
+            string key = $"course/{newCourseId}";
+
+            using var stream = new MemoryStream();
+            await request.Thumbnail.CopyToAsync(stream);
+            var uploadRespone = await s3Services.UploadFileAsync(stream, key, request.Thumbnail.ContentType);
+
             var course = new Course
             {
-                Id = Guid.NewGuid(),
+                Id = newCourseId,
                 InstructorId = instructorId,
                 Title = request.Title,
                 Description = request.Description,
-                Thumbnail = request.Thumbnail,
+                Thumbnail = uploadRespone.FileURL,
                 TopicId = topic.Id,
                 Timestamp = DateTime.Now,
             };
@@ -381,9 +393,9 @@ namespace LumiLearn.Controllers
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> UpdateCourse(Guid id, UpdateCourseRequest request)
         {
-            if(request.Title == null && 
-               request.Description == null && 
-               request.Thumbnail == null && 
+            if (request.Title == null &&
+               request.Description == null &&
+               request.Thumbnail == null &&
                request.Topic == null)
             {
                 return BadRequest("Nothing to change!"); // Handle at frontend not to call
@@ -417,9 +429,14 @@ namespace LumiLearn.Controllers
                 course.Description = request.Description;
             }
 
-            if (request.Thumbnail != null && request.Thumbnail != course.Thumbnail)
+            string key = $"course/{id}";
+            using var stream = new MemoryStream();
+            await request.Thumbnail.CopyToAsync(stream);
+            var uploadRespone = await s3Services.UploadFileAsync(stream, key, request.Thumbnail.ContentType);
+
+            if (request.Thumbnail != null && uploadRespone.FileURL != course.Thumbnail)
             {
-                course.Thumbnail = request.Thumbnail;
+                course.Thumbnail = uploadRespone.FileURL;
             }
 
             if (request.Topic != null && request.Topic != course.Topic.Name)

@@ -96,7 +96,8 @@ namespace LumiLearn.Repositories
                         Id = Guid.NewGuid(),
                         Content = $"Student: \"{studentUserName}\" has just enrolled your Course: \"{course.Title}\"",
                         Type = stringType,
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        Thumbnail = course.Thumbnail
                     };
                     await scopedDbContext.Notifications.AddAsync(notification);
 
@@ -162,6 +163,7 @@ namespace LumiLearn.Repositories
                             Id = l.CourseId,
                             Title = l.Course.Title,
                             InstructorId = l.Course.InstructorId,
+                            Thumbnail = l.Course.Thumbnail
                         }).FirstOrDefaultAsync();
 
                     // Create Notification
@@ -173,7 +175,8 @@ namespace LumiLearn.Repositories
                             $"with a score of \"{score}\" in the Lesson: \"{lesson.Title}\" " +
                             $"of the Course: \"{course.Title}\"",
                         Type = stringType,
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        Thumbnail = course.Thumbnail
                     };
                     await scopedDbContext.Notifications.AddAsync(notification);
 

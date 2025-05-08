@@ -12,49 +12,57 @@ const coursesDummyData: CourseItemProps[] = [
         imgUrl: null,
         id: '1',
         courseName: 'Football',
-        instructorName: 'Leo Messi'
+        instructorName: 'Leo Messi', 
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '2',
         courseName: 'Billiards',
-        instructorName: 'Fedor Gorst'
+        instructorName: 'Fedor Gorst',
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '3',
         courseName: 'Snooker',
-        instructorName: `Ronnie O' Sullivan`
+        instructorName: `Ronnie O' Sullivan`,
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '4',
         courseName: '3pts Shooting',
-        instructorName: 'Steph Curry'
+        instructorName: 'Steph Curry',
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '5',
         courseName: 'Fathering',
-        instructorName: 'Nikola Jokic'
+        instructorName: 'Nikola Jokic',
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '6',
         courseName: 'Formula One',
-        instructorName: 'Max Verstappen'
+        instructorName: 'Max Verstappen',
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '7',
         courseName: 'Golf',
-        instructorName: 'Gareth Bale'
+        instructorName: 'Gareth Bale',
+        isUserEnrolled: false
     },
     {
         imgUrl: null,
         id: '8',
         courseName: 'Swimming',
-        instructorName: 'Michael Phelps'
+        instructorName: 'Michael Phelps',
+        isUserEnrolled: false
     },
 ];
 
@@ -75,6 +83,7 @@ const MyCourseScreen = () => {
                 imgUrl: course.thumbnail,
                 courseName: course.title,
                 instructorName: course.instructor,
+                isUserEnrolled: course.isUserEnrolled
             }));
 
             // setCourses(prev => [...mappedCourses, ...coursesDummyData]);

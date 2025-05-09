@@ -71,6 +71,7 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
                 }
                 updateProfileApi(payload).then((response) => {
                     console.log("Update profile successfully!");
+                    router.push('/(tabs)/home');
                     setupDisplayChangeProfile(false);
                     resetProfile();
                 }).catch(err => console.error(err));

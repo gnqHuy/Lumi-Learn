@@ -32,6 +32,7 @@ import { CourseOverview } from "@/types/course";
 import { CourseItemProps } from "@/components/Course/CourseItem";
 import { getUserProfile } from "@/api/userApi";
 import { User } from "@/types/user";
+import { Feather } from "@expo/vector-icons";
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -236,13 +237,13 @@ const HomePage = () => {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
-      <View className="flex-1 flex-col gap-3 mt-[2rem] pb-4">
+      <View className="flex-1 flex-col gap-3 mt-16 pb-4">
         {/* username */}
         {displaySearch === false ? (
-          <View className="relative left-[5%] mt-[2rem]">
-            <Text className="text-3xl font-bold">{userProfile?.name}</Text>
+          <View className="relative left-[5%]">
+            <Text className="text-3xl text-cyan-800 font-bold">{userProfile?.name}</Text>
           </View>
         ) : (
           <Pressable
@@ -262,11 +263,12 @@ const HomePage = () => {
         {/* search bar and sort */}
         <View className="flex-row w-full items-center justify-between gap-3 px-4">
           {/* search bar */}
-          <Pressable className="flex-row items-center px-3 gap-3 bg-gray-300 rounded-full w-5/6 z-[10] h-[3.3rem]">
-            <EvilIcon name="search" size={30} className=" z-[20]" />
+          <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
+            <Feather name="search" color={"gray"} size={22} className=" z-[20]" />
             {keyword && (
               <AntDesign
                 name="close"
+                color={"#4b5563"}
                 size={25}
                 className="z-[10]"
                 onPress={() => {
@@ -277,10 +279,10 @@ const HomePage = () => {
             )}
             <TextInput
               placeholder="Find courses here"
-              className="bg-gray-300"
+              className="font-semibold"
               style={{ textAlignVertical: "center" }}
               editable={displaySearch === false ? false : true}
-              placeholderTextColor={"black"}
+              placeholderTextColor={"gray"}
               onPressIn={() => setDisplaySearch(true)}
               onChangeText={setKeyword}
               value={keyword}
@@ -289,10 +291,10 @@ const HomePage = () => {
           </Pressable>
           {/* filter  */}
           <Pressable
-            className="flex items-center justify-center p-[10px] bg-gray-300 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.7rem]"
+            className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.7rem]"
             onPress={() => setDisplaySearchFilter(true)}
           >
-            <AntDesign name="filter" size={24} />
+            <AntDesign name="filter" color={"gray"} size={24} />
           </Pressable>
         </View>
 

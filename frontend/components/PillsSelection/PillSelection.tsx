@@ -5,6 +5,8 @@ import { Pill } from './Pill';
 type PillGroupProps = {
     values: string[];
     selected: string[];
+    textColor?: string;
+    selectedTextColor?: string;
     defaultColor?: string;
     selectedColor?: string;
     borderStyle?: string;
@@ -16,6 +18,8 @@ type PillGroupProps = {
 export const PillSelection: React.FC<PillGroupProps> = ({
     values,
     selected,
+    textColor,
+    selectedTextColor,
     defaultColor,
     selectedColor,
     borderStyle,
@@ -49,6 +53,8 @@ export const PillSelection: React.FC<PillGroupProps> = ({
             <Pill
                 key={val}
                 value={val}
+                textColor={textColor}
+                selectedTextColor={selectedTextColor}
                 defaultColor={defaultColor}
                 selectedColor={selectedColor}
                 borderStyle={borderStyle}

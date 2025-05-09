@@ -4,6 +4,8 @@ import { Pressable, Text } from 'react-native';
 type PillProps = {
   value: string;
   selected: boolean;
+  textColor?: string;
+  selectedTextColor?: string;
   defaultColor?: string;
   selectedColor?: string;
   borderStyle?: string;
@@ -13,6 +15,8 @@ type PillProps = {
 export const Pill: React.FC<PillProps> = ({ 
   value, 
   selected, 
+  textColor = 'text-black',
+  selectedTextColor = 'text-white',
   defaultColor = 'bg-gray-200', 
   selectedColor = 'bg-gray-500',
   borderStyle = undefined,
@@ -24,7 +28,7 @@ export const Pill: React.FC<PillProps> = ({
       } ${borderStyle}`}
       onPress={onPress}
     >
-      <Text className={`${selected ? 'text-white' : 'text-black'}`}>{value}</Text>
+      <Text className={`${selected ? selectedTextColor : textColor}`}>{value}</Text>
     </Pressable>
   );
 };

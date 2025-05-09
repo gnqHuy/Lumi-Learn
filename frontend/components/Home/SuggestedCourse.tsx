@@ -33,8 +33,7 @@ const SuggestedCourse = ({courses, filters, selectedFilter, setSelectedFilter}: 
             />
 
             {/* courses */}
-            <CourseList 
-                courses={courses}
+            <CourseList courses={courses}
             />
         </View>
     )

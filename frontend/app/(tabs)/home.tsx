@@ -294,7 +294,7 @@ const HomePage = () => {
 
         {/* Course joined */}
         <ScrollView className="w-full">
-          <View className="flex-col gap-3">
+          <View className="flex-col gap-3 flex-1">
             {displaySearch === false && (
               <CourseJoined courseJoined={coursesJoined} />
             )}

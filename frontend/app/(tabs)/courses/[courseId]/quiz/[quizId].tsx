@@ -10,6 +10,8 @@ import { QuizResult, QuizSubmissionDto } from '@/types/quizResult'
 import useAuthStore from '@/zustand/authStore'
 import { SubmitQuiz } from '@/api/quizResultApi'
 import QuizResultScreen from '@/components/Quizz/QuizResult'
+import { AccessibilityInfo, findNodeHandle, InteractionManager } from 'react-native';
+import { useRef } from 'react';
 
 const QuizPage = () => {
     const { quizId, courseId } = useLocalSearchParams();
@@ -22,10 +24,20 @@ const QuizPage = () => {
         answers: []
     });
     const [ showQuizResult, setShowQuizResult ] = useState(false);
-    const [ quizResult, setQuizResult ] = useState<QuizResult | undefined>(undefined);
+    const [quizResult, setQuizResult] = useState<QuizResult | undefined>(undefined);
+    const [suppressAccessibility, setSuppressAccessibility] = useState(false);
     const router = useRouter();
 
     const currentQuestion = quizDetail?.questions[currentIndex];
+
+    const currentQuestionRef = useRef(null);
+
+    useEffect(() => {
+        const node = findNodeHandle(currentQuestionRef.current);
+        if (node) {
+            AccessibilityInfo.setAccessibilityFocus(node);
+        }
+    }, [currentIndex]);
 
     useEffect(() => {
         console.log(courseId);
@@ -67,13 +79,23 @@ const QuizPage = () => {
 
     const next = () => {
         if (currentIndex < quizDetail?.questions.length! - 1) {
+            setSuppressAccessibility(true);
             setCurrentIndex(currentIndex + 1);
+
+            setTimeout(() => {
+                setSuppressAccessibility(false);
+            }, 100);
         }
     };
 
     const prev = () => {
         if (currentIndex > 0) {
+            setSuppressAccessibility(true);
             setCurrentIndex(currentIndex - 1);
+
+            setTimeout(() => {
+                setSuppressAccessibility(false);
+            }, 100);
         }
     };
 
@@ -98,37 +120,61 @@ const QuizPage = () => {
         <View 
             id='quiz-screen'
             className="flex-1 flex-col items-center bg-white px-6 py-4">
-        {quizDetail && currentQuestion ? (
+        
+        {showQuizResult == true 
+        ? 
+        <View className='absolute h-screen w-screen z-100'>
+            <QuizResultScreen quizTitle={quizDetail?.title!} quizResult={quizResult!}/>
+        </View>
+        : <>{quizDetail && currentQuestion ? (
             <>
             <View
                 id='top-nav'
                 className='flex-row mt-14 px-2 w-full'
+                accessible={false}
             >
                 <Pressable
-                    className='z-10'
+                    className='z-10 pr-2'
+                    accessible={true}
+                    accessibilityLabel='Back button. Double tab to back to course detail'
                     onPress={() => { 
                         router.back();
                     }}
                 >
                     <AntDesign name='arrowleft' size={24}/>
                 </Pressable>
-                <Text className="absolute left-0 right-0 text-center text-xl font-semibold">Quiz: {quizDetail.title}</Text>
+                <Text 
+                    className="absolute left-0 right-0 text-center text-xl font-semibold"
+                    accessible={true}
+                >
+                    Quiz: {quizDetail.title}
+                </Text>
             </View>
-            <Text 
+            <Text
                 id='quiz-length'
                 className="text-sm text-gray-500 mb-4"
+                accessible={false}
             >
                 Question {currentIndex + 1}/{quizDetail.questions.length}
             </Text>
     
-            <View 
-                id='question-content'
+            <View
+                ref={currentQuestionRef}
+                accessible={true}
+                accessibilityLabel={`Question ${currentIndex + 1} of ${quizDetail.questions.length}.
+                 ${currentQuestion.content}. Choose the answer below`}
                 className="flex items-center justify-center p-2 w-full h-1/4 border border-gray-300 rounded-xl mb-4"
             >
-                <Text className="text-lg font-semibold">{currentQuestion.content}</Text>
+                <Text className="text-lg font-semibold">
+                    {currentQuestion.content}
+                </Text>
             </View>
     
-            <Text className="text-sm text-gray-500 mb-2">Choose the answer</Text>
+            <Text className="text-sm text-gray-500 mb-2"
+                accessible={false}
+            >
+                Choose the answer
+            </Text>
     
             <AnswerOptionGroup
                 options={currentQuestion.answerOptions}
@@ -141,6 +187,8 @@ const QuizPage = () => {
                     onPress={prev} 
                     className="flex-row gap-2 items-center bg-gray-400 pl-3 pr-8 py-3 rounded-xl"
                     activeOpacity={0.55}
+                    accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Return to previous question'}`}
+                    accessibilityRole='button'
                 >
                     <Entypo name='chevron-left' size={14} color={'white'}/>
                     <Text className="text-white font-semibold text-base">Prev</Text>
@@ -149,8 +197,14 @@ const QuizPage = () => {
                     onPress={next} 
                     className="flex-row gap-2 items-center bg-gray-400 pl-8 pr-3 py-3 rounded-xl"
                     activeOpacity={0.55}
+                    accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Move to next question'}`}
+                    accessibilityRole='button'
                 >
-                    <Text className="text-white font-semibold text-base">Next</Text>
+                    <Text 
+                        className="text-white font-semibold text-base"
+                        accessible={false}
+                    >
+                        Next</Text>
                     <Entypo name='chevron-right' size={14} color={'white'}/>
                 </TouchableOpacity>
             </View>
@@ -160,19 +214,18 @@ const QuizPage = () => {
                 className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
                 onPress={() => submitQuiz()}
                 activeOpacity={0.55}
+                accessibilityLabel='Submiz quiz'
+                accessibilityRole='button'
             >
                 <Text className='text-lg text-white font-semibold'>Submit quiz</Text>
             </TouchableOpacity>
             : <></>}
             </>
         ) : (
-            <Text className="text-center mt-10">Loading quiz...</Text>
-        )}
-        {showQuizResult == true ? 
-        <View className='absolute h-screen w-screen z-100'>
-            <QuizResultScreen quizTitle={quizDetail?.title!} quizResult={quizResult!}/>
-        </View>
-        : <></>
+            <Text className="text-center mt-10"accessible={false}>
+                Loading quiz...
+            </Text>
+        )}</>
         }
         </View>
     );

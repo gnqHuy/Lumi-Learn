@@ -4,4 +4,5 @@ export type Notification = {
     type: string;
     createdAt: string;
     isRead: boolean;
+    thumbnail: string,
   };

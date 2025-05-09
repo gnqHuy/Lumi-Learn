@@ -161,7 +161,7 @@ const MyCourseScreen = () => {
         GetAllTopics().then((response) => {
             setSearchingTopics(response.data);
         }).catch(err => console.error(err));
-    })
+    }, [])
 
     useEffect(() => {
         getMySearchHistories().then((response) => {

@@ -6,6 +6,7 @@ import MyCourseScreen from '@/app/(tabs)/courses';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import useAuthStore from '@/zustand/authStore';
 import { S3_URL_PREFIX } from '@/const/AmazonS3';
+import { Entypo } from '@expo/vector-icons';
 
 export type LessonItemProps = {
     lesson: LessonOverview,
@@ -39,7 +40,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
     return (
         <View
             id="lesson-item"
-            className={`flex-col px-3 w-[98%] ${isPressed ? 'bg-slate-100' : 'bg-gray-50'} rounded-xl`}
+            className={`flex-col px-3 w-[98%] ${isPressed ? 'bg-slate-200' : 'bg-slate-100'} rounded-xl`}
             style = {{boxShadow: "0px 4px 6px rgba(0,0,0,0.08)"}}
         >
             <Pressable
@@ -49,16 +50,24 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                 onPressIn={() => setIsPressed(true)}
                 onPressOut={() => setIsPressed(false)}
             >
-                <Text
-                    id="lesson-title"
-                    className="font-semibold"
-                >
-                    Lesson {lessonNumber}: {lesson.title}
-                </Text>
+                <View className='flex-row gap-2'>
+                    <Text
+                        id="lesson"
+                        className="font-bold text-yellow-600"
+                    >
+                        Lesson {lessonNumber}:
+                    </Text>
+                    <Text
+                        id="lesson-name"
+                        className="font-semibold text-cyan-700"
+                    >
+                        {lesson.title}
+                    </Text>
+                </View>
                 {isOpen ? (
-                    <AntDesign name="up" size={18} />
+                    <Entypo name="chevron-up" size={18} color={'#0e7490'}/>
                 ) : (
-                    <AntDesign name="down" size={18} />
+                    <Entypo name="chevron-down" size={18} color={'#0e7490'} />
                 )}
             </Pressable>
             <View
@@ -84,14 +93,14 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                                 <TouchableHighlight
                                     id='flashcard-set'
                                     key={index}
-                                    className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
+                                    className='w-full px-3 py-4 rounded-lg bg-white'
                                     onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
                                     underlayColor={'rgba(0,0,0,0.08)'}
                                 >
                                     <View className='flex-row gap-2 items-center'>
-                                        <AntDesign name='filetext1' size={22}></AntDesign>
+                                        <AntDesign name='filetext1' size={22} color={'#0e7490'}></AntDesign>
                                         <Text id='flashcard-set-title' className='text-base'>
-                                            {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 40)}
+                                            {trim(`Flashcard set ${index + 1}: ${flashcardSet.title}`, 36)}
                                         </Text>
                                     </View>
                                 </TouchableHighlight>
@@ -113,14 +122,14 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                                 <TouchableHighlight
                                     id='quiz'
                                     key={index}
-                                    className='w-full px-3 py-4 border border-gray-400 rounded-lg bg-white'
+                                    className='w-full px-3 py-4 rounded-lg bg-white'
                                     onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
                                     underlayColor={'rgba(0,0,0,0.08)'}
                                 >
                                     <View className='flex-row gap-2 items-center'>
-                                        <AntDesign name='barschart' size={22}></AntDesign>
+                                        <AntDesign name='barschart' size={22} color={'#ca8a04'}></AntDesign>
                                         <Text id='quiz-title' className='text-base'>
-                                            {trim(`Quiz ${index + 1}: ${quiz.title}`, 44)}
+                                            {trim(`Quiz ${index + 1}: ${quiz.title}`, 36)}
                                         </Text>
                                     </View>
                                 </TouchableHighlight>

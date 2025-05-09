@@ -25,8 +25,8 @@ const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySe
         {displaySearchResult === false &&
             <View className = "relative left-[4%] animate-slideLeftFromRight">
                 {/* header */}
-                <View className = "mt-[2rem]">
-                    <Text className = "text-xl font-bold">Topic you may like</Text>
+                <View className = "">
+                    <Text className = "text-lg font-semibold">Topic you may like</Text>
                     {/* topics */}
                     <View className = "flex-row mt-[1rem] gap-3 flex-wrap">
                         {searchingTopics.map((topic, index) => {
@@ -40,8 +40,8 @@ const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySe
                 </View>
         
                 {/* recent searches */}
-                <View className = "mt-[2rem]">
-                    <Text className = "text-xl font-bold">Recent searches</Text>
+                <View className = "mt-[1.5rem]">
+                    <Text className = "text-lg font-semibold">Recent searches</Text>
                     <View className = "flex-col gap-8 mt-[1rem] relative left-[4%]">
                         {recentSearches.map((search, index) => {
                             return (

@@ -65,7 +65,7 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
             id='filter-top'
             className='w-full'
         >
-            <Text className = "text-center font-semibold text-xl mt-5">Search Filter</Text>
+            <Text className = "text-center font-bold text-xl mt-5 text-cyan-800">Search Filter</Text>
             {/* close icon */}
             <Pressable className = "absolute top-4">
                 <AntDesgin name = "close" size = {24} className = "" onPress = {disableSearchFilter}/>
@@ -77,7 +77,7 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
             id='topic-section'
             className = "flex-col w-full gap-3"
         >
-            <Text className = "text-xl font-semibold">Topics</Text>
+            <Text className = "text-xl font-semibold text-cyan-800">Topics</Text>
             {/* list of topics */}
             <PillSelection
                 values={topics}
@@ -85,6 +85,9 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
                 selected={selectedTopics}
                 setSelected={setSelectedTopics}
                 wrap={true}
+                defaultColor='bg-zinc-100'
+                selectedColor='bg-cyan-700'
+                textColor='text-cyan-700'
             />
         </View>
 
@@ -93,7 +96,7 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
             id='rating-section'
             className = "flex-col w-full gap-3"
         >
-            <Text className = "text-xl font-semibold">Rating</Text>
+            <Text className = "text-xl font-semibold text-cyan-800">Rating</Text>
             <View
                 id='slider-container'
                 className='flex-col items-center px-3 w-full'
@@ -107,14 +110,14 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
                         max={10}
                         step={1}
                         snapped={true}
-                        selectedStyle={{backgroundColor: "black"}}
+                        selectedStyle={{backgroundColor: "#155e75"}}
                         unselectedStyle={{backgroundColor: "#e5e7eb"}}
-                        markerStyle={{backgroundColor: "white", borderColor: "black", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
+                        markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
                     />
                 </View>
                 {/* Start value label */}
                 <Text
-                    className="absolute top-[3rem]"
+                    className="absolute top-[3rem] text-cyan-700"
                     style={{
                         left: ratingRange[0] * positionPerStep + 9,
                     }}
@@ -124,7 +127,7 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
 
                 {/* End value label */}
                 <Text
-                    className="absolute top-[3rem]"
+                    className="absolute top-[3rem] text-cyan-700"
                     style={{
                         left: ratingRange[1] * positionPerStep + 9,
                     }}
@@ -139,7 +142,7 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
             id='course-length-section'
             className = "flex-col gap-4 w-full"
         >
-            <Text className = "text-xl font-semibold">Course length</Text>
+            <Text className = "text-xl font-semibold text-cyan-800">Course length</Text>
             {/* choices */}
             <PillSelection
                 values={dummyCourseLength}
@@ -147,6 +150,9 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
                 selected={selectedLength}
                 setSelected={setSelectedLength}
                 wrap={true}
+                defaultColor='bg-zinc-100'
+                selectedColor='bg-cyan-700'
+                textColor='text-cyan-700'
             />
         </View>
 
@@ -157,16 +163,16 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
         >
             <Pressable 
                 className = {`py-[0.5rem] w-[48%] rounded-xl border-solid border-[1px]
-                    ${isClearButtonPressed ? 'border-gray-700 bg-gray-300' : 'border-black bg-gray-200'}`}
+                    ${isClearButtonPressed ? 'border-cyan-800 bg-gray-300' : 'border-cyan-700 bg-gray-200'}`}
                 onPress={() => clearSearchFilter()}
                 onPressIn={() => setClearButtonPressed(true)}
                 onPressOut={() => setClearButtonPressed(false)}
             >
-                <Text className = "text-lg font-semibold text-center">Clear filter</Text>
+                <Text className = "text-lg font-semibold text-center text-cyan-700">Clear filter</Text>
             </Pressable>
             <Pressable 
                 className = {`py-[0.5rem] w-[48%] rounded-xl
-                    ${isApplyButtonPressed ? 'bg-gray-300' : 'bg-gray-400'}`}
+                    ${isApplyButtonPressed ? 'bg-cyan-800' : 'bg-cyan-700'}`}
                 onPress={() => applyFilter()}
                 onPressIn={() => setApplyButtonPressed(true)}
                 onPressOut={() => setApplyButtonPressed(false)}

@@ -98,9 +98,6 @@ const MyCourseScreen = () => {
     // filteredCourse
     const [filteredCourses, setFilteredCourses] = useState<CourseItemProps[]>([]);
 
-    // searching topics
-    const [searchingTopics, setSearchingTopics] = useState([]);
-
     // recent searches 
     const [recentSearches, setRecentSearches] = useState([]);
 
@@ -155,13 +152,6 @@ const MyCourseScreen = () => {
         
         setFilteredCourses(sortedCourses);
     }, [selectedFilter, courses]);
-
-    // get topics
-    useEffect(() => {
-        GetAllTopics().then((response) => {
-            setSearchingTopics(response.data);
-        }).catch(err => console.error(err));
-    }, [])
 
     useEffect(() => {
         getMySearchHistories().then((response) => {
@@ -287,13 +277,14 @@ const MyCourseScreen = () => {
 
                 {/* search screen */}
                 {displaySearch === true && (
-                    <Search
-                        searchingTopics={searchingTopics}
-                        recentSearches={recentSearches}
-                        deleteSearchHistory={deleteSearchHistory}
-                        displaySearchResult={displaySearchResult}
-                        searchedCourses={searchedCourses}
-                    />
+                    <View className = "mt-[0.75rem]">
+                        <Search
+                            recentSearches={recentSearches}
+                            deleteSearchHistory={deleteSearchHistory}
+                            displaySearchResult={displaySearchResult}
+                            searchedCourses={searchedCourses}
+                        />
+                    </View>
                 )}
             </View>
 

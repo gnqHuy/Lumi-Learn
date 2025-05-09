@@ -10,7 +10,7 @@ const Policy = ({setupDisplayPolicy}: PolicyProps) => {
   return (
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
-        <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
+        <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[1rem] mt-[1rem]">
             <Text className = "text-center text-3xl font-bold">Policy</Text>
             <Pressable className = "absolute left-8 top-1" onPress={() => setupDisplayPolicy(false)}>
                 <AntDesign name = "left" size = {26} />

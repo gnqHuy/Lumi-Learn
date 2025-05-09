@@ -7,7 +7,6 @@ import CourseList from '../Course/CourseList';
 import { ScrollView } from 'react-native-gesture-handler';
 
 interface SearchProps {
-    searchingTopics: Topic[],
     recentSearches: SearchInfo[],
     deleteSearchHistory: (content: any) => void
     displaySearchResult: boolean,
@@ -18,29 +17,14 @@ type SearchInfo  = {
     content: string
 }
 
-const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses}: SearchProps) => {
+const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses}: SearchProps) => {
     const [option, setOption] = useState(1);
   return (
     <ScrollView>
         {displaySearchResult === false &&
             <View className = "relative left-[4%] animate-slideLeftFromRight">
-                {/* header */}
-                <View className = "">
-                    <Text className = "text-lg font-semibold">Topic you may like</Text>
-                    {/* topics */}
-                    <View className = "flex-row mt-[1rem] gap-3 flex-wrap">
-                        {searchingTopics.map((topic, index) => {
-                            return (
-                                <Pressable className = {`rounded-full py-[0.5rem] px-[1.2rem] border-solid border-[2px] ${option === index ? "bg-gray-400" : ""}`} onPress={() => setOption(index)} key = {index}>
-                                    <Text className = {option === index ? "text-white" : ""}>{topic.name}</Text>
-                                </Pressable>
-                            )
-                        })}
-                    </View>
-                </View>
-        
                 {/* recent searches */}
-                <View className = "mt-[1.5rem]">
+                <View className = "">
                     <Text className = "text-lg font-semibold">Recent searches</Text>
                     <View className = "flex-col gap-8 mt-[1rem] relative left-[4%]">
                         {recentSearches.map((search, index) => {

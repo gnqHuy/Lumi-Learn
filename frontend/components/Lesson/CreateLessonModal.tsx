@@ -36,7 +36,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
 
         createLesson(createLessonRequest).then((res) => {
             setRefresh(true);
-            router.push(`/(tabs)/courses/${courseId}`);
+            onClose(false);
         }).catch((err) => {
             console.log(err.message);
         })

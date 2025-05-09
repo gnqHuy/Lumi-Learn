@@ -2,6 +2,7 @@ import { View, Text, Pressable, Image } from 'react-native'
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router'
 import useCourseStore from '@/zustand/courseStore'
+import { Feather, FontAwesome6 } from '@expo/vector-icons'
 
 export type CourseItemProps = {
     id: string,
@@ -22,8 +23,8 @@ const CourseItem = (props: CourseItemProps) => {
     return (
         <Pressable
             id='course-item-container'
-            className={`w-[98.5%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-gray-50'}`}
-            style = {{boxShadow: "0px 4px 6px rgba(0,0,0,0.08)"}}
+            className={`w-[98%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-zinc-50'}`}
+            style = {{boxShadow: "0px 4px 10px rgba(0,0,0,0.15)"}}
             onPress={() => {
                 setSelectedCourseId(props.id);
                 props.isUserEnrolled === true ? router.push(`/(tabs)/courses/${props.id}`) : router.push('/(other)/CoursePreview');
@@ -45,16 +46,19 @@ const CourseItem = (props: CourseItemProps) => {
 
                 <View
                     id='course-overview'
-                    className='w-full h-20 flex-col gap-1'
+                    className='w-full h-20 flex-col'
                 >
                     <Text
                         id='course-name'
-                        className='color-gray-700 font-semibold text-lg'
+                        className='text-cyan-800 font-semibold text-lg'
                     >{props.courseName}</Text>
-                    <Text
-                        id='instructor-name'
-                        className='color-gray-700 text-sm'
-                    >{props.instructorName}</Text>
+                    <View className='flex-row gap-2 items-center ml-1'>
+                        <FontAwesome6 name='user' size={10} color={"#ca8a04"} style={{ fontWeight: 'bold'}}/>
+                        <Text
+                            id='instructor-name'
+                            className='text-yellow-600 text-sm font-medium'
+                        >{props.instructorName}</Text>
+                    </View>
                 </View>
             </View>
         </Pressable>

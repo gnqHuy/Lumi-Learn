@@ -97,8 +97,9 @@ const MyCourseScreen = () => {
     return (
         <View
             id='my-course-screen'
-            className='flex-col flex-1 px-6 items-center'
+            className='flex-1 px-6 pt-16 bg-white'
         >
+            <Text className="text-3xl text-cyan-800 font-bold mb-4">My Courses</Text>
             <CourseList courses={courses}/>
             {isTeacher() ? 
             <TouchableOpacity

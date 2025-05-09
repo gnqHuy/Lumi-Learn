@@ -14,7 +14,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
     <View className = "flex-col gap-2 pl-[4%]">
         {/* title */}
         <View className = "">
-            <Text className = "text-lg font-semibold">Courses you've joined</Text> 
+            <Text className = "text-lg text-cyan-800 font-semibold">Courses you've joined</Text> 
         </View>
 
         {/* courses */}
@@ -27,7 +27,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
             {courseJoined.map((course, index) => {
                 return (
                     <TouchableOpacity 
-                        className = "p-2 border-solid border-gray-300 border-[1px] rounded-xl" 
+                        className = "p-2 border-solid border-gray-300 border-[1px] rounded-xl bg-zinc-50" 
                         key = {index} 
                         onPress = {() => {
                             router.push(`/(tabs)/courses/${course.id}`)}
@@ -42,7 +42,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                                 height={95}
                                 borderRadius={8}
                             />
-                            <Text className = "ml-1 font-bold">
+                            <Text className = "ml-1 font-bold text-cyan-900">
                                 {course.courseName?.length > 18 ? course.courseName.substring(0, 18) + "..." : course.courseName}
                             </Text>
                         </View>

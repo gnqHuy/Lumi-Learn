@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { GetAllTopics } from '@/api/topicApi';
 import { PillSelection } from '@/components/PillsSelection/PillSelection';
 import { createCourse } from '@/api/courseApi';
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 
 type ReactNativeFile = {
   uri: string;
@@ -126,14 +127,14 @@ const CreateCoursePage = () => {
       <ScrollView horizontal={false} showsVerticalScrollIndicator={false} className="w-full">
         <View className="w-full flex-col items-center justify-center">
           <TouchableOpacity onPress={handleImagePicker}>
-            <View className="w-32 h-32 items-center justify-center rounded-xl bg-gray-300 mb-6 mt-20">
+            <View className="w-32 h-32 items-center justify-center rounded-xl bg-gray-200 border-4 border-gray-300 mb-6 mt-20">
               {thumbnailUri ? (
                 <Image
                   source={{ uri: thumbnailUri }}
                   style={{ width: '100%', height: '100%', borderRadius: 8 }}
                 />
               ) : (
-                <Text className="text-center">Select Thumbnail</Text>
+                <MaterialCommunityIcons name='camera-plus-outline' size={30} color={'#9ca3af'}/>
               )}
             </View>
           </TouchableOpacity>

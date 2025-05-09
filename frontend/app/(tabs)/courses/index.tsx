@@ -247,7 +247,7 @@ const MyCourseScreen = () => {
 
                 {/* options filter */}
                 {displaySearch === false && 
-                    <View className = "mt-[1rem]">
+                    <View className = "mt-[1rem] mb-1">
                         <PillSelection
                             values={filters}
                             defaultColor='bg-zinc-100'
@@ -260,14 +260,12 @@ const MyCourseScreen = () => {
                 }
 
                 {displaySearch === false && 
-                    <ScrollView className = "mt-[1rem]">
-                        <CourseList courses={filteredCourses}/>
-                    </ScrollView>
+                    <CourseList courses={filteredCourses}/>
                 }
                 {(isTeacher() && displaySearch === false) ? 
                 <TouchableOpacity
                     id='submit-button'
-                    className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-500 rounded-xl'
+                    className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
                     onPress={() => router.push('/(tabs)/courses/createCourse')}
                     activeOpacity={0.55}
                 >

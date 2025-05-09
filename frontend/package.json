@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
+    "@react-native-community/datetimepicker": "^8.3.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "axios": "^1.8.4",
@@ -37,6 +38,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
+    "react-native-date-picker": "^5.0.12",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",

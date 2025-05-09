@@ -10,11 +10,13 @@ import { User } from '@/types/user';
 import { changePasswordApi, getUserProfile } from '@/api/userApi';
 import useAuthStore from '@/zustand/authStore';
 import { router } from 'expo-router';
+import ChangeProfile from '@/components/Profile/ChangeProfile';
 
 const ProfilePage = () => {
   const [displayInformation, setDisplayInformation] = useState(false);
   const [displayChangePassword, setDisplayChangePassword] = useState(false);
   const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
+  const [displayChangeProfile, setDisplayChangeProfile] = useState(false);
   const [displayPolicy, setDisplayPolicy] = useState(false);
   const [displayHelp, setDisplayHelp] = useState(false);
 
@@ -59,6 +61,17 @@ const ProfilePage = () => {
     setDisplayHelp(display);
   }
 
+  const setupDisplayChangeProfile = (display: boolean) => {
+    setDisplayChangeProfile(display);
+  }
+
+  // reset user profile
+  const resetProfile = () => {
+    getUserProfile().then((response) => {
+      setUserProfile(response.data);
+    })
+  }
+
   // logout
   const handleLogOut = () => {
       try {
@@ -71,7 +84,7 @@ const ProfilePage = () => {
   return (
     <View>
       <View>
-        {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false) && 
+        {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false && displayChangeProfile === false) && 
           <View>
             <MainProfile 
               setupDisplayInformation={setupDisplayInformation}
@@ -88,6 +101,7 @@ const ProfilePage = () => {
           <UserInformation 
               setupDisplayInformation={setupDisplayInformation}
               userProfile={userProfile}
+              setupDisplayChangeProfile={setupDisplayChangeProfile}
           />
         }
 
@@ -95,6 +109,17 @@ const ProfilePage = () => {
           <View>
               <ChangePassword 
                   setupDisplayChangePassword={setupDisplayChangePassword}
+              />
+          </View>
+        }
+
+        {displayChangeProfile === true && 
+          <View>
+              <ChangeProfile 
+                  setupDisplayChangeProfile={setupDisplayChangeProfile}
+                  setupDisplayInformation={setupDisplayInformation}
+                  userProfile={userProfile}
+                  resetProfile={resetProfile}
               />
           </View>
         }

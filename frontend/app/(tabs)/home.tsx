@@ -56,9 +56,6 @@ const HomePage = () => {
   const [ suggestedCourses, setSuggestedCourses ] = useState<CourseItemProps[]>([]);
   const [ allCourses, setAllCourses ] = useState<CourseItemProps[]>([]);
 
-  // searching topic
-  const [searchingTopics, setSearchingTopics] = useState([]);
-
   // recent search
   const [recentSearches, setRecentSearches] = useState([]);
 
@@ -107,9 +104,6 @@ const HomePage = () => {
     if (authState?.accessToken) {
       setText(authState.accessToken);
     }
-    GetAllTopics().then((response) => {
-      setSearchingTopics(response.data);
-    });
   }, [authState]);
 
   // get user's courses
@@ -243,7 +237,7 @@ const HomePage = () => {
         {/* username */}
         {displaySearch === false ? (
           <View className="relative left-[5%]">
-            <Text className="text-3xl text-cyan-800 font-bold">{userProfile?.name}</Text>
+            <Text className="text-3xl text-cyan-800 font-bold">{userProfile.name || userProfile.username}</Text>
           </View>
         ) : (
           <Pressable
@@ -317,7 +311,6 @@ const HomePage = () => {
 
             {displaySearch === true && (
               <Search
-                searchingTopics={searchingTopics}
                 recentSearches={recentSearches}
                 deleteSearchHistory={deleteSearchHistory}
                 displaySearchResult={displaySearchResult}

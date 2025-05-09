@@ -16,6 +16,7 @@ const AnswerOption: React.FC<Props> = ({ option, isSelected, onSelect }) => {
             }}
             className={`w-full border rounded-xl p-4 mb-2 ${isSelected ? 'border-black bg-gray-200' : 'border-gray-300'}`}
             activeOpacity={0.35}
+            accessibilityLabel={`${option.content}. ${isSelected ? 'Selected': 'Double tab to select this option'}`}
         >
             <Text className="text-base">{option.content}</Text>
         </TouchableOpacity>

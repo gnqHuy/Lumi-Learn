@@ -27,7 +27,8 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
             {courseJoined.map((course, index) => {
                 return (
                     <TouchableOpacity 
-                        className = "p-2 border-solid border-gray-300 border-[1px] rounded-xl bg-zinc-50" 
+                        className = "p-2 border-solid rounded-xl bg-slate-100" 
+                        // style = {{boxShadow: "0px 4px 8px rgba(0,0,0,0.1)"}}
                         key = {index} 
                         onPress = {() => {
                             router.push(`/(tabs)/courses/${course.id}`)}

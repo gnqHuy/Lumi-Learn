@@ -23,8 +23,8 @@ const CourseItem = (props: CourseItemProps) => {
     return (
         <Pressable
             id='course-item-container'
-            className={`w-[98%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-zinc-50'}`}
-            style = {{boxShadow: "0px 4px 10px rgba(0,0,0,0.15)"}}
+            className={`w-[98%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-slate-50'}`}
+            style = {{boxShadow: "0px 4px 8px rgba(0,0,0,0.1)"}}
             onPress={() => {
                 setSelectedCourseId(props.id);
                 props.isUserEnrolled === true ? router.push(`/(tabs)/courses/${props.id}`) : router.push('/(other)/CoursePreview');

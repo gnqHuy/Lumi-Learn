@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Dimensions, Image, ImageBackground, Pressable, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import useCourseStore from '@/zustand/courseStore'
@@ -7,9 +7,12 @@ import { getCourseOverview } from '@/api/courseApi'
 import { CourseOverview } from '@/types/course'
 import { ScrollView } from 'react-native-gesture-handler'
 import { JoinCourseApi } from '@/api/enrollmentApi'
+import { S3_URL_PREFIX } from '@/const/AmazonS3'
+import { LinearGradient } from 'expo-linear-gradient';
 
 const CoursePreview = () => {
     const selectedCourseId = useCourseStore((state) => state.selectedCourseId);
+    const screenWidth = Dimensions.get('window').width;
 
     // course
     const [courseOverview, setCourseOverview] = useState<CourseOverview>();
@@ -27,56 +30,129 @@ const CoursePreview = () => {
         }
         JoinCourseApi(payload).then((res) => {
             console.log('Join course successfully!');
-            router.push('/(tabs)/home');
+            router.push(`/(tabs)/courses/${selectedCourseId}`);
         }).catch(err => console.error(err));
     }
   return (
-    <View className = "w-full h-full bg-gray-200">
-        <View className = "mt-[4rem]">
+    <View className = "flex-1 bg-gray-200">
+        {/* <StatusBar barStyle="light-content"/> */}
+        {/* <Image
+            id="cover-pic"
+            source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
+            style={{
+            position: 'absolute',
+            right: screenWidth * 0.1,
+            height: '40%',
+            width: screenWidth * 0.8,
+            resizeMode: 'cover',
+            }}
+        />
+        <LinearGradient
+            colors={['#083344', 'transparent']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+                position: 'absolute',
+                left: screenWidth * 0.1,
+                width: screenWidth * 0.5,
+                height: '100%',
+            }}
+        />
+        <LinearGradient
+            colors={['#083344', 'transparent']}
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 0 }}
+            style={{
+                position: 'absolute',
+                right: screenWidth * 0.1,
+                width: screenWidth * 0.5,
+                height: '100%',
+            }}
+        /> */}
+        <View className = "mt-14 flex-1 flex-col">
             {/* close button */}
-            <Pressable className = "absolute top-4 left-[2rem]">
-                <AntDesign name = "close" size = {32} onPress={() => {
-                    router.push('/(tabs)/home');
-                }}/>
-            </Pressable>
-            {/* course name and topic */}
-            <View className = "mt-[7rem] ml-[3rem]">
-                <Text className = "text-5xl font-bold">{courseOverview?.title}</Text>
-                <Pressable className = "mt-[1rem] border-solid border-black border-[2px] rounded-full px-[1rem] py-[0.4rem] w-auto self-start">
-                    <Text className = "">{courseOverview?.topic}</Text>
-                </Pressable>
+            <View 
+                id='cover'
+                className='w-full'
+            >
+                <View 
+                    id='cover-content'
+                    className='w-full flex-col gap-4 z-10'
+                >
+                    <View className='w-full px-6'>
+                        <Pressable className = "">
+                            <AntDesign color='black' name = "close" size = {24} onPress={() => {
+                                router.push('/(tabs)/home');
+                            }}/>
+                        </Pressable>
+                    </View>
+                    {/* course name and topic */}
+                    <View className='flex-row justify-between w-full px-6'>
+                        <View className = "w-2/3 flex-col gap-3">
+                            <Text className = "text-3xl text-cyan-900 font-extrabold">{courseOverview?.title}</Text>
+                            <Pressable className = "border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-[1rem] py-[0.4rem] w-auto self-start">
+                                <Text className = "text-cyan-700 font-semibold">{courseOverview?.topic}</Text>
+                            </Pressable>
+                        </View>
+                        <View 
+                            id="cover-pic"
+                            className='mt-2 border border-2 border-cyan-800 rounded-xl self-start'    
+                        >
+                            <Image
+                                source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
+                                width={80}
+                                height={80}
+                                borderRadius={8}
+                            />
+                        </View>
+                    </View>
+                </View>
+                
             </View>
             {/* course info */}
-            <ScrollView className = "w-full bg-white h-full mt-[10rem] rounded-tl-3xl rounded-tr-3xl">
-                <Text className = "text-2xl font-bold mt-[2rem] ml-[2rem]">{courseOverview?.title}</Text>
-                <Text className = "mt-[1rem] text-lg ml-[2rem]">{`${courseOverview?.lessons.length} lesson(s)`}</Text>
-                {/* description */}
-                <View className = "mt-[1rem] ml-[2rem]">
-                    <Text className = "text-xl font-bold">Descriptions</Text>
-                    <Text className = "text-lg mt-[0.5rem]">{courseOverview?.description}</Text>
-                </View>
-                {/* lesson lists */}
-                <ScrollView className = "flex-col ml-[2rem] mt-[1rem]">
-                    {courseOverview?.lessons?.map((lesson, index) => {
-                        const index_ = index + 1;
-                        return (
-                            <View className = "flex-row gap-[2rem] pt-[2rem]" key = {index}>
-                                <Text className = "font-bold text-3xl">{index_.toString().padStart(2, "0")}</Text>
-                                <View className = "relative bottom-[0.5rem]">
-                                    <Text className = "text-xl font-bold">{lesson.title}</Text>
-                                    <Text className = "text-lg">{`${lesson.flashcardSets.length} flashcard(s)`}</Text>
-                                </View>
+            <View className = "absolute bottom-0 h-3/4 p-8 bg-white rounded-t-[30px]">
+                <View className='flex-col flex-1 gap-4'>
+                    <View>
+                        <Text className = "text-2xl font-bold text-cyan-800">{courseOverview?.title}</Text>
+                        <Text className = "text-lg mt-1">{`${courseOverview?.lessons.length} lesson(s)`}</Text>
+                    </View>
+                    {/* description */}
+                    <View>
+                        <Text className = "text-xl font-bold text-cyan-800">Descriptions</Text>
+                        <Text className = "text-lg mt-1">{courseOverview?.description}</Text>
+                    </View>
+                    {/* lesson lists */}
+                    <View className='flex-1 mt-2'>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <View className='flex-col gap-6'>
+                                {courseOverview?.lessons?.map((lesson, index) => {
+                                    const index_ = index + 1;
+                                    return (
+                                        <View className = "flex-row items-center gap-[2rem]" key = {index}>
+                                            <Text className = "font-bold text-4xl text-cyan-800">{index_.toString().padStart(2, "0")}</Text>
+                                            <View className = "relative">
+                                                <Text className = "text-lg text-cyan-800 font-bold">{lesson.title}</Text>
+                                                <Text className = "text-base text-yellow-600">{`${lesson.flashcardSets.length} flashcard(s)`}</Text>
+                                            </View>
+                                        </View>
+                                    )
+                                })}
                             </View>
-                        )
-                    })}
-                </ScrollView>
-                {/* join course */}
-                <View className = "mt-[2rem] ml-[20vw]">
-                    <Pressable className = "w-[60vw] self-start bg-gray-400 py-[0.5rem] rounded-xl" onPress={handleJoinCourse}>
-                        <Text className = "text-lg text-white text-center">Join course</Text>
-                    </Pressable>
+                        </ScrollView>
+                    </View>
+                    <View className = "sticky z-10 bottom-0 w-full flex-row justify-center">
+                        <TouchableOpacity 
+                            className = "w-full flex items-center bg-cyan-900 py-4 rounded-2xl" 
+                            onPress={handleJoinCourse}
+                            activeOpacity={0.6}
+                        >
+                            <Text className = "text-lg text-white font-semibold">Join course</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </ScrollView>
+            </View>
         </View>
     </View>
   )

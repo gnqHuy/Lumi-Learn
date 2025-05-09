@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Pressable,
+  StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CoursesPage from "./courses";
@@ -150,7 +151,6 @@ const HomePage = () => {
             isUserEnrolled: course.isUserEnrolled,
           })
         );
-        console.log(mappedCourses);
         setAllCourses(
           mappedCourses.filter((course) => course.isUserEnrolled === false)
         );
@@ -237,7 +237,8 @@ const HomePage = () => {
 
   return (
     <View className="flex-1">
-      <View className="h-full flex-col gap-3 mt-[2rem]">
+      <StatusBar barStyle="dark-content"/>
+      <View className="flex-1 flex-col gap-3 mt-[2rem] pb-4">
         {/* username */}
         {displaySearch === false ? (
           <View className="relative left-[5%] mt-[2rem]">

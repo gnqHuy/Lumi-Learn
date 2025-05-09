@@ -3,6 +3,7 @@ import { Image, Pressable, Text, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
 import { User } from '@/types/user';
+import { Entypo } from '@expo/vector-icons';
 
 interface MainProfileProps {
     setupDisplayInformation: (display: boolean) => void;
@@ -17,63 +18,63 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
   return (
     <ScrollView className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
-        <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-black">
+        <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-cyan-700">
             <View>
                 <Image source = {require('../../assets/images/userAvatarTest.png')} alt = "" className = "w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem]" />
-                <Text className = "text-center text-2xl font-bold mt-[0.5rem]">{userProfile.username}</Text>
+                <Text className = "text-center text-2xl text-cyan-800 font-bold mt-[0.5rem]">{userProfile.username}</Text>
             </View>
         </View>
 
         {/* account controller */}
         <View className = "mt-[1rem] relative left-[5%]">
-            <Text className = "text-xl font-bold">Account</Text>
+            <Text className = "text-lg text-cyan-800 font-bold">Account</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-b-[1px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-tr-lg" onPress={() => setupDisplayInformation(true)}>
-                    <Text className = "text-xl">Information</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
+                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayInformation(true)}>
+                    <Text className = "text-lg">Information</Text>
+                    <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg" onPress={() => setupDisplayChangePassword(true)}>
-                    <Text className = "text-xl">Change password</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
+                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayChangePassword(true)}>
+                    <Text className = "text-lg">Change password</Text>
+                    <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
             </View>
         </View>
 
         {/* settings controller */}
         <View className = "mt-[3rem] relative left-[5%]">
-            <Text className = "text-xl font-bold">Settings</Text>
+            <Text className = "text-lg text-cyan-800 font-bold">Settings</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-b-[1px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-tr-lg" onPress={() => setupDisplayPolicy(true)}>
-                    <Text className = "text-xl">Policy</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
+                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayPolicy(true)}>
+                    <Text className = "text-lg">Policy</Text>
+                    <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-lg rounded-br-lg" onPress={() => setupDisplayHelp(true)}>
-                    <Text className = "text-xl">Helps</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
+                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayHelp(true)}>
+                    <Text className = "text-lg">Helps</Text>
+                    <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
             </View>
         </View>
 
         {/* theme controller */}
         <View className = "mt-[3rem] relative left-[5%]">
-            <Text className = "text-xl font-bold">Theme</Text>
+            <Text className = "text-lg text-cyan-800 font-bold">Theme</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-tl-lg rounded-lg" onPress={() => setupDisplayChangeTheme(true)}>
-                    <Text className = "text-xl">Change</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
+                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayChangeTheme(true)}>
+                    <Text className = "text-lg">Change</Text>
+                    <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
             </View>
         </View>
 
         {/* logout */}
-        <Pressable className = "mt-[3rem] w-[60%] relative left-[20%] border-solid border-[2px] border-black rounded-lg py-[0.7rem]" onPress={handleLogOut}>
-            <Text className = "text-xl text-center">Logout</Text>
+        <Pressable className = "mt-[3rem] w-[90%] left-[5%] relative border-solid bg-cyan-700 rounded-2xl py-[1rem]" onPress={handleLogOut}>
+            <Text className = "text-lg font-semibold text-white text-center">Logout</Text>
         </Pressable>
     </ScrollView>
   )

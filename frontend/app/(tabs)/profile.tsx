@@ -82,7 +82,7 @@ const ProfilePage = () => {
       router.push('/(auth)/login');
   }
   return (
-    <View>
+    <View className='bg-white flex-1'>
       <View>
         {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false && displayChangeProfile === false) && 
           <View>

@@ -54,7 +54,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold">Change password</Text>
+            <Text className = "text-center text-3xl font-bold text-cyan-700">Change password</Text>
             <Pressable className = "absolute left-8 top-1" onPress={() => setupDisplayChangePassword(false)}>
                 <AntDesign name = "left" size = {26} />
             </Pressable>
@@ -62,11 +62,11 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
 
         {/* recent password */}
         <View className = "relative left-[5%] mt-[5rem]">
-            <Text className = {currentPasswordError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Recent Password</Text>
+            <Text className = {currentPasswordError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Recent Password</Text>
             <TextInput 
               placeholder = "Enter your current password"
               secureTextEntry = {true}
-              className = {`w-[90%] border-solid border-[2px] rounded-lg py-[1rem] mt-[1rem] pl-[1rem] ${currentPasswordError ? "border-red-500" : "border-black"}`} 
+              className = {`w-[90%] border-solid border-[1px] rounded-2xl py-[1rem] mt-[0.5rem] pl-[1rem] bg-slate-100 ${currentPasswordError ? "border-red-500" : "border-black"}`} 
               placeholderTextColor={"black"}
               value = {currentPassword}
               onChangeText={setCurrentPassword}
@@ -79,11 +79,11 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
 
         {/* new password */}
         <View className = "relative left-[5%] mt-[2rem]">
-            <Text className = {newPasswordError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>New Password</Text>
+            <Text className = {newPasswordError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>New Password</Text>
             <TextInput 
               placeholder = "Enter your new password"
               secureTextEntry = {true}
-              className = {`w-[90%] border-solid border-[2px] rounded-lg py-[1rem] mt-[1rem] pl-[1rem] ${newPasswordError ? "border-red-500" : "border-black"}`} 
+              className = {`w-[90%] border-solid border-[1px] rounded-2xl py-[1rem] mt-[0.5rem] pl-[1rem] bg-slate-100 ${newPasswordError ? "border-red-500" : "border-black"}`} 
               placeholderTextColor={"black"}
               value = {newPassword}
               onChangeText={setNewPassword}
@@ -96,11 +96,11 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
 
         {/* confirm password */}
         <View className = "relative left-[5%] mt-[2rem]">
-            <Text className = {confirmPasswordError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Confirm new Password</Text>
+            <Text className = {confirmPasswordError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Confirm new Password</Text>
             <TextInput 
               placeholder = "Confirm your new password"
               secureTextEntry = {true}
-              className = {`w-[90%] border-solid border-[2px] rounded-lg py-[1rem] mt-[1rem] pl-[1rem] ${confirmPasswordError ? "border-red-500" : "border-black"}`} 
+              className = {`w-[90%] border-solid border-[1px] rounded-2xl py-[1rem] mt-[0.5rem] pl-[1rem] bg-slate-100 ${confirmPasswordError ? "border-red-500" : "border-black"}`} 
               placeholderTextColor={"black"}
               value = {confirmPassword}
               onChangeText={setConfirmPassword}
@@ -112,9 +112,9 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
         </View>
 
         {/* comfirm button */}
-        <View className = "mt-[3rem]">
-            <Pressable className = "relative left-[15%] w-[70%] border-solid border-[2px] border-black rounded-lg py-[0.7rem]" onPress = {handleChangePassword}>
-                <Text className = "text-xl text-center">Confirm</Text>
+        <View className = "mt-[5rem]">
+            <Pressable className = "relative left-[5%] w-[90%] rounded-2xl py-[0.7rem] bg-cyan-800" onPress = {handleChangePassword}>
+                <Text className = "text-xl text-center text-white">Confirm</Text>
             </Pressable>
         </View>
     </ScrollView>

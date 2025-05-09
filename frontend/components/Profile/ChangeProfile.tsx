@@ -82,7 +82,7 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight h-full">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold">Update information</Text>
+            <Text className = "text-center text-3xl font-bold text-cyan-700">Update information</Text>
             <Pressable className = "absolute left-8 top-1" onPress = {() => {
                 setupDisplayChangeProfile(false);
                 setupDisplayInformation(true);
@@ -95,10 +95,10 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
         <View className = "mt-[3rem]">
             {/* full name */}
             <View className = "mt-[1rem] relative left-[5%]">
-                <Text className = {fullNameError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Full name</Text>
+                <Text className = {fullNameError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Full name</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
-                        className = {fullNameError ? "w-[90%] border-solid border-red-500 border-[2px] pl-[1rem] py-[0.9rem] rounded-lg" : "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.9rem] rounded-lg"}
+                        className = {fullNameError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {fullNameInput}
                         onChangeText={setFullNameInput}
                         onFocus={() => setFullNameError("")}
@@ -111,9 +111,9 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* birthday */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {birthdayError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Birthday</Text>
+                <Text className = {birthdayError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Birthday</Text>
                 <View className = "flex-col mt-[0.5rem]">
-                    <Pressable className = {birthdayError ? "w-[90%] border-solid border-red-500 border-[2px] pl-[1rem] py-[0.9rem] rounded-lg" : "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.9rem] rounded-lg"} onPress = {() => {
+                    <Pressable className = {birthdayError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"} onPress = {() => {
                         setDisplayDatePicker(true);
                         setBirthdayError("");
                     }}>
@@ -148,10 +148,10 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* email */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {emailError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Email</Text>
+                <Text className = {emailError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Email</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
-                        className = {emailError ? "w-[90%] border-solid border-red-500 border-[2px] pl-[1rem] py-[0.9rem] rounded-lg" : "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.9rem] rounded-lg"}
+                        className = {emailError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {emailInput}
                         onChangeText={setEmailInput}
                         onFocus={() => setEmailError("")}
@@ -164,10 +164,10 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* phone number */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {phoneError ? "text-xl font-bold text-red-500" : "text-xl font-bold"}>Phone number</Text>
+                <Text className = {phoneError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Phone number</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
-                        className = {phoneError ? "w-[90%] border-solid border-red-500 border-[2px] pl-[1rem] py-[0.9rem] rounded-lg" : "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.9rem] rounded-lg"}
+                        className = {phoneError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {phoneInput}
                         onChangeText={setPhoneInput}
                         onFocus={() => setPhoneError("")}
@@ -180,7 +180,7 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* update button */}
             <View className = "mt-[5rem]">
-                <Pressable className = "w-[60vw] relative self-start left-[20vw] border-solid border-black border-[2px] py-[0.5rem] rounded-lg bg-gray-400" onPress={handleUpdateProfile}>
+                <Pressable className = "w-[90%] relative self-start left-[5%] py-[0.5rem] rounded-2xl bg-cyan-800" onPress={handleUpdateProfile}>
                     <Text className = "text-center text-lg text-white">Update</Text>
                 </Pressable>
             </View>

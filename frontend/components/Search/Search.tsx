@@ -65,7 +65,7 @@ const Search = ({searchingTopics, recentSearches, deleteSearchHistory, displaySe
                     className = "mt-[1.5rem]"
                     contentContainerStyle = {{paddingBottom: 20}}
                 >
-                    <View className = "flex-col flex-1 items-center px-6" id='my-course-screen'>
+                    <View className = "flex-col flex-1 items-center" id='my-course-screen'>
                         <CourseList 
                             courses={searchedCourses}
                         />

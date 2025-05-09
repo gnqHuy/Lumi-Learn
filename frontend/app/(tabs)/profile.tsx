@@ -93,6 +93,7 @@ const ProfilePage = () => {
               setupDisplayPolicy={setupDisplayPolicy}
               setupDisplayHelp={setupDisplayHelp}
               handleLogOut={handleLogOut}
+              userProfile={userProfile}
             />
           </View>
         }

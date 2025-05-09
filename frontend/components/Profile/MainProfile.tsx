@@ -2,6 +2,7 @@ import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
+import { User } from '@/types/user';
 
 interface MainProfileProps {
     setupDisplayInformation: (display: boolean) => void;
@@ -10,15 +11,16 @@ interface MainProfileProps {
     setupDisplayPolicy: (display: boolean) => void;
     setupDisplayHelp: (display: boolean) => void;
     handleLogOut: () => void;
+    userProfile: User
 }
-const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp, handleLogOut}: MainProfileProps) => {
+const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp, handleLogOut, userProfile}: MainProfileProps) => {
   return (
     <ScrollView className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
         <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-black">
             <View>
                 <Image source = {require('../../assets/images/userAvatarTest.png')} alt = "" className = "w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem]" />
-                <Text className = "text-center text-2xl font-bold mt-[0.5rem]">Username</Text>
+                <Text className = "text-center text-2xl font-bold mt-[0.5rem]">{userProfile.username}</Text>
             </View>
         </View>
 

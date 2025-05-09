@@ -7,3 +7,10 @@ export type User = {
     birthday: Date,
     role: string,
 };
+
+export type ChangeProfile = {
+    email: string, 
+    phone: string, 
+    birthday: Date | null, 
+    name: string
+}

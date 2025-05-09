@@ -6,10 +6,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 interface UserInformationProps {
     setupDisplayInformation: (display: boolean) => void;
-    userProfile: User | undefined
+    userProfile: User | undefined;
+    setupDisplayChangeProfile: (display: boolean) => void;
 }
 
-const UserInformation = ({setupDisplayInformation, userProfile}: UserInformationProps) => {
+const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChangeProfile}: UserInformationProps) => {
+    const handleDisplayChangeProfile = () => {
+        setupDisplayInformation(false);
+        setupDisplayChangeProfile(true);
+    }
   return (
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
@@ -33,7 +38,6 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
             <View className = "flex-col mt-[0.5rem]">
                 <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
                     <Text className = "text-xl">{userProfile?.username}</Text>
-                    <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
             </View>
         </View>
@@ -43,7 +47,7 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
             <Text className = "text-xl font-bold">Full name</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg" onPress = {handleDisplayChangeProfile}>
                     <Text className = "text-xl">{userProfile?.name}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
@@ -55,7 +59,7 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
             <Text className = "text-xl font-bold">Birthday</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg" onPress = {handleDisplayChangeProfile}>
                     <Text className = "text-xl">{userProfile?.birthday.toString().substring(0,10)}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
@@ -67,7 +71,7 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
             <Text className = "text-xl font-bold">Email</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg" onPress = {handleDisplayChangeProfile}>
                     <Text className = "text-xl">{userProfile?.email}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>
@@ -79,7 +83,7 @@ const UserInformation = ({setupDisplayInformation, userProfile}: UserInformation
             <Text className = "text-xl font-bold">Phone number</Text>
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
-                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg">
+                <Pressable className = "w-[90%] border-solid border-black border-[2px] pl-[1rem] py-[0.7rem] rounded-lg" onPress = {handleDisplayChangeProfile}>
                     <Text className = "text-xl">{userProfile?.phone}</Text>
                     <AntDesign name = "right" size = {24} className = "absolute right-4 top-3" /> 
                 </Pressable>

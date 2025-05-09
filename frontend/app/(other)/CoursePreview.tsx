@@ -96,7 +96,7 @@ const CoursePreview = () => {
                         </View>
                         <View 
                             id="cover-pic"
-                            className='mt-2 border border-2 border-cyan-800 rounded-xl self-start'    
+                            className='mt-2 border-2 border-cyan-800 rounded-xl self-start'    
                         >
                             <Image
                                 source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}

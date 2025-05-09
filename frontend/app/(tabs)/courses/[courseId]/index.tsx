@@ -36,7 +36,7 @@ const CourseOverviewPage = () => {
     return (
         <View
             id='course-overview-screen'
-            className='flex-1 flex-col items-center px-6'
+            className='flex-1 flex-col items-center px-6 bg-white'
         >
             <View
                 id='top-nav'
@@ -52,15 +52,15 @@ const CourseOverviewPage = () => {
             </View>
             <View
                 id='course-overview-section'
-                className='flex-row gap-2 py-8 w-full'
+                className='flex-row justify-between py-8 w-full'
             >
                 <View
                     id='course-overview-info'
-                    className='flex-col gap-3 w-3/4'
+                    className='flex-col gap-3 w-2/3'
                 >
                     <Text
                         id='course-name'
-                        className='text-2xl font-bold'
+                        className='text-2xl font-bold text-cyan-800'
                     >
                         {courseOverview?.title}
                     </Text>
@@ -72,21 +72,26 @@ const CourseOverviewPage = () => {
                     </Text>
                 </View>
                 {/* Replace with course thumbnail later */}
-                <Image
-                    id='course-thumbnail'
-                    source={{ uri: courseOverview?.thumbnail as string | undefined }}
-                    width={84}
-                    height={84}
-                    borderRadius={8}
+                <View 
+                    id="cover-pic"
+                    className='border-[3px] border-cyan-700 rounded-xl self-start'    
                 >
-                </Image>
+                    <Image
+                        id='course-thumbnail'
+                        source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                        width={84}
+                        height={84}
+                        borderRadius={8}
+                    >
+                    </Image>
+                </View>
             </View>
             <View
                 id='Lesson-list-section'
                 className='flex-col gap-4 w-full flex-1'
             >
                 <View id='lesson-list-title'>
-                    <Text className='text-lg font-bold'>Lessons in this course</Text>
+                    <Text className='text-lg text-cyan-800 font-bold'>Lessons in this course</Text>
                 </View>
                 <LessonList lessons={courseOverview?.lessons}/>
             </View>

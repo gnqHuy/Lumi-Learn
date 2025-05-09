@@ -252,10 +252,10 @@ const HomePage = () => {
               setDisplaySearchResult(false);
             }}
           >
-            <Entypo
-              name="chevron-left"
-              size={40}
-              className="relative left-[1%] top-[0.5rem] mt-[1rem]"
+            <AntDesign
+              name="arrowleft"
+              size={24}
+              className="relative left-[5%]"
             />
           </Pressable>
         )}
@@ -329,7 +329,7 @@ const HomePage = () => {
 
         {/* search filter */}
         {displaySearchFilter === true && (
-          <View className="absolute left-0 bottom-[2rem] z-[50]">
+          <View className="absolute left-0 bottom-0 z-[50]">
             <SearchFilter disableSearchFilter={disableSearchFilter} />
           </View>
         )}

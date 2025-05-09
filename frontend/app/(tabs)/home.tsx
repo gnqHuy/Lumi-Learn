@@ -243,7 +243,7 @@ const HomePage = () => {
         {/* username */}
         {displaySearch === false ? (
           <View className="relative left-[5%]">
-            <Text className="text-3xl text-cyan-800 font-bold">{userProfile?.name}</Text>
+            <Text className="text-3xl text-cyan-800 font-bold">{userProfile.name || userProfile.username}</Text>
           </View>
         ) : (
           <Pressable

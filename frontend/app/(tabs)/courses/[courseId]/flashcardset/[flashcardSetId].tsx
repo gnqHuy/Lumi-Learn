@@ -1,5 +1,5 @@
-import { View, Text, useWindowDimensions, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, useWindowDimensions, Pressable, AccessibilityInfo, findNodeHandle } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { GetFlashcards } from "@/api/flashcardApi";
 import { FlashcardDto } from "@/types/flashcard";
@@ -37,6 +37,9 @@ const FlashcardSetPage = () => {
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
     const { width } = useWindowDimensions();
+    
+    const termRef = useRef(null);
+    const fakeRef = useRef(null);
 
     const flipCard = () => {
         const newFlipped = !isFlipped;
@@ -53,6 +56,17 @@ const FlashcardSetPage = () => {
         setIndex(nextIndex);
         setIsFlipped(false);
         setCurrentCard(nextCard);
+
+        const node = findNodeHandle(termRef.current);
+        const fakeNode = findNodeHandle(fakeRef.current);
+        if (node && fakeNode) {
+            AccessibilityInfo.setAccessibilityFocus(fakeNode);
+            setTimeout(() => {
+                AccessibilityInfo.announceForAccessibility('Moved to next Flashcard');
+                AccessibilityInfo.setAccessibilityFocus(node);
+            }, 300);
+        }
+        console.log("nextCard() active");
     };
 
     const addToLearning = () => {
@@ -133,6 +147,7 @@ const FlashcardSetPage = () => {
             { rotateY: `${interpolate(rotateY.value, [0, 180], [0, 180])}deg` },
         ],
         backfaceVisibility: "hidden",
+        // display: !isFlipped ? 'flex' : 'none',
     }));
 
     const backStyle = useAnimatedStyle(() => ({
@@ -143,11 +158,22 @@ const FlashcardSetPage = () => {
         position: "absolute",
         top: 0,
         backfaceVisibility: "hidden",
+        // display: isFlipped ? 'flex' : 'none',
     }));
 
     const containerStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: translateX.value }, {translateY: translateY.value}],
     }));
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            AccessibilityInfo.announceForAccessibility(
+                "Before you start, after you learned a flashcard, use double tab and hold, and swipe right if you already known that, or swipe left if you want to relearn after that. Learn well!"
+            );
+        }, 5000);
+    
+        return () => clearTimeout(timeout);
+    }, []);
 
     useEffect(() => {
         GetFlashcards(flashcardSetId as string)
@@ -196,6 +222,8 @@ const FlashcardSetPage = () => {
     }
 
     return (
+        flashcards && flashcardSetTitle
+        ?
         <>
             {!isCompleted ? 
                 <View className="flex-1 bg-orange-300">
@@ -204,26 +232,36 @@ const FlashcardSetPage = () => {
                             id="top-nav"
                             className="flex-row mt-14 mb-4 items-center px-2 w-full"
                         >
-                            <Pressable className="z-10" onPress={() => router.back()}>
+                            <Pressable className="z-10 pr-2" onPress={() => router.back()}
+                                accessible={true}
+                                accessibilityLabel="Back button. Double tab to return to Course Detail"
+                            >
                                 <AntDesign name="arrowleft" size={24} />
                             </Pressable>
                             <View className="absolute left-0 right-0 items-center">
-                                <Text className="w-2/3 text-center text-xl font-semibold">
+                                <Text className="w-full text-center text-xl font-semibold"
+                                >
                                     Flashcard Set: {flashcardSetTitle}
                                 </Text>
                             </View>
                         </View>
 
                         <View className="flex-row justify-between items-center px-2 mt-4">
-                            <View className={`w-10 h-10 rounded-full border-2 border-orange-500 ${isLearning ? 'bg-orange-500' : ''} items-center justify-center`}>
+                            <View className={`w-10 h-10 rounded-full border-2 border-orange-500 ${isLearning ? 'bg-orange-500' : ''} items-center justify-center`}
+                                accessible={true}
+                                accessibilityLabel={`Learning Flashcard: ${learningCount}`}
+                            >
                                 <Text className={`font-extrabold text-lg ${isLearning ? 'text-gray-100' : 'text-orange-500'}`}>
                                     {learningCount}
                                 </Text>
                             </View>
-                            <Text className="text-black text-base">
+                            <Text className="text-black text-base" accessible={false}>
                                 {index + 1}/{flashcards.length} 
                             </Text>
-                            <View className={`w-10 h-10 rounded-full border-2 border-green-500 ${isKnown ? 'bg-green-500' : ''} items-center justify-center`}>
+                            <View className={`w-10 h-10 rounded-full border-2 border-green-500 ${isKnown ? 'bg-green-500' : ''} items-center justify-center`}
+                                accessible={true}
+                                accessibilityLabel={`Known Flashcard: ${knowCount}`}
+                            >
                                 <Text className={`font-extrabold text-lg ${isKnown ? 'text-gray-100' : 'text-green-500'}`}>
                                     {knowCount}
                                 </Text>
@@ -236,8 +274,12 @@ const FlashcardSetPage = () => {
                                 className="relative z-10 mt-6 flex h-3/5 w-full justify-center items-center"
                             >
                                 <Animated.View
+                                    ref={termRef}
                                     style={[frontStyle]}
-                                    className={flashcardStyle()}
+                                    className={!isFlipped ? `${flashcardStyle()}` : 'hidden'}
+                                    accessible={true}
+                                    accessibilityLabel={`Term ${index + 1}: ${getTextSafe(currentCard?.term)}`}
+                                    accessibilityHint='Double tab to flip to definition'
                                 >
                                     <Text className={`font-semibold ${textStyle()}`}>
                                         {getTextSafe(currentCard?.term)}
@@ -246,7 +288,10 @@ const FlashcardSetPage = () => {
 
                                 <Animated.View
                                     style={[backStyle]}
-                                    className={flashcardStyle()}
+                                    className={isFlipped ? `${flashcardStyle()}` : 'hidden'}
+                                    accessible={true}
+                                    accessibilityLabel={`Definition ${index + 1}: ${getTextSafe(currentCard?.definition)}`}
+                                    accessibilityHint='Double tab to flip to term'
                                 >
                                     <Text className={textStyle()}>
                                         {getTextSafe(currentCard?.definition)}
@@ -255,7 +300,9 @@ const FlashcardSetPage = () => {
                             </Animated.View>
                         </GestureDetector>
 
-                        <Text className="text-center text-gray-600 text-base mt-8">
+                        <Text className="text-center text-gray-600 text-base mt-8"
+                            ref={fakeRef}
+                        >
                             Swipe right to mark Know
                         </Text>
                     </View>
@@ -272,7 +319,7 @@ const FlashcardSetPage = () => {
                 </View>
             }
         </>
-        
+        : <></>
     );
 };
 

@@ -11,7 +11,7 @@ const NotificationImage: React.FC<NotificationImageProps> = ({
   image,
   type,
 }) => {
-  console.log(image);
+  // console.log(image);
   return (
     <View className="w-[64px] h-[64px] my-auto overflow-hidden relative">
       {!image ? <Image source={require("../../assets/images/lumiLearnLogo.png")} className="w-[100%] h-[100%] rounded-full bg-blue-300" resizeMode="contain" /> : <Image source={{ uri: image }} className="w-[100%] h-[100%] rounded-full" resizeMode="cover" />}

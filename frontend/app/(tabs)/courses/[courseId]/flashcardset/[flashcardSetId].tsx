@@ -19,6 +19,7 @@ Gesture,
 import FlashcardResultScreen from "@/components/Flashcard/FlashcardResult";
 
 const FlashcardSetPage = () => {
+    const defaultFlashcardStyle = "h-full w-11/12 bg-gray-200 rounded-3xl justify-center items-center px-6";
     const [ flashcards, setFlashcards ] = useState<FlashcardDto[]>([]);
     const [ cardStore, setCardStore ] = useState<FlashcardDto[]>([]);
     const [ learningCards, setLearningCards ] = useState<FlashcardDto[]>([]);
@@ -103,6 +104,7 @@ const FlashcardSetPage = () => {
                 runOnJS(setIsLearning)(false);
                 runOnJS(setIsKnown)(false);
             }
+            
         })
         .onEnd((event) => {
             runOnJS(setIsLearning)(false);
@@ -135,7 +137,7 @@ const FlashcardSetPage = () => {
         });
 
 
-    const tapGesture = Gesture.Tap().onEnd(() => {
+    const tapGesture = Gesture.Tap().onTouchesUp(() => {
         runOnJS(flipCard)();
     });
 
@@ -197,7 +199,7 @@ const FlashcardSetPage = () => {
     };
 
     const flashcardStyle = () => {
-        const style = "h-full w-11/12 bg-gray-200 rounded-3xl justify-center items-center px-6";
+        const style = defaultFlashcardStyle;
         let additionalStyle = "";
 
         if(isKnown) {
@@ -277,6 +279,7 @@ const FlashcardSetPage = () => {
                                     ref={termRef}
                                     style={[frontStyle]}
                                     className={!isFlipped ? `${flashcardStyle()}` : 'hidden'}
+                                    // className={frontFlashcardStyle()}
                                     accessible={true}
                                     accessibilityLabel={`Term ${index + 1}: ${getTextSafe(currentCard?.term)}`}
                                     accessibilityHint='Double tab to flip to definition'
@@ -289,6 +292,7 @@ const FlashcardSetPage = () => {
                                 <Animated.View
                                     style={[backStyle]}
                                     className={isFlipped ? `${flashcardStyle()}` : 'hidden'}
+                                    // className={backFlashcardStyle()}
                                     accessible={true}
                                     accessibilityLabel={`Definition ${index + 1}: ${getTextSafe(currentCard?.definition)}`}
                                     accessibilityHint='Double tab to flip to term'

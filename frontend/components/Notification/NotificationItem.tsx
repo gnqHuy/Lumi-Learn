@@ -6,6 +6,7 @@ import { deleteNotification, markNotificationAsRead } from '@/api/notification';
 import NotificationOptions from './NotificationOptions';
 import { Entypo } from '@expo/vector-icons';
 import NotificationImage from './NotificationImage';
+import { showNotification } from '../Toast/Toast';
 
 
 interface Props {
@@ -40,21 +41,6 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
   
   const timeAgo = getTimeAgo(createdAt);
 
-  const getIconName = () => {
-    switch (notification.type) {
-      case 'FlashCardSet':
-        return 'clone';
-      case 'Quiz':
-        return 'question-circle';
-      case 'StudentEnrolled':
-        return 'user';
-      case 'StudentSubmitQuiz':
-        return 'check-square';
-      default:
-        return 'bell';
-    }
-  };
-
   const formatTypeText = (type: string) => {
     switch (type) {
       case 'FlashCardSet':
@@ -74,8 +60,9 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
     try {
       await deleteNotification(notification.notificationId);
       onDelete(notification.notificationId);
+      showNotification('success', 'Success !', 'Notification was deleted');
     } catch (error) {
-      console.error("Error deleting notification:", error);
+      showNotification('error', 'Error !', 'Something is wrong');
     } finally {
       setModalVisible(false);
     }
@@ -85,8 +72,9 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
     try {
       await markNotificationAsRead(notification.notificationId);
       onRead(notification.notificationId);
+      showNotification('success', 'Success !', 'Notification is marked as read');
     } catch (error) {
-      console.error("Error marking as read:", error);
+      showNotification('error', 'Error !', 'Something is wrong');
     } finally {
       setModalVisible(false);
     }
@@ -95,11 +83,11 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
   return (
     <>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <View className={`rounded-lg py-2 px-3 mb-3 ${notification.isRead ? 'bg-white' : 'bg-gray-200'} border border-gray-300`}>
+        <View className={`py-2 px-3 pb-3 ${notification.isRead ? 'bg-white' : 'bg-blue-300/20'} border-non`}>
           <View className="flex-row items-start gap-3">
             <NotificationImage
-              image={require('../../assets/images/userAvatarTest.png')}
-              iconName={getIconName()}
+              image={notification.thumbnail}
+              type={notification.type}
             />
             <View className="flex-1">
               <Text className="text-[14px] font-medium text-gray-900" numberOfLines={3}>
@@ -111,7 +99,7 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
               </View>
             </View>
             <TouchableOpacity className=" my-auto" onPress={() => setModalVisible(true)}>
-              <Entypo name="dots-three-horizontal" size={20} color="black" />
+              <Entypo name="dots-three-horizontal" size={20} color="#155e75" />
             </TouchableOpacity>
           </View>
         </View>
@@ -120,6 +108,7 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
       <NotificationOptions
         notificationContent={notification.content}
         notificationType={notification.type}
+        notificationThumbnail={notification.thumbnail}
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onDelete={handleDelete}

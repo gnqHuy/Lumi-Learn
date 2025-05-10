@@ -5,6 +5,7 @@ import { setupAxios } from "@/api/api";
 import useAuthStore from "@/zustand/authStore";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "react-native";
+import { NotificationsProvider } from "@/components/Toast/Toast";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -13,6 +14,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
+      <NotificationsProvider>
       <StatusBar barStyle="dark-content"/>
       <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)"
@@ -21,7 +23,7 @@ export default function RootLayout() {
           />
           <Stack.Screen name = "(other)"
           />
-      </Stack>
+      </Stack></NotificationsProvider>
       {/* {redirectPath ?? <Redirect href={redirectPath}/>} */}
     </GestureHandlerRootView>
   );

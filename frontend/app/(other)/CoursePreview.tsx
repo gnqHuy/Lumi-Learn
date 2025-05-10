@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { JoinCourseApi } from '@/api/enrollmentApi'
 import { S3_URL_PREFIX } from '@/const/AmazonS3'
 import { LinearGradient } from 'expo-linear-gradient';
+import { showNotification } from '@/components/Toast/Toast'
 
 const CoursePreview = () => {
     const selectedCourseId = useCourseStore((state) => state.selectedCourseId);
@@ -30,8 +31,10 @@ const CoursePreview = () => {
         }
         JoinCourseApi(payload).then((res) => {
             console.log('Join course successfully!');
+            showNotification('success', 'Enrollment Successful', 'You have successfully joined the course.');
             router.push(`/(tabs)/courses/${selectedCourseId}`);
-        }).catch(err => console.error(err));
+        }).catch(err => showNotification('error', 'Enrollment Failed', 'An error occurred while trying to join the course. Please try again later.')
+    );
     }
   return (
     <View className = "flex-1 bg-gray-200">

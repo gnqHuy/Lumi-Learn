@@ -48,7 +48,7 @@ const NotificationPage = () => {
       setNotifications((prev) =>
         prev.map((n) => ({ ...n, isRead: true }))
       );
-      showNotification('success', 'Success !', 'All notifications are marked as read');
+      showNotification('success', 'Success', 'All notifications have been marked as read.');
     } catch (error) {
       console.error('Error marking all as read:', error);
       showNotification('error', 'Error !', 'Something is wrong');
@@ -90,12 +90,12 @@ const NotificationPage = () => {
         {todayNotifications.length > 0 && (
           <View className="w-[100%]">
             <View className="flex-row justify-between items-center mb-2 mx-3">
-              <Text className="text-lg font-semibold">Today</Text>
+              <Text className="text-lg text-cyan-800 font-semibold">Today</Text>
               <TouchableOpacity
                 className="px-3 py-1 rounded-full hover:text-gray-400"
                 onPress={handleMarkAllAsRead}
               >
-                <Text className="text-gray-900 font-medium text-sm">Mark all as read</Text>
+                <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
               </TouchableOpacity>
             </View>
 
@@ -112,14 +112,14 @@ const NotificationPage = () => {
 
         {previousNotifications.length > 0 && (
           <View className="w-[100%] mt-3">
-            <View className="flex-row justify-between items-center mb-2 mx-3">
-              <Text className="text-lg font-semibold">Earlier</Text>
+            <View className="flex-row justify-between items-center mb-2 mx-4">
+              <Text className="text-lg text-cyan-800 font-semibold">Earlier</Text>
               {todayNotifications.length === 0 && (
                 <TouchableOpacity
                   className="rounded-full hover:text-gray-400"
                   onPress={handleMarkAllAsRead}
                 >
-                  <Text className="text-black font-medium text-sm">Mark all as read</Text>
+                  <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -135,7 +135,7 @@ const NotificationPage = () => {
 
             {previousNotifications.length > 10 && (
               <TouchableOpacity
-                className="mt-6 self-center bg-black px-4 py-3 rounded-full"
+                className="mt-6 self-center bg-cyan-900 px-4 py-3 rounded-full"
                 onPress={togglePrevious}
               >
                 <Text className="text-white font-semibold">

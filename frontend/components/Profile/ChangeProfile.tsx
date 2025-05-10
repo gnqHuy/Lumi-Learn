@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { updateProfileApi } from '@/api/userApi';
 import { router } from 'expo-router';
+import { showNotification } from '../Toast/Toast';
 
 
 interface ChangeProfileProps {
@@ -71,7 +72,8 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
                 }
                 updateProfileApi(payload).then((response) => {
                     console.log("Update profile successfully!");
-                    router.push('/(tabs)/home');
+                    showNotification('success', 'Profile Updated', 'Your profile has been updated successfully.');
+                    router.push('/(tabs)/profile');
                     setupDisplayChangeProfile(false);
                     resetProfile();
                 }).catch(err => console.error(err));

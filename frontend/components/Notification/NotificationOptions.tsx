@@ -33,12 +33,12 @@ const NotificationOptions = ({ visible, notificationContent, notificationType, n
         <Text className="text-[16px] text-center font-medium mb-8">{notificationContent}</Text>
 
         <TouchableOpacity className="flex-row py-5 border-b border-gray-200" onPress={onMarkAsRead}>
-            <Ionicons name="mail-open-outline" size={21} color="black" />
+            <Ionicons name="mail-open-outline" size={21} color="#155e75" />
           <Text className="ml-2 text-base text-black">Mark as read</Text>
         </TouchableOpacity>
 
         <TouchableOpacity className="flex-row py-5 border-b border-gray-200 mb-10" onPress={onDelete}>
-            <FontAwesome className='ml-1' name="trash-o" size={21} color="black" />
+            <FontAwesome className='ml-1' name="trash-o" size={21} color="#155e75" />
           <Text className="ml-2 text-base text-black">Delete</Text>
         </TouchableOpacity>
       </View>

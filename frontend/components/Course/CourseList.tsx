@@ -11,7 +11,7 @@ const CourseList = ({ courses }: CourseListProps) => {
     return (
         <View
             id='course-screen'
-            className='flex-1 items-center'
+            className='w-full items-center'
         >
             <ScrollView
                 id='course-list-container'
@@ -21,7 +21,7 @@ const CourseList = ({ courses }: CourseListProps) => {
             >
                 <View
                     id='course-list'
-                    className='w-full flex flex-col items-center gap-5'
+                    className='w-full flex flex-col items-center gap-5 pt-3 pb-4'
                 >
                     {courses.map((course, index) => (
                         <CourseItem {...course} key={course.id}/>

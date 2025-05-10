@@ -17,20 +17,23 @@ interface SuggestedCourses {
 const SuggestedCourse = ({courses, filters, selectedFilter, setSelectedFilter}: SuggestedCourses) => {
 
     return (
-        <View className = "flex-1 flex-col gap-3 px-5"> 
+        <View className = "flex-1 flex-col"> 
             {/* title */}
-            <View className = "">
-                <Text className = "text-lg text-cyan-800 font-bold">Choose your courses</Text>
+            <View className = "w-full px-5 pb-3">
+                <Text className = "text-xl text-cyan-800 font-bold">Choose your courses</Text>
             </View>
             {/* options filter */}
-            <PillSelection
-                values={filters}
-                defaultColor='bg-zinc-100'
-                selectedColor='bg-cyan-700'
-                textColor='text-cyan-700'
-                selected={selectedFilter}
-                setSelected={setSelectedFilter}
-            />
+
+            <View className='w-full px-5'>
+                <PillSelection
+                    values={filters}
+                    defaultColor='bg-zinc-100'
+                    selectedColor='bg-cyan-700'
+                    textColor='text-cyan-700'
+                    selected={selectedFilter}
+                    setSelected={setSelectedFilter}
+                />
+            </View>
 
             {/* courses */}
             <CourseList courses={courses}

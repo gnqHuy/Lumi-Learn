@@ -44,12 +44,12 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
 
         {displaySearchResult === true && 
             <View className = "">
-                <Text className = "text-xl font-bold relative left-[2rem] top-[1rem]">Courses:</Text>
+                <Text className = "text-xl font-bold relative left-[2rem]">Courses:</Text>
                 <ScrollView
-                    className = "mt-[1.5rem]"
+                    className = ""
                     contentContainerStyle = {{paddingBottom: 20}}
                 >
-                    <View className = "flex-col flex-1 items-center" id='my-course-screen'>
+                    <View className = "flex-col w-full items-center" id='my-course-screen'>
                         <CourseList 
                             courses={searchedCourses}
                         />

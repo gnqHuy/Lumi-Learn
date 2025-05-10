@@ -99,7 +99,7 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
               </View>
             </View>
             <TouchableOpacity className=" my-auto" onPress={() => setModalVisible(true)}>
-              <Entypo name="dots-three-horizontal" size={20} color="black" />
+              <Entypo name="dots-three-horizontal" size={20} color="#155e75" />
             </TouchableOpacity>
           </View>
         </View>

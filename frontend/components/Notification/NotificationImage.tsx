@@ -11,13 +11,11 @@ const NotificationImage: React.FC<NotificationImageProps> = ({
   image,
   type,
 }) => {
-  if (image == null) {
-    image = "https://lumi-learn.s3.ap-southeast-2.amazonaws.com/course/0750cca2-4efd-4089-9ec0-b4cd698833ae";
-  }
   console.log(image);
   return (
     <View className="w-[64px] h-[64px] my-auto overflow-hidden relative">
-      <Image source={require("../../assets/images/lumiLearnLogo.png")} className="w-[100%] h-[100%] rounded-full bg-blue-300" resizeMode="contain" />
+      {!image ? <Image source={require("../../assets/images/lumiLearnLogo.png")} className="w-[100%] h-[100%] rounded-full bg-blue-300" resizeMode="contain" /> : <Image source={{ uri: image }} className="w-[100%] h-[100%] rounded-full" resizeMode="cover" />}
+      
       <View className="absolute bottom-[0] right-[0] bg-[#b2e4b3] rounded-full p-[2px] border border-black">
         {type == 'FlashCardSet' && 
           <Image

@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import React, { useState } from 'react'
 import { Pressable, Text, TextInput, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
+import { showNotification } from '../Toast/Toast';
 
 interface ChangePasswordProps {
     setupDisplayChangePassword: (display: boolean) => void;
@@ -40,7 +41,8 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
       }
       changePasswordApi(payload).then((res) => {
         console.log("Change password successfully");
-        router.push('/(tabs)/home');
+        showNotification('success', 'Password Changed', 'Your password has been changed successfully.');
+        router.push('/(tabs)/profile');
         setupDisplayChangePassword(false);
       }).catch((err) => {
           if (err?.response.status === 400) {

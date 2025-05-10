@@ -312,7 +312,7 @@ const HomePage = () => {
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
-      <View className="flex-1 flex-col gap-3 mt-16 pb-4">
+      <View className="flex-1 flex-col gap-3 mt-20 pb-4">
         {/* username */}
         {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">
@@ -338,21 +338,9 @@ const HomePage = () => {
           {/* search bar */}
           <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
             <Feather name="search" color={"gray"} size={22} className=" z-[20]" />
-            {keyword && (
-              <AntDesign
-                name="close"
-                color={"#4b5563"}
-                size={25}
-                className="z-[10]"
-                onPress={() => {
-                  setKeyword("");
-                  setDisplaySearchResult(false);
-                }}
-              />
-            )}
             <TextInput
               placeholder="Find courses here"
-              className="font-semibold"
+              className="font-semibold w-3/4"
               style={{ textAlignVertical: "center" }}
               editable={displaySearch === false ? false : true}
               placeholderTextColor={"gray"}
@@ -361,6 +349,18 @@ const HomePage = () => {
               value={keyword}
               onSubmitEditing={() => searchCourseByKeyword(keyword)}
             />
+            {keyword && (
+              <AntDesign
+                name="close"
+                color={"gray"}
+                size={20}
+                className="z-[10] ml-2"
+                onPress={() => {
+                  setKeyword("");
+                  setDisplaySearchResult(false);
+                }}
+              />
+            )}
           </Pressable>
           {/* filter  */}
           <Pressable

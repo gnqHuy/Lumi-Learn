@@ -66,7 +66,7 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
                 id='submit-button'
                 className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
                 onPress={() => router.push(`/(tabs)/courses/${courseId}`)}
-                activeOpacity={0.75}
+                activeOpacity={0.7}
             >
                 <Text className='text-lg text-white font-semibold'>
                     Back to course

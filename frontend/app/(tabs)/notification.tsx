@@ -80,8 +80,8 @@ const NotificationPage = () => {
   };
 
   return (
-    <View className="flex-1 bg-white pt-16">
-      <Text className="text-3xl text-cyan-800 font-bold ml-6 mb-4">Notifications</Text>
+    <View className="flex-1 bg-white pt-20">
+      <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4">Notifications</Text>
 
       <ScrollView
         ref={scrollViewRef}

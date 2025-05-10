@@ -235,47 +235,39 @@ const MyCourseScreen = () => {
         <View className='flex-1'>
             <View
                 id='my-course-screen'
-                className='flex-1 px-4 pt-16 bg-white'
+                className='flex-1 pt-20 bg-white'
             >
                 {displaySearch === false && 
-                    <Text className="text-3xl text-cyan-800 font-bold mb-2 ml-2">My Courses</Text>
+                    <View className='w-full px-4'>
+                        <Text className="text-3xl text-cyan-800 font-extrabold mb-3 ml-2">My Courses</Text>
+                    </View>
                 }
 
                 {displaySearch === true && 
-                    <Pressable
-                    onPress={() => {
-                    setDisplaySearch(false);
-                    setDisplaySearchResult(false);
-                    }}
-                    className="relative left-[1%]"
-                    >
-                        <AntDesign
-                            name="arrowleft"
-                            size={24}
-                        />
-                    </Pressable>
+                    <View className='w-full px-4'>
+                        <Pressable
+                            onPress={() => {
+                            setDisplaySearch(false);
+                            setDisplaySearchResult(false);
+                            }}
+                            className="relative left-[4%]"
+                        >
+                            <AntDesign
+                                name="arrowleft"
+                                size={24}
+                            />
+                        </Pressable>
+                    </View>
                 }
 
                 {/* search bar and sort */}
-                <View className="flex-row w-full items-center justify-between gap-3">
+                <View className="flex-row w-full px-4 items-center justify-between">
                     {/* search bar */}
                     <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
                         <Feather name="search" color={"gray"} size={22} className=" z-[20]" />
-                        {keyword && (
-                        <AntDesign
-                            name="close"
-                            color={"#4b5563"}
-                            size={25}
-                            className="z-[10]"
-                            onPress={() => {
-                            setKeyword("");
-                            setDisplaySearchResult(false);
-                            }}
-                        />
-                        )}
                         <TextInput
                             placeholder="Find courses here"
-                            className="font-semibold"
+                            className="font-semibold w-3/4"
                             style={{ textAlignVertical: "center" }}
                             editable={displaySearch === false ? false : true}
                             placeholderTextColor={"gray"}
@@ -284,6 +276,18 @@ const MyCourseScreen = () => {
                             value={keyword}
                             onSubmitEditing={() => searchCourseByKeyword(keyword)}
                         />
+                        {keyword && (
+                        <AntDesign
+                            name="close"
+                            color={"gray"}
+                            size={20}
+                            className="z-[20] ml-2"
+                            onPress={() => {
+                            setKeyword("");
+                            setDisplaySearchResult(false);
+                            }}
+                        />
+                        )}
                     </Pressable>
                     {/* filter  */}
                     <Pressable
@@ -297,7 +301,7 @@ const MyCourseScreen = () => {
 
                 {/* options filter */}
                 {displaySearch === false && 
-                    <View className = "mt-[1rem] mb-1">
+                    <View className = "mt-[1rem] mb-1 w-full px-4">
                         <PillSelection
                             values={filters}
                             defaultColor='bg-zinc-100'
@@ -313,14 +317,16 @@ const MyCourseScreen = () => {
                     <CourseList courses={filteredCourses}/>
                 }
                 {(isTeacher() && displaySearch === false) ? 
-                <TouchableOpacity
-                    id='submit-button'
-                    className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
-                    onPress={() => router.push('/(tabs)/courses/createCourse')}
-                    activeOpacity={0.55}
-                >
-                    <Text className='text-lg text-white font-semibold'>Create new course</Text>
-                </TouchableOpacity>
+                <View className='w-full px-4 bottom-2 z-10 absolute'>
+                    <TouchableOpacity
+                        id='submit-button'
+                        className='flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
+                        onPress={() => router.push('/(tabs)/courses/createCourse')}
+                        activeOpacity={0.55}
+                    >
+                        <Text className='text-lg text-white font-semibold'>Create new course</Text>
+                    </TouchableOpacity>
+                </View>
                 : <></>}
 
                 {/* search screen */}

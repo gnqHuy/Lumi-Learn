@@ -7,17 +7,32 @@ import { GetAllTopics } from '@/api/topicApi';
 
 interface SearchFilterProps {
     disableSearchFilter: () => void;
+    setupDisplaySearch: (display: boolean) => void;
+    setupDisplaySearchResult: (display: boolean) => void;
+    handleFilterCourse: (rating: number[], topics: string[], length: number[]) => void;
 }
-const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
+const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySearchResult, handleFilterCourse}: SearchFilterProps) => {
+    // rating filter of course
     const [ratingRange, setRatingRange] = useState<number[]>([2, 8]);
+
+    // course length range
+    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+
+    // topics chosen
     const [ selectedTopics, setSelectedTopics ] = useState<string[]>([]);
-    const [ selectedLength, setSelectedLength ] = useState<string[]>([]);
+
+    // state of buttons
     const [ isClearButtonPressed, setClearButtonPressed ] = useState(false);
     const [ isApplyButtonPressed, setApplyButtonPressed ] = useState(false);
+
+    // all topics
     const [ topics, setTopics ] = useState<string[]>([]);
+
+    // some attribute to calculate
     const screenWidth = Dimensions.get('window').width;
     const sliderWidth = screenWidth - 28 * 2;
     const positionPerStep = sliderWidth / 10;
+    const positionPerStepCourseLengthSlider = sliderWidth / 50;
 
     useEffect(() => {
         GetAllTopics().then((res) => {
@@ -29,35 +44,20 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
         });
     }, []);
 
+    // handle when clear search filter
     const clearSearchFilter = () => {
         setSelectedTopics([]);
-        setSelectedLength([]);
         setRatingRange([2, 8]);
     }
 
+    // handle when apply filter
     const applyFilter = () => {
         disableSearchFilter();
+        handleFilterCourse(ratingRange, selectedTopics, courseLengthRange);
+        console.log('rating range' + ratingRange[0] + "-->" + ratingRange[1]);
+        console.log('topics selected: ' + selectedTopics);
+        console.log('course length range: ' + courseLengthRange[0] + "-->" + courseLengthRange[1]);
     }
-
-    // dummy categories
-    const dummyCategories = [
-        "Math",
-        "Literature",
-        "History",
-        "Science",
-        "Technology",
-        "Physics", 
-        "Art"
-    ]
-
-    // dummy course length
-    const dummyCourseLength = [
-        "1-5 Lessons",
-        "6-10 Lessons",
-        "11-15 Lessons",
-        "16-20 Lessons",
-        ">20 Lessons"
-    ]
     
   return (
     <View className = "flex-col items-center px-4 pb-6 gap-5 rounded-t-3xl bg-white w-full animate-slideUpToHalf">
@@ -140,20 +140,47 @@ const SearchFilter = ({disableSearchFilter}: SearchFilterProps) => {
         {/* course length */}
         <View 
             id='course-length-section'
-            className = "flex-col gap-4 w-full"
+            className = "flex-col gap-3 w-full"
         >
             <Text className = "text-xl font-semibold text-cyan-800">Course length</Text>
-            {/* choices */}
-            <PillSelection
-                values={dummyCourseLength}
-                multiSelect={false}
-                selected={selectedLength}
-                setSelected={setSelectedLength}
-                wrap={true}
-                defaultColor='bg-zinc-100'
-                selectedColor='bg-cyan-700'
-                textColor='text-cyan-700'
-            />
+            <View
+                id='slider-container'
+                className='flex-col items-center px-3 w-full'
+            >
+                <View id='slider'>
+                    <MultiSlider 
+                        values={courseLengthRange}
+                        sliderLength={screenWidth - 2 * 28}
+                        onValuesChange={setCourseLengthRange}
+                        min={0}
+                        max={50}
+                        step={2}
+                        snapped={true}
+                        selectedStyle={{backgroundColor: "#155e75"}}
+                        unselectedStyle={{backgroundColor: "#e5e7eb"}}
+                        markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
+                    />
+                </View>
+                {/* Start value label */}
+                <Text
+                    className="absolute top-[3rem] text-cyan-700"
+                    style={{
+                        left: courseLengthRange[0] * positionPerStepCourseLengthSlider + 9,
+                    }}
+                >
+                    {Math.floor(courseLengthRange[0])}
+                </Text>
+
+                {/* End value label */}
+                <Text
+                    className="absolute top-[3rem] text-cyan-700"
+                    style={{
+                        left: courseLengthRange[1] * positionPerStepCourseLengthSlider + 9,
+                    }}
+                >
+                    {Math.floor(courseLengthRange[1])}
+                </Text>
+            </View>
         </View>
 
         {/* buttons */}

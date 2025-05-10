@@ -24,7 +24,7 @@ const CourseItem = (props: CourseItemProps) => {
     return (
         <Pressable
             id='course-item-container'
-            className={`w-[98%] flex-row justify-center p-3 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-slate-50'}`}
+            className={`w-[98%] flex-row justify-center p-2 rounded-xl ${isPressed ? 'bg-slate-100' : 'bg-slate-50'}`}
             style = {{boxShadow: "0px 4px 8px rgba(0,0,0,0.1)"}}
             onPress={() => {
                 setSelectedCourseId(props.id);
@@ -40,18 +40,18 @@ const CourseItem = (props: CourseItemProps) => {
                 {/* Replace with real thumbnail image later */}
                 <Image
                   src={props.imgUrl}  
-                  width={80}
-                  height={80}
+                  width={85}
+                  height={85}
                   borderRadius={8}
                 />
 
                 <View
                     id='course-overview'
-                    className='w-full h-20 flex-col'
+                    className='w-full h-20 flex-col gap-1'
                 >
                     <Text
                         id='course-name'
-                        className='text-cyan-800 font-semibold text-lg'
+                        className='text-cyan-900 font-semibold text-lg'
                     >{props.courseName}</Text>
                     <View className='flex-row gap-2 items-center ml-1'>
                         <FontAwesome6 name='user' size={10} color={"#ca8a04"} style={{ fontWeight: 'bold'}}/>

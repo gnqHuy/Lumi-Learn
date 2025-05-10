@@ -14,7 +14,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
     <View className = "flex-col gap-2 pl-[4%]">
         {/* title */}
         <View className = "">
-            <Text className = "text-lg text-cyan-800 font-semibold">Courses you've joined</Text> 
+            <Text className = "text-lg text-cyan-800 font-bold">Courses you've joined</Text> 
         </View>
 
         {/* courses */}
@@ -36,14 +36,14 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                         activeOpacity={0.6}
                     >
                         {/* fake thumbnail */}
-                        <View className='flex-col gap-2'>
+                        <View className='flex-col gap-3'>
                             <Image
                                 src={course.imgUrl}
                                 width={140}
                                 height={95}
                                 borderRadius={8}
                             />
-                            <Text className = "ml-1 font-bold text-cyan-900">
+                            <Text className = "ml-1 font-semibold text-gray-600">
                                 {course.courseName?.length > 18 ? course.courseName.substring(0, 18) + "..." : course.courseName}
                             </Text>
                         </View>

@@ -1,4 +1,4 @@
-import { View, Text, TouchableHighlight, Image } from 'react-native'
+import { View, Text, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
@@ -62,26 +62,26 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
                     </View>
                 </View>
             </View>
-            <TouchableHighlight
+            <TouchableOpacity
                 id='submit-button'
-                className='mt-16 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
+                className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
                 onPress={() => router.push(`/(tabs)/courses/${courseId}`)}
-                underlayColor={"rgba(0,0,0,0.25)"}
+                activeOpacity={0.75}
             >
                 <Text className='text-lg text-white font-semibold'>
                     Back to course
                 </Text>
-            </TouchableHighlight>
-            <TouchableHighlight
+            </TouchableOpacity>
+            <TouchableOpacity
                 id='submit-button'
-                className='flex justify-center items-center w-full py-4 border border-black bg-gray-200 rounded-xl'
+                className='flex justify-center items-center w-full py-4 border border-cyan-900 bg-cyan-200 rounded-xl'
                 onPress={() => handleClose()}
-                underlayColor={"rgba(0,0,0,0.25)"}
+                activeOpacity={0.68}
             >
-                <Text className='text-lg text-black font-semibold'>
+                <Text className='text-lg text-cyan-900 font-semibold'>
                     {learning == 0 ? 'Restart flashcard set' : 'Continue learning'}
                 </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         </View>
     )
 }

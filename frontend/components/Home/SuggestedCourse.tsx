@@ -20,7 +20,7 @@ const SuggestedCourse = ({courses, filters, selectedFilter, setSelectedFilter}: 
         <View className = "flex-1 flex-col gap-3 px-5"> 
             {/* title */}
             <View className = "">
-                <Text className = "text-lg text-cyan-800 font-semibold">Choose your courses</Text>
+                <Text className = "text-lg text-cyan-800 font-bold">Choose your courses</Text>
             </View>
             {/* options filter */}
             <PillSelection

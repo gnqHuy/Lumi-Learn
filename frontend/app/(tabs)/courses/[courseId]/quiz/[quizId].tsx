@@ -163,14 +163,14 @@ const QuizPage = () => {
                 accessible={true}
                 accessibilityLabel={`Question ${currentIndex + 1} of ${quizDetail.questions.length}.
                  ${currentQuestion.content}. Choose the answer below`}
-                className="flex items-center justify-center p-2 w-full h-1/4 border border-gray-300 rounded-xl mb-4"
+                className="flex items-center justify-center p-2 w-full h-1/4 border-2 border-zinc-300 rounded-xl mb-4"
             >
                 <Text className="text-lg font-semibold">
                     {currentQuestion.content}
                 </Text>
             </View>
     
-            <Text className="text-sm text-gray-500 mb-2"
+            <Text className="text-sm font-semibold text-gray-500 mb-4"
                 accessible={false}
             >
                 Choose the answer
@@ -185,7 +185,7 @@ const QuizPage = () => {
             <View className="flex-row w-full justify-between mt-6">
                 <TouchableOpacity 
                     onPress={prev} 
-                    className="flex-row gap-2 items-center bg-gray-400 pl-3 pr-8 py-3 rounded-xl"
+                    className="flex-row gap-2 items-center bg-cyan-800 pl-3 pr-8 py-3 rounded-xl"
                     activeOpacity={0.55}
                     accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Return to previous question'}`}
                     accessibilityRole='button'
@@ -195,7 +195,7 @@ const QuizPage = () => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={next} 
-                    className="flex-row gap-2 items-center bg-gray-400 pl-8 pr-3 py-3 rounded-xl"
+                    className="flex-row gap-2 items-center bg-cyan-800 pl-8 pr-3 py-3 rounded-xl"
                     activeOpacity={0.55}
                     accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Move to next question'}`}
                     accessibilityRole='button'
@@ -211,7 +211,7 @@ const QuizPage = () => {
             {userHasCompletedQuiz() ? 
             <TouchableOpacity
                 id='submit-button'
-                className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-gray-400 rounded-xl'
+                className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
                 onPress={() => submitQuiz()}
                 activeOpacity={0.55}
                 accessibilityLabel='Submiz quiz'

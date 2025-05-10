@@ -22,7 +22,7 @@ import Search from "@/components/Search/Search";
 import Entypo from "@expo/vector-icons/Entypo";
 import SearchFilter from "@/components/Search/SearchFilter";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { getAllCourses, getMyCourses, searchCourse } from "@/api/courseApi";
+import { getAllCourses, getCourseOverview, getMyCourses, searchCourse } from "@/api/courseApi";
 import { GetAllTopics } from "@/api/topicApi";
 import {
   deleteSearchHistoryByContent,
@@ -52,9 +52,12 @@ const HomePage = () => {
   // courseJoined
   const [coursesJoined, setCoursesJoined] = useState<CourseItemProps[]>([]);
 
-  // all courses
+  // all courses not joined
   const [ suggestedCourses, setSuggestedCourses ] = useState<CourseItemProps[]>([]);
-  const [ allCourses, setAllCourses ] = useState<CourseItemProps[]>([]);
+  const [ allCoursesNotJoined, setAllCoursesNotJoined ] = useState<CourseItemProps[]>([]);
+
+  // full all courses
+  const [allCourses, setAllCourses] = useState<CourseItemProps[]>([]);
 
   // recent search
   const [recentSearches, setRecentSearches] = useState([]);
@@ -100,11 +103,31 @@ const HomePage = () => {
       });
   };
 
+  // auth state 
   useEffect(() => {
     if (authState?.accessToken) {
       setText(authState.accessToken);
     }
   }, [authState]);
+
+  // get all courses
+  useEffect(() => {
+    getAllCourses().then((res) => {
+      const mappedCourses: CourseItemProps[] = res.data.map(
+        (course: any) => ({
+          id: course.id,
+          imgUrl: course.thumbnail,
+          courseName: course.title,
+          instructorName: course.instructor,
+          timestamp: new Date(course.timestamp),
+          rating: course.rating,
+          isUserEnrolled: course.isUserEnrolled,
+          topic: course.topic
+        })
+      );
+      setAllCourses(mappedCourses);
+    })
+  }, [])
 
   // get user's courses
   useEffect(() => {
@@ -125,6 +148,7 @@ const HomePage = () => {
             timestamp: new Date(course.timestamp),
             rating: course.rating,
             isUserEnrolled: course.isUserEnrolled,
+            topic: course.topic
           })
         );
         setCoursesJoined(mappedCourses);
@@ -144,9 +168,10 @@ const HomePage = () => {
             timestamp: new Date(course.timestamp),
             rating: course.rating,
             isUserEnrolled: course.isUserEnrolled,
+            topic: course.topic
           })
         );
-        setAllCourses(
+        setAllCoursesNotJoined(
           mappedCourses.filter((course) => course.isUserEnrolled === false)
         );
         setSuggestedCourses(
@@ -167,7 +192,7 @@ const HomePage = () => {
 
   // get user profile
   useEffect(() => {
-    let sortedCourses = [...allCourses];
+    let sortedCourses = [...allCoursesNotJoined];
   
     switch (selectedFilter[0]) {
       case 'All':
@@ -186,7 +211,7 @@ const HomePage = () => {
     }
   
     setSuggestedCourses(sortedCourses);
-  }, [selectedFilter, allCourses]);
+  }, [selectedFilter, allCoursesNotJoined]);
 
   // disable search filter
   const disableSearchFilter = () => {
@@ -213,6 +238,10 @@ const HomePage = () => {
             imgUrl: course.thumbnail,
             courseName: course.title,
             instructorName: course.instructor,
+            timestamp: new Date(course.timestamp),
+            rating: course.rating,
+            isUserEnrolled: course.isUserEnrolled,
+            topic: course.topic
           })
         );
         setSearchedCourses(mappedCourses);
@@ -230,12 +259,62 @@ const HomePage = () => {
     });
   };
 
+  // set up display search
+  const setupDisplaySearch = (display: boolean) => {
+      setDisplaySearch(display);
+  }
+
+  // set up display search result
+  const setupDisplaySearchResult = (display: boolean) => {
+      setDisplaySearchResult(display);
+  }
+
+  // filter by course length
+  async function filterByLength(
+    courses: CourseItemProps[],
+    minLength: number,
+    maxLength: number
+  ): Promise<CourseItemProps[]> {
+    const courseDetails = await Promise.all(
+      courses.map(course =>
+        getCourseOverview(course.id).then(res => ({
+          ...course,
+          length: res.data.lessons.length
+        }))
+      )
+    );
+  
+    return courseDetails.filter(course =>
+      course.length >= minLength && course.length <= maxLength
+    );
+  }
+  
+  // Main filter function combining all criteria
+  const handleFilterCourse = async (
+    rating: number[],
+    topics: string[],
+    length: number[]
+  ) => {
+    const basicFiltered = allCourses.filter(course =>
+      course.rating >= rating[0] &&
+      course.rating <= rating[1] &&
+      topics.includes(course.topic)
+    );
+  
+    const finalFiltered = await filterByLength(basicFiltered, length[0], length[1]);
+    setSearchedCourses(finalFiltered);
+    console.log(finalFiltered);
+
+    setDisplaySearchResult(true);
+    setDisplaySearch(true);
+  };
+
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
       <View className="flex-1 flex-col gap-3 mt-16 pb-4">
         {/* username */}
-        {displaySearch === false ? (
+        {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">
             <Text className="text-3xl text-cyan-800 font-bold">{userProfile.name || userProfile.username}</Text>
           </View>
@@ -295,12 +374,12 @@ const HomePage = () => {
         {/* Course joined */}
         <ScrollView className="w-full">
           <View className="flex-col gap-3 flex-1">
-            {displaySearch === false && (
+            {(displaySearch === false && displaySearchResult === false) && (
               <CourseJoined courseJoined={coursesJoined} />
             )}
 
             {/* suggested course */}
-            {displaySearch === false && (
+            {(displaySearch === false && displaySearchResult === false) && (
               <SuggestedCourse
                 courses={suggestedCourses}
                 filters={filters}
@@ -323,7 +402,12 @@ const HomePage = () => {
         {/* search filter */}
         {displaySearchFilter === true && (
           <View className="absolute left-0 bottom-0 z-[50]">
-            <SearchFilter disableSearchFilter={disableSearchFilter} />
+            <SearchFilter 
+              disableSearchFilter={disableSearchFilter} 
+              setupDisplaySearch={setupDisplaySearch}
+              setupDisplaySearchResult={setupDisplaySearchResult}
+              handleFilterCourse={handleFilterCourse}
+            />
           </View>
         )}
       </View>

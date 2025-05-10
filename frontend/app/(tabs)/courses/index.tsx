@@ -2,7 +2,7 @@ import { View, Text, ScrollView, TouchableOpacity, Pressable } from 'react-nativ
 import React, { useEffect, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
-import { getMyCourses, searchCourse } from '@/api/courseApi'
+import { getCourseOverview, getMyCourses, searchCourse } from '@/api/courseApi'
 import useAuthStore from '@/zustand/authStore'
 import CreateCourseModal from '@/components/Course/CreateCourseModal'
 import { useRouter } from 'expo-router'
@@ -121,7 +121,8 @@ const MyCourseScreen = () => {
                 instructorName: course.instructor,
                 timestamp: new Date(course.timestamp),
                 rating: course.rating,
-                isUserEnrolled: course.isUserEnrolled
+                isUserEnrolled: course.isUserEnrolled, 
+                topic: course.topic
             }));
 
             setCourses(mappedCourses);
@@ -181,14 +182,63 @@ const MyCourseScreen = () => {
         setSearchTrigger((prev) => !prev);
     };
 
+    // set up display search
+    const setupDisplaySearch = (display: boolean) => {
+        setDisplaySearch(display);
+    }
+
+    // set up display search result
+    const setupDisplaySearchResult = (display: boolean) => {
+        setDisplaySearchResult(display);
+    }
+
+    async function filterByLength(
+        courses: CourseItemProps[],
+        minLength: number,
+        maxLength: number
+      ): Promise<CourseItemProps[]> {
+        const courseDetails = await Promise.all(
+          courses.map(course =>
+            getCourseOverview(course.id).then(res => ({
+              ...course,
+              length: res.data.lessons.length
+            }))
+          )
+        );
+      
+        return courseDetails.filter(course =>
+          course.length >= minLength && course.length <= maxLength
+        );
+      }
+      
+      // Main filter function combining all criteria
+      const handleFilterCourse = async (
+        rating: number[],
+        topics: string[],
+        length: number[]
+      ) => {
+        const basicFiltered = courses.filter(course =>
+          course.rating >= rating[0] &&
+          course.rating <= rating[1] &&
+          topics.includes(course.topic)
+        );
+      
+        const finalFiltered = await filterByLength(basicFiltered, length[0], length[1]);
+        setSearchedCourses(finalFiltered);
+        console.log(finalFiltered);
+    
+        setDisplaySearchResult(true);
+        setDisplaySearch(true);
+    };
+
     return (
         <View className='flex-1'>
             <View
                 id='my-course-screen'
-                className='flex-1 px-6 pt-16 bg-white'
+                className='flex-1 px-4 pt-16 bg-white'
             >
                 {displaySearch === false && 
-                    <Text className="text-3xl text-cyan-800 font-bold mb-4">My Courses</Text>
+                    <Text className="text-3xl text-cyan-800 font-bold mb-2 ml-2">My Courses</Text>
                 }
 
                 {displaySearch === true && 
@@ -289,7 +339,12 @@ const MyCourseScreen = () => {
             {/* search filter */}
             {displaySearchFilter === true && 
                 <View className="absolute bottom-0 z-[50]">
-                    <SearchFilter disableSearchFilter={disableSearchFilter} />
+                    <SearchFilter 
+                        disableSearchFilter={disableSearchFilter} 
+                        setupDisplaySearch={setupDisplaySearch}
+                        setupDisplaySearchResult={setupDisplaySearchResult}
+                        handleFilterCourse={handleFilterCourse}
+                    />
                 </View>
             }
 

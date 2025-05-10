@@ -11,7 +11,8 @@ export type CourseItemProps = {
     instructorName: string,
     timestamp: Date,
     rating: number,
-    isUserEnrolled: boolean
+    isUserEnrolled: boolean, 
+    topic: string
 }
 
 const CourseItem = (props: CourseItemProps) => {

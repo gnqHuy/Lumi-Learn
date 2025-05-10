@@ -90,7 +90,7 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
               type={notification.type}
             />
             <View className="flex-1">
-              <Text className="text-[14px] font-medium text-gray-900" numberOfLines={3}>
+              <Text className="text-[14px] leading-6 font-medium text-gray-900" numberOfLines={3}>
                 {notification.content}
               </Text>
               <View className="flex-row justify-between mt-1">

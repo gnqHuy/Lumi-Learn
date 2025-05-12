@@ -11,7 +11,7 @@ interface Props {
 
 const CreateAnswerOption: React.FC<Props> = ({ index, content, isCorrect, onChange }) => {
     return (
-        <View className='flex-row items-center border p-4 rounded-xl'>
+        <View className='flex-row items-center border border-gray-400 p-4 rounded-xl'>
             <TextInput
                 placeholder={`Option ${index + 1}`}
                 placeholderTextColor={"#9CA3AF"}
@@ -21,9 +21,9 @@ const CreateAnswerOption: React.FC<Props> = ({ index, content, isCorrect, onChan
             />
             <TouchableOpacity onPress={() => onChange(content, !isCorrect)}>
                 {isCorrect ? (
-                    <AntDesign name="checkcircle" size={20} color="green" />
+                    <AntDesign name="checkcircle" size={20} color="#16a34a" />
                 ) : (
-                    <Feather name="circle" size={20} color="gray" />
+                    <Feather name="circle" size={20} color="#9ca3af" />
                 )}
             </TouchableOpacity>
         </View>

@@ -95,7 +95,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
             </View>
             <TouchableHighlight
                 id='submit-button'
-                className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
+                className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
                 onPress={() => router.push(`/(tabs)/courses/${courseId}`)}
                 underlayColor={"rgba(0,0,0,0.25)"}
                 accessible={true}

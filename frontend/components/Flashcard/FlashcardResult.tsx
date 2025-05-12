@@ -64,7 +64,7 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
             </View>
             <TouchableOpacity
                 id='submit-button'
-                className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
+                className='mt-16 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
                 onPress={() => router.push(`/(tabs)/courses/${courseId}`)}
                 activeOpacity={0.7}
             >
@@ -74,11 +74,11 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
             </TouchableOpacity>
             <TouchableOpacity
                 id='submit-button'
-                className='flex justify-center items-center w-full py-4 border border-cyan-900 bg-cyan-200 rounded-xl'
+                className='flex justify-center items-center w-full py-4 border border-cyan-800 bg-cyan-200 rounded-xl'
                 onPress={() => handleClose()}
                 activeOpacity={0.68}
             >
-                <Text className='text-lg text-cyan-900 font-semibold'>
+                <Text className='text-lg text-cyan-800 font-semibold'>
                     {learning == 0 ? 'Restart flashcard set' : 'Continue learning'}
                 </Text>
             </TouchableOpacity>

@@ -9,7 +9,8 @@ import { createQuizWithContent } from '@/api/quizApi';
 
 const CreateQuizScreen = () => {
     const [questions, setQuestions] = useState<QuestionWithContent[]>([]);
-    const [validationErrors, setValidationErrors] = useState<boolean[]>([]);
+    const [ questionTitleErrors, setQuestionTitleErrors ] = useState<boolean[]>([]);
+    const [ answerOptionErrors, setAnswerOptionErrors ] = useState<boolean[]>([]);
     const [title, setTitle] = useState('');
     const [titleError, setTitleError] = useState(false);
 
@@ -21,21 +22,26 @@ const CreateQuizScreen = () => {
             content: '',
             answerOptions: Array(4).fill({ content: '', isCorrect: false })
         }]);
-        setValidationErrors([...validationErrors, true]);
+        setQuestionTitleErrors([...questionTitleErrors, true]);
+        setAnswerOptionErrors([...answerOptionErrors, true]);
     };
 
-    const handleQuestionChange = (index: number, question: QuestionWithContent, hasError: boolean) => {
+    const handleQuestionChange = (index: number, question: QuestionWithContent, titleError: boolean, answerOptionError: boolean) => {
         const updated = [...questions];
         updated[index] = question;
         setQuestions(updated);
 
-        const updatedErrors = [...validationErrors];
-        updatedErrors[index] = hasError;
-        setValidationErrors(updatedErrors);
+        const titleErrors = [...questionTitleErrors];
+        titleErrors[index] = titleError;
+        setQuestionTitleErrors(titleErrors);
+
+        const optionErrors = [...answerOptionErrors];
+        optionErrors[index] = answerOptionError;
+        setAnswerOptionErrors(optionErrors);
     };
 
     const handleCreateQuiz = () => {
-        const hasError = validationErrors.some(e => e);
+        const hasError = questionTitleErrors.some(e => e) || answerOptionErrors.some(e => e);
         const isTitleEmpty = !title.trim();
         setTitleError(isTitleEmpty);
 
@@ -78,7 +84,7 @@ const CreateQuizScreen = () => {
                         setTitle(text);
                         setTitleError(false);
                     }}
-                    className={`border-b-2 ${titleError ? 'border-red-500' : 'border-gray-500'} p-4 rounded mb-2 text-2xl font-semibold`}
+                    className={`border-b-2 ${titleError ? 'border-red-500' : 'border-gray-400'} p-4 rounded mb-2 text-2xl font-semibold`}
                     style={{ textAlignVertical: 'center' }}
                 />
                 {titleError && <Text className='text-sm text-red-500'>* Please enter exam title</Text>}
@@ -96,23 +102,24 @@ const CreateQuizScreen = () => {
                             key={i}
                             index={i}
                             question={q}
-                            hasError={validationErrors[i]}
+                            titleError={questionTitleErrors[i]}
+                            answerOptionError={answerOptionErrors[i]}
                             onChange={handleQuestionChange}
                         />
                     ))}
 
                     <TouchableOpacity
-                        className='w-full p-4 bg-gray-200 border rounded-xl border-black items-center justify-center'
+                        className='w-full p-4 bg-gray-200 border rounded-xl border-cyan-600 items-center justify-center'
                         onPress={handleAddQuestion}
                         activeOpacity={0.55}
                     >
-                        <Text className='text-lg text-black font-semibold'>Add question</Text>
+                        <Text className='text-lg text-cyan-700 font-semibold'>Add question</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
 
             <TouchableOpacity
-                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-black rounded-xl'
+                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
                 activeOpacity={0.55}
                 onPress={handleCreateQuiz}
             >

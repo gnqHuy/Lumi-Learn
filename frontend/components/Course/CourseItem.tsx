@@ -20,6 +20,11 @@ export type CourseItemProps = {
 const CourseItem = (props: CourseItemProps) => {
     const [ isPressed, setIsPressed ] = useState(false);
     const router = useRouter();
+    
+    const trim = (input: string, maxLength: number) => {
+        if (input.length <= maxLength) return input;
+        return `${input.substring(0, maxLength - 3)}...`;
+    }
 
     // zustand for course
     const setSelectedCourseId = useCourseStore((state) => state.setSelectedCourseId);
@@ -56,7 +61,7 @@ const CourseItem = (props: CourseItemProps) => {
                             id='course-name'
                             className='text-gray-600 font-bold text-lg'
                         >
-                            {props.courseName}
+                            {trim(props.courseName, 20)}
                         </Text>
                         <View className='flex-row items-center'>
                             <Text className='text-sm text-gray-400 mr-2'>

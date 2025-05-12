@@ -115,7 +115,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
 
         {/* comfirm button */}
         <View className = "mt-[5rem]">
-            <Pressable className = "relative left-[5%] w-[90%] rounded-2xl py-[0.7rem] bg-cyan-800" onPress = {handleChangePassword}>
+            <Pressable className = "relative left-[5%] w-[90%] rounded-2xl py-[0.7rem] bg-cyan-700" onPress = {handleChangePassword}>
                 <Text className = "text-xl text-center text-white">Confirm</Text>
             </Pressable>
         </View>

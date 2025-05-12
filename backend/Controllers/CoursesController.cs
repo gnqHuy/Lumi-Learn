@@ -58,6 +58,7 @@ namespace LumiLearn.Controllers
                     Thumbnail = c.Thumbnail,
                     Topic = c.Topic.Name,
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                    NumberOfLessons = c.Lessons.Count,
                     NumberOfRatings = c.Feedbacks.Count,
                     Timestamp = c.Timestamp,
                     IsUserEnrolled = enrolledCourseIds.Contains(c.Id),
@@ -149,6 +150,7 @@ namespace LumiLearn.Controllers
                     Thumbnail = c.Thumbnail,
                     Topic = c.Topic.Name,
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
+                    NumberOfLessons = c.Lessons.Count,
                     NumberOfRatings = c.Feedbacks.Count,
                     Timestamp = c.Timestamp,
                 })

@@ -123,7 +123,7 @@ const CreateCoursePage = () => {
   }, []);
 
   return (
-    <View className="flex-col flex-1 items-center justify-center px-6">
+    <View className="flex-col flex-1 bg-white items-center justify-center px-6">
       <ScrollView horizontal={false} showsVerticalScrollIndicator={false} className="w-full">
         <View className="w-full flex-col items-center justify-center">
           <TouchableOpacity onPress={handleImagePicker}>
@@ -140,17 +140,17 @@ const CreateCoursePage = () => {
           </TouchableOpacity>
 
           <View className="w-full flex-col items-center justify-center gap-6">
-            <View className="w-full">
+            <View className="w-full bg-red-100">
               <Text className={`text-sm ml-1 mb-2 ${titleError ? 'text-red-600' : 'text-slate-700'}`}>
                 Course title
               </Text>
               <TextInput
                 placeholder="Enter course title"
                 placeholderTextColor="#9CA3AF"
-                className={`w-full p-4 rounded-xl text-3xl font-semibold bg-transparent border-b-2 ${
+                className={`w-full bg-blue-100 p-4 rounded-xl text-3xl font-semibold bg-transparent border-b-2 ${
                   titleError ? 'border-red-500' : 'border-gray-400'
                 }`}
-                style={{ textAlignVertical: 'center' }}
+                style={{ textAlignVertical: 'center', width: 'auto' }}
                 value={titleInput}
                 onChangeText={(text) => {
                   setTitleInput(text);
@@ -194,6 +194,9 @@ const CreateCoursePage = () => {
               </Text>
               <PillSelection
                 values={topics}
+                defaultColor='bg-zinc-100'
+                selectedColor='bg-cyan-700'
+                textColor='text-cyan-700'
                 selected={selectedTopics}
                 setSelected={setSelectedTopics}
                 multiSelect={false}
@@ -205,7 +208,7 @@ const CreateCoursePage = () => {
             </View>
 
             <TouchableOpacity
-              className="bg-gray-400 py-5 rounded-xl items-center w-full"
+              className="bg-cyan-700 py-5 rounded-xl items-center w-full"
               onPress={handleCreateCourse}
               activeOpacity={0.6}
             >
@@ -213,11 +216,11 @@ const CreateCoursePage = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="bg-gray-200 border border-black py-5 rounded-xl items-center w-full"
+              className="bg-gray-100 border border-cyan-600 py-5 rounded-xl items-center w-full"
               onPress={() => router.back()}
               activeOpacity={0.6}
             >
-              <Text className="text-gray-700">Cancel</Text>
+              <Text className="text-cyan-700 font-semibold">Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>

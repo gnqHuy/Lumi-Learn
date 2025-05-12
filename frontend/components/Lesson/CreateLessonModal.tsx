@@ -59,7 +59,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
                     className="flex-col gap-4 items-center w-11/12 bg-white rounded-2xl p-6 shadow-lg"
                     onStartShouldSetResponder={() => true}
                 >
-                    <Text className="text-xl font-bold mb-4">Create New Lesson</Text>
+                    <Text className="text-xl text-cyan-700 font-bold mb-4">Create New Lesson</Text>
 
                     <View
                         id='create-lesson-form'
@@ -93,7 +93,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
                         </View>
     
                         <TouchableOpacity
-                            className="bg-gray-400 py-5 rounded-xl items-center w-full"
+                            className="bg-cyan-700 py-5 rounded-xl items-center w-full"
                             onPress={handleCreateCourse}
                             activeOpacity={0.6}
                         >
@@ -101,11 +101,11 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
                         </TouchableOpacity>
     
                         <TouchableOpacity
-                            className="bg-gray-200 border border-black py-5 rounded-xl items-center w-full"
+                            className="bg-gray-200 border border-cyan-600 py-5 rounded-xl items-center w-full"
                             onPress={() => onClose(false)}
                             activeOpacity={0.6}
                         >
-                            <Text className="text-gray-700">Cancel</Text>
+                            <Text className="text-cyan-700 font-semibold">Cancel</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

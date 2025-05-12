@@ -15,7 +15,9 @@ export type AddRatingProps = {
 
 const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setRating, isRatedByUser, setIsRatedByUser }) => {
     const handleRating = (score: number) => {
-        setRating(score);
+        if (!isRatedByUser) {
+            setRating(score);
+        }
     }
 
     const handleSubmitRating = () => {

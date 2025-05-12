@@ -23,7 +23,7 @@ const LessonList = ({ lessons }: LessonListProps) => {
             >
                 <View
                     id='lesson-list-container'
-                    className='flex-col flex-1 items-center gap-3 pb-8'
+                    className='flex-col flex-1 items-center gap-3 pb-10'
                 >
                     {lessons?.map((lesson, index) => (
                         <LessonItem key={index} lesson={lesson} lessonNumber={index + 1}/>

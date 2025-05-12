@@ -46,7 +46,7 @@ const CoursePreview = () => {
   return (
     <View className="flex-1 bg-white">
         <View className="mt-14 px-5 flex-row items-center justify-between mb-2">
-            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.back()} />
+            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.push('/(tabs)/home')} />
             <Text className="text-2xl font-bold text-cyan-800">Course Preview</Text>
             <View className="mx-2" />
         </View>
@@ -84,7 +84,7 @@ const CoursePreview = () => {
                         </Text>
                     </View>
                 </View>
-                <Pressable className="border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
+                <Pressable className="border-solid bg-yellow-400 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
                     <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
                 </Pressable>
             </View>

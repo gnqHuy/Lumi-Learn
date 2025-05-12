@@ -51,11 +51,11 @@ const CourseOverviewPage = () => {
   }, []);
 
   return (
-    <View className='bg-white'>
-    <ScrollView className='bg-white mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+    <View className='bg-white flex-1'>
+    <ScrollView className='mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
         <View className=" px-5 pt-5 pb-2 flex-row bg-white items-center justify-between mb-2">
-            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.back()} />
-            <Text className="text-2xl font-bold text-cyan-800">Course Details</Text>
+            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.push('/(tabs)/courses')} />
+            <Text className="text-xl font-bold text-cyan-800">Course Details</Text>
             <View className="mx-2" />
         </View>
         <View id="course-overview-screen" className="flex-1">
@@ -97,7 +97,7 @@ const CourseOverviewPage = () => {
                             </Text>
                         </View>
                     </View>
-                    <Pressable className="border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
+                    <Pressable className="border-solid bg-yellow-400 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
                         <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
                     </Pressable>
                 </View>
@@ -167,26 +167,25 @@ const CourseOverviewPage = () => {
             )}
             </View>
         
-            {isTeacher() && activeTab === 'lesson' && (
-                <View className="w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute">
-                <TouchableOpacity
-                    id="submit-button"
-                    className="flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl"
-                    onPress={() => setIsLessonModalOpen(true)}
-                    activeOpacity={0.55}
-                    style={{ boxShadow: '0px 0px 20px 20px rgba(243, 243, 243, 0.9)' }}
-                >
-                    <Text className="text-lg text-white font-semibold">Add lesson</Text>
-                </TouchableOpacity>
-                </View>
-            )}
         </View>
 
       {isLessonModalOpen && (
         <CreateLessonModal onClose={setIsLessonModalOpen} setRefresh={setRefreshPage} />
       )}
     </ScrollView>
-
+      {isTeacher() && activeTab === 'lesson' && (
+        <View className="w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute">
+        <TouchableOpacity
+            id="submit-button"
+            className="flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl"
+            onPress={() => setIsLessonModalOpen(true)}
+            activeOpacity={0.55}
+            style={{ boxShadow: '0px 0px 20px 20px rgba(243, 243, 243, 0.5)' }}
+        >
+            <Text className="text-lg text-white font-semibold">Add lesson</Text>
+        </TouchableOpacity>
+        </View>
+    )}
     </View>
   );
 };

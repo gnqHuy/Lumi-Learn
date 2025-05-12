@@ -1,3 +1,4 @@
+import { Entypo } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useState } from 'react';
 import { View, TextInput, Text, Pressable } from 'react-native';
@@ -17,9 +18,9 @@ const CreateFlashcard = ({ index, term, definition, hasError, onChange }: Flashc
         <View
             id="flashcard-item"
             className={`flex-col px-3 w-full rounded-xl 
-                ${isPressed ? 'bg-slate-100 ' : 'bg-gray-50 '}
+                ${isPressed ? 'bg-slate-100 ' : 'bg-slate-50 '}
                 ${hasError ? 'border border-red-500' : ''}`}
-            style = {{boxShadow: hasError ? "0px 2px 8px rgba(255,0,0,0.5)" : "0px 2px 8px rgba(0,0,0,0.15)"}}
+                style = {{boxShadow: hasError ? "0px 0px 6px 0px rgba(255,0,0,0.3)" : "0px 4px 6px rgba(0,0,0,0.08)"}}
         >
             <Pressable
                 id="flashcard-top"
@@ -35,9 +36,9 @@ const CreateFlashcard = ({ index, term, definition, hasError, onChange }: Flashc
                     Flashcard {index + 1}
                 </Text>
                 {isOpen ? (
-                    <AntDesign name="up" size={18} color={hasError ? 'red' : 'black'}/>
+                    <Entypo name="chevron-up" size={20} color={hasError ? 'red' : 'gray'}/>
                 ) : (
-                    <AntDesign name="down" size={18} color={hasError ? 'red' : 'black'}/>
+                    <Entypo name="chevron-down" size={20} color={hasError ? 'red' : 'gray'}/>
                 )}
             </Pressable>
             {isOpen ? 

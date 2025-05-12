@@ -62,17 +62,17 @@ const CreateFlashcardSetScreen = () => {
     return (
         <View
             id='create-flashcard-set-screen'
-            className='flex-col flex-1 items-center gap-4 px-6 py-2'
+            className='flex-col bg-white flex-1 items-center gap-4 px-6 py-2'
         >
             <View 
                 id="top-nav"
                 className="flex-row mt-14 mb-4 items-center w-full"
             >
                 <Pressable className="z-10" onPress={() => router.back()}>
-                    <AntDesign name="arrowleft" size={24} />
+                    <AntDesign name="arrowleft" size={24} color={"#155e75"} />
                 </Pressable>
                 <View className="absolute left-0 right-0 items-center">
-                    <Text className="w-2/3 text-center text-xl font-semibold">
+                    <Text className="w-2/3 text-cyan-800 text-center text-xl font-bold">
                         Create flashcard set
                     </Text>
                 </View>
@@ -105,31 +105,33 @@ const CreateFlashcardSetScreen = () => {
             >
                 <View
                     id='flashcard-list-container'
-                    className='flex-col gap-3 pb-8 px-2 pt-2'
+                    className='flex-col gap-6 pb-8 px-2'
                 >
-                    {flashcards.map((flashcard, index) => (
-                        <CreateFlashcard
-                            key={index}
-                            index={index}
-                            term={flashcard.term}
-                            definition={flashcard.definition}
-                            hasError={validationErrors[index]}
-                            onChange={handleFlashcardChange}
-                        />
-                    ))}
+                    <View className='flex-col gap-3'>
+                        {flashcards.map((flashcard, index) => (
+                            <CreateFlashcard
+                                key={index}
+                                index={index}
+                                term={flashcard.term}
+                                definition={flashcard.definition}
+                                hasError={validationErrors[index]}
+                                onChange={handleFlashcardChange}
+                            />
+                        ))}
+                    </View>
                     <TouchableOpacity
                         id='add-flashcard-button'
-                        className='w-full p-4 bg-gray-200 border rounded-xl border-black items-center justify-center'
+                        className='w-full p-4 bg-gray-200 border rounded-xl border-cyan-600 items-center justify-center'
                         onPress={() => handleAddFlashcard()}
                         activeOpacity={0.55}
                     >
-                        <Text className='text-lg text-black font-semibold'>Add flashcard</Text>
+                        <Text className='text-lg text-cyan-700 font-semibold'>Add flashcard</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
             <TouchableOpacity
                 id='add-flashcard-set-button'
-                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-gray-500 rounded-xl'
+                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
                 activeOpacity={0.55}
                 onPress={() => handleCreateFlashcardSet()}
             >

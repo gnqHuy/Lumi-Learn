@@ -61,7 +61,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         id="lesson-name"
                         className="font-semibold text-cyan-700"
                     >
-                        {lesson.title}
+                        {trim(lesson.title, 30)}
                     </Text>
                 </View>
                 {isOpen ? (

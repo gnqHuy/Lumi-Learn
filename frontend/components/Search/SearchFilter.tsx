@@ -199,7 +199,7 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
             </Pressable>
             <Pressable 
                 className = {`py-[0.5rem] w-[48%] rounded-xl
-                    ${isApplyButtonPressed ? 'bg-cyan-800' : 'bg-cyan-700'}`}
+                    ${isApplyButtonPressed ? 'bg-cyan-700' : 'bg-cyan-600'}`}
                 onPress={() => applyFilter()}
                 onPressIn={() => setApplyButtonPressed(true)}
                 onPressOut={() => setApplyButtonPressed(false)}

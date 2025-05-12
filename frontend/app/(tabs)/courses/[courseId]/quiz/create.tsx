@@ -65,10 +65,10 @@ const CreateQuizScreen = () => {
             {/* Top nav */}
             <View className="flex-row mt-14 mb-4 items-center w-full">
                 <Pressable className="z-10" onPress={() => router.back()}>
-                    <AntDesign name="arrowleft" size={24} />
+                    <AntDesign name="arrowleft" size={24} color={"#155e75"} />
                 </Pressable>
                 <View className="absolute left-0 right-0 items-center">
-                    <Text className="w-2/3 text-center text-xl font-semibold">
+                    <Text className="w-2/3 text-cyan-800 text-center text-xl font-bold">
                         Create a new Quiz
                     </Text>
                 </View>

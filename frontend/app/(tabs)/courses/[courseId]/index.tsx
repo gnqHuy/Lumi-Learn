@@ -52,9 +52,9 @@ const CourseOverviewPage = () => {
 
   return (
     <View className='bg-white'>
-    <ScrollView className='bg-white mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+    <ScrollView className='bg-white h-full mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
         <View className=" px-5 pt-5 pb-2 flex-row bg-white items-center justify-between mb-2">
-            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.back()} />
+            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.push(`/(tabs)/courses`)} />
             <Text className="text-2xl font-bold text-cyan-800">Course Details</Text>
             <View className="mx-2" />
         </View>

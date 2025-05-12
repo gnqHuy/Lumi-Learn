@@ -11,6 +11,6 @@ export type User = {
 export type ChangeProfile = {
     email: string, 
     phone: string, 
-    birthday: Date | null, 
+    birthday: Date, 
     name: string
 }

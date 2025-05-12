@@ -80,6 +80,15 @@ const HomePage = () => {
   // user profile
   const userProfile = useAuthStore.getState().authState?.user;
 
+  // rating filter of course
+  const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+
+  // course length range
+  const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+
+  // topics chosen
+  const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
+
   const handleOnClick = () => {
     const request = {
       username: username,
@@ -245,11 +254,11 @@ const HomePage = () => {
           })
         );
         setSearchedCourses(mappedCourses);
-        setSearchTrigger((prev) => !prev);
       })
       .catch((err) => {
         console.log(err);
       });
+      setSearchTrigger((prev) => !prev);
   };
 
   // handle auto fill and search keyword
@@ -268,6 +277,7 @@ const HomePage = () => {
   // set up display search
   const setupDisplaySearch = (display: boolean) => {
       setDisplaySearch(display);
+      setSearchTrigger(prev => !prev)
   }
 
   // set up display search result
@@ -419,6 +429,12 @@ const HomePage = () => {
               setupDisplaySearch={setupDisplaySearch}
               setupDisplaySearchResult={setupDisplaySearchResult}
               handleFilterCourse={handleFilterCourse}
+              ratingRange={ratingRange}
+              setRatingRange={setRatingRange}
+              courseLengthRange={courseLengthRange}
+              setCourseLengthRange={setCourseLengthRange}
+              selectedTopics={selectedTopics}
+              setSelectedTopics={setSelectedTopics}
             />
           </View>
         )}

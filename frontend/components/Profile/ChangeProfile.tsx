@@ -3,10 +3,11 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { updateProfileApi } from '@/api/userApi';
 import { router } from 'expo-router';
 import { showNotification } from '../Toast/Toast';
+import moment from 'moment-timezone';
 
 
 interface ChangeProfileProps {
@@ -14,12 +15,13 @@ interface ChangeProfileProps {
     setupDisplayInformation: (display: boolean) => void;
     userProfile: User
     resetProfile: () => void;
+    activateChangeBirthday: () => void;
 }
 
-const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, userProfile, resetProfile}: ChangeProfileProps) => {
+const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, userProfile, resetProfile, activateChangeBirthday}: ChangeProfileProps) => {
     // inputs
     const [fullNameInput, setFullNameInput] = useState(userProfile.name);
-    const [birthdayInput, setBirthdayInput] = useState(userProfile.birthday ? userProfile.birthday : null);
+    const [birthdayInput, setBirthdayInput] = useState<Date>(userProfile.birthday ? new Date(userProfile.birthday) : new Date());
     const [emailInput, setEmailInput] = useState(userProfile.email);
     const [phoneInput, setPhoneInput] = useState(userProfile.phone);
 
@@ -31,14 +33,6 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
     const [birthdayError, setBirthdayError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [phoneError, setPhoneError] = useState("");
-
-    // on change of date time picker
-    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
-        if (selectedDate) {
-            setBirthdayInput(new Date(selectedDate)); // Save the selected date as a Date object
-        }
-        setDisplayDatePicker(false); // Close the date picker
-    };
 
     // check empty
     const checkInputEmpty = () => {
@@ -67,7 +61,11 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
                 const payload = {
                     email: emailInput, 
                     phone: phoneInput, 
-                    birthday: birthdayInput, 
+                    birthday: new Date(
+                        new Date(birthdayInput).getFullYear(), 
+                        new Date(birthdayInput).getMonth(),
+                        new Date(birthdayInput).getDate() + 1
+                    ), 
                     name: fullNameInput
                 }
                 updateProfileApi(payload).then((response) => {
@@ -153,15 +151,11 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
                         setDisplayDatePicker(true);
                         setBirthdayError("");
                     }}>
-                    <Text>
-                        {birthdayInput
-                            ? new Intl.DateTimeFormat('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: '2-digit',
-                            }).format(new Date(birthdayInput))
-                            : 'Select a date'}
-                    </Text>
+                    <Text>{new Date(birthdayInput).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }).replace(/ /g, ' ')}</Text>
                     </Pressable>
                 </View>
                 {birthdayError && 
@@ -172,12 +166,20 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
             {/* date picker */}
             {displayDatePicker === true && 
                 <View className = "">
-                    <DateTimePicker 
-                        value = {birthdayInput ? new Date(birthdayInput) : new Date()}
-                        mode = {'date'}
-                        onChange={onChange}
-                        style = {{backgroundColor: 'gray', position: 'relative', left: 20, borderRadius: 5, marginTop: 10, paddingRight: 5}}
+                    <DateTimePickerModal 
+                        isVisible = {displayDatePicker}
+                        mode = 'date'
+                        display='spinner'
+                        date = {birthdayInput ? new Date(birthdayInput) : new Date()}
+                        onCancel={() => setDisplayDatePicker(false)}
                         maximumDate={new Date()}
+                        onConfirm={(date) => {
+                            const timezone = "Asia/Bangkok";
+                            const localDate = moment(date).tz(timezone).startOf('day').toDate();
+                            setBirthdayInput(localDate);
+                            setDisplayDatePicker(false);
+                            activateChangeBirthday();
+                        }}
                     />
                 </View>
             }

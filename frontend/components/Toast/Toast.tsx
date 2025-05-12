@@ -32,6 +32,7 @@ const { NotificationsProvider, useNotifications } = createNotifications({
         borderRadius: 10,
         accentColor: '#dc3545',
         defaultIconType: 'color',
+        multiline: 3,
         leftIconSource: require('../../assets/images/error.png'),
       },
       infoConfig: {
@@ -44,6 +45,7 @@ const { NotificationsProvider, useNotifications } = createNotifications({
         borderRadius: 10,
         accentColor: '#17a2b8',
         defaultIconType: 'color',
+        multiline: 3,
         leftIconSource: require('../../assets/images/info.png'),
       }
     },

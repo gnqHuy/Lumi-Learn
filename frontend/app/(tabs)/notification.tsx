@@ -78,11 +78,18 @@ const NotificationPage = () => {
       }, 50);
     }
   };
+  console.log(notifications.length)
 
   return (
     <View className="flex-1 bg-white pt-20">
       <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4">Notifications</Text>
-
+      {notifications.length === 0 && (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-2xl text-gray-600 font-semibold">
+            You have no notifications
+          </Text>
+        </View>
+      )}
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}

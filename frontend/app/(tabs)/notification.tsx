@@ -78,7 +78,6 @@ const NotificationPage = () => {
       }, 50);
     }
   };
-  console.log(notifications.length)
 
   return (
     <View className="flex-1 bg-white pt-20">

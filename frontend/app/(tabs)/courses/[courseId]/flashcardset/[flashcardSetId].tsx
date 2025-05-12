@@ -42,6 +42,8 @@ const FlashcardSetPage = () => {
     const termRef = useRef(null);
     const fakeRef = useRef(null);
 
+    const [isHolding, setIsHolding] = useState(false);
+
     const flipCard = () => {
         const newFlipped = !isFlipped;
         setIsFlipped(newFlipped);
@@ -60,14 +62,13 @@ const FlashcardSetPage = () => {
 
         const node = findNodeHandle(termRef.current);
         const fakeNode = findNodeHandle(fakeRef.current);
-        if (node && fakeNode) {
+        if (node && fakeNode && !(index == flashcards.length - 1)) {
             AccessibilityInfo.setAccessibilityFocus(fakeNode);
             setTimeout(() => {
                 AccessibilityInfo.announceForAccessibility('Moved to next Flashcard');
                 AccessibilityInfo.setAccessibilityFocus(node);
             }, 300);
         }
-        console.log("nextCard() active");
     };
 
     const addToLearning = () => {
@@ -97,12 +98,15 @@ const FlashcardSetPage = () => {
             if (event.translationX < -threshold) {
                 runOnJS(setIsKnown)(false);
                 runOnJS(setIsLearning)(true);
+                runOnJS(setIsHolding)(false);
             } else if (event.translationX > threshold) {
                 runOnJS(setIsLearning)(false);
                 runOnJS(setIsKnown)(true);
+                runOnJS(setIsHolding)(false);
             } else {
                 runOnJS(setIsLearning)(false);
                 runOnJS(setIsKnown)(false);
+                runOnJS(setIsHolding)(true);
             }
             
         })
@@ -114,7 +118,7 @@ const FlashcardSetPage = () => {
             if (event.translationX < -threshold) {
                 const currentLearningCount = learningCount + 1;
                 runOnJS(nextCard)();
-                translateX.value = withTiming(-width, {duration: 400}, () => {
+                translateX.value = withTiming(-width, {duration: 300}, () => {
                     runOnJS(setLearningCount)(currentLearningCount);
                     runOnJS(addToLearning)();
                     rotateY.value = 0;
@@ -124,7 +128,7 @@ const FlashcardSetPage = () => {
             } else if (event.translationX > threshold) {
                 const currentKnowCount = knowCount + 1;
                 runOnJS(nextCard)();
-                translateX.value = withTiming(width, {duration: 400}, () => {
+                translateX.value = withTiming(width, {duration: 300}, () => {
                     runOnJS(setKnowCount)(currentKnowCount);
                     rotateY.value = 0;
                     translateX.value = 0;
@@ -134,6 +138,7 @@ const FlashcardSetPage = () => {
                 translateX.value = withTiming(0);
                 translateY.value = withTiming(0);
             }
+            runOnJS(setIsHolding)(false);
         });
 
 
@@ -149,7 +154,7 @@ const FlashcardSetPage = () => {
             { rotateY: `${interpolate(rotateY.value, [0, 180], [0, 180])}deg` },
         ],
         backfaceVisibility: "hidden",
-        // display: !isFlipped ? 'flex' : 'none',
+        display: !isFlipped ? 'flex' : 'none',
     }));
 
     const backStyle = useAnimatedStyle(() => ({
@@ -160,7 +165,7 @@ const FlashcardSetPage = () => {
         position: "absolute",
         top: 0,
         backfaceVisibility: "hidden",
-        // display: isFlipped ? 'flex' : 'none',
+        display: isFlipped ? 'flex' : 'none',
     }));
 
     const containerStyle = useAnimatedStyle(() => ({
@@ -172,10 +177,39 @@ const FlashcardSetPage = () => {
             AccessibilityInfo.announceForAccessibility(
                 "Before you start, after you learned a flashcard, use double tab and hold, and swipe right if you already known that, or swipe left if you want to relearn after that. Learn well!"
             );
-        }, 5000);
+        }, 4000);
     
         return () => clearTimeout(timeout);
     }, []);
+
+    useEffect(() => {
+        if (isKnown) {
+            AccessibilityInfo.announceForAccessibility(
+                "Known area. Unhold to mark this flashcard known"
+            );
+        }
+    }, [isKnown]);
+
+    useEffect(() => {
+        if (isLearning) {
+            AccessibilityInfo.announceForAccessibility(
+                "Learning area. Unhold to mark this flashcard learning"
+            );
+        }
+    }, [isLearning]);
+
+    useEffect(() => {
+        if (isHolding) {
+            AccessibilityInfo.announceForAccessibility(
+                "Holding. Swipe right to mark known or left to mark learning"
+            );
+        } else if (!isKnown && !isLearning && !isCompleted) {
+            console.log(isCompleted);
+            AccessibilityInfo.announceForAccessibility(
+                "Unhold"
+            );
+        }
+    }, [isHolding]);
 
     useEffect(() => {
         GetFlashcards(flashcardSetId as string)
@@ -278,11 +312,9 @@ const FlashcardSetPage = () => {
                                 <Animated.View
                                     ref={termRef}
                                     style={[frontStyle]}
-                                    className={!isFlipped ? `${flashcardStyle()}` : 'hidden'}
-                                    // className={frontFlashcardStyle()}
+                                    className={flashcardStyle()}
                                     accessible={true}
-                                    accessibilityLabel={`Term ${index + 1}: ${getTextSafe(currentCard?.term)}`}
-                                    accessibilityHint='Double tab to flip to definition'
+                                    accessibilityLabel={`Term ${index + 1}: ${getTextSafe(currentCard?.term)}. . . Double tab to flip to definition`}
                                 >
                                     <Text className={`font-semibold ${textStyle()}`}>
                                         {getTextSafe(currentCard?.term)}
@@ -291,11 +323,10 @@ const FlashcardSetPage = () => {
 
                                 <Animated.View
                                     style={[backStyle]}
-                                    className={isFlipped ? `${flashcardStyle()}` : 'hidden'}
-                                    // className={backFlashcardStyle()}
+                                    ref={fakeRef}
+                                    className={flashcardStyle()}
                                     accessible={true}
-                                    accessibilityLabel={`Definition ${index + 1}: ${getTextSafe(currentCard?.definition)}`}
-                                    accessibilityHint='Double tab to flip to term'
+                                    accessibilityLabel={`Definition ${index + 1}: ${getTextSafe(currentCard?.definition)}. . . Double tab to flip to term`}
                                 >
                                     <Text className={textStyle()}>
                                         {getTextSafe(currentCard?.definition)}
@@ -305,7 +336,6 @@ const FlashcardSetPage = () => {
                         </GestureDetector>
 
                         <Text className="text-center text-gray-600 text-base mt-8"
-                            ref={fakeRef}
                         >
                             Swipe right to mark Know
                         </Text>

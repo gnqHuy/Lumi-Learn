@@ -1,3 +1,4 @@
+import { AccessibilityInfo } from 'react-native';
 import { createNotifications, notify, SlideInLeftSlideOutRight } from 'react-native-notificated';
 import { DefaultVariants } from 'react-native-notificated/lib/typescript/defaultConfig/types';
 
@@ -50,13 +51,16 @@ const { NotificationsProvider, useNotifications } = createNotifications({
       }
     },
   })
-
+  
   const showNotification = (type: keyof DefaultVariants, title: string, description: string) => {
-      notify(type, {
-        params: {
-          title: title,
-          description: description,
-        },
-      });
-    };
+    notify(type, {
+      params: {
+        title: title,
+        description: description,
+      },
+    });
+    AccessibilityInfo.announceForAccessibility(description);
+  };
+    
+
 export { NotificationsProvider, useNotifications, showNotification };

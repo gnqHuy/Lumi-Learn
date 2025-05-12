@@ -40,7 +40,7 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
     return (
         <View
             id="lesson-item"
-            className={`flex-col px-3 w-[98%] ${isPressed ? 'bg-slate-200' : 'bg-slate-100'} rounded-xl`}
+            className={`flex-col px-3 w-[98%] ${isPressed ? 'bg-slate-100' : 'bg-slate-50'} rounded-xl`}
             style = {{boxShadow: "0px 4px 6px rgba(0,0,0,0.08)"}}
         >
             <Pressable
@@ -65,9 +65,9 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                     </Text>
                 </View>
                 {isOpen ? (
-                    <Entypo name="chevron-up" size={18} color={'#0e7490'}/>
+                    <Entypo name="chevron-up" size={18} color={'#0891b2'}/>
                 ) : (
-                    <Entypo name="chevron-down" size={18} color={'#0e7490'} />
+                    <Entypo name="chevron-down" size={18} color={'#0891b2'} />
                 )}
             </Pressable>
             <View

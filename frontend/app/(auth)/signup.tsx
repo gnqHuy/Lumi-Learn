@@ -1,6 +1,6 @@
 import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import useAuthStore from '@/zustand/authStore';
+import useAuthStore, { AuthState } from '@/zustand/authStore';
 import { logIn, register } from '@/api/authApi';
 import { Redirect, useRouter } from 'expo-router';
 import DropdownSelection, { DropdownProps } from '@/components/Auth/DropdownSelection';
@@ -50,11 +50,14 @@ const signup = () => {
         const request = {
             username: usernameInput,
             password: passwordInput,
-            role: selectedItem == "Student" ? 0 : 1
+            role: 0
         };
 
         register(request).then((res) => {
-            const authState = res.data;
+            const authState: AuthState = {
+                user: res.data.user,
+                accessToken: res.data.authToken
+            };
             saveAuthState(authState);
             setUsernameError(false);
             setPasswordError(false);
@@ -91,7 +94,7 @@ const signup = () => {
     }, [selectedItem]);
 
     if (authState?.user != null) {
-        return <Redirect href="/(tabs)/notification"/>;
+        return <Redirect href="/(tabs)/home"/>;
     }
 
   return (
@@ -109,7 +112,7 @@ const signup = () => {
                 accessible={true}
                 accessibilityLabel="Lumi Learn Logo, Sign Up Page"
             >
-                <Text className='text-4xl pb-6 font-bold color-slate-900'>Logo</Text>
+                <Text className='text-4xl pb-6 font-bold color-cyan-700'>Logo</Text>
             </View>
             <View
                 id='login-form'
@@ -120,7 +123,7 @@ const signup = () => {
                         accessible={false}
                         className={usernameError ? 
                             'text-sm ml-1 mb-2 color-red-600'
-                            : 'text-sm ml-1 mb-2 color-slate-700'}
+                            : 'text-sm ml-1 mb-2 color-cyan-700'}
                     >
                         Username
                     </Text>
@@ -132,7 +135,7 @@ const signup = () => {
                         placeholderTextColor={"#9CA3AF"}
                         className={usernameError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-cyan-600'}
                         style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setUsernameInput(text);
@@ -165,7 +168,7 @@ const signup = () => {
                         accessible={false}
                         className={passwordError ? 
                             'text-sm ml-1 mb-2 color-red-600'
-                            : 'text-sm ml-1 mb-2 color-slate-700'}
+                            : 'text-sm ml-1 mb-2 color-cyan-700'}
                     >
                         Password
                     </Text>
@@ -176,7 +179,7 @@ const signup = () => {
                         placeholderTextColor={"#9CA3AF"}
                         className={passwordError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-cyan-600'}
                         style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setPasswordInput(text);
@@ -194,7 +197,7 @@ const signup = () => {
                         accessible={false}
                         className={confirmPasswordError ? 
                             'text-sm ml-1 mb-2 color-red-600'
-                            : 'text-sm ml-1 mb-2 color-slate-700'}
+                            : 'text-sm ml-1 mb-2 color-cyan-700'}
                     >
                         Confirm password
                     </Text>
@@ -205,7 +208,7 @@ const signup = () => {
                         placeholderTextColor={"#9CA3AF"}
                         className={confirmPasswordError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-cyan-600'}
                         style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setConfirmPasswordInput(text);
@@ -219,7 +222,7 @@ const signup = () => {
                 </View>
                 <TouchableHighlight
                     id='login-button'
-                    className='w-full mt-5 py-4 flex items-center bg-slate-900 rounded-xl'
+                    className='w-full mt-5 py-4 flex items-center bg-cyan-700 rounded-xl'
                     onPress={() => handleSignup()}
                     underlayColor="gray"
                     accessible={true}

@@ -93,7 +93,7 @@ const login = () => {
                         accessible={false}
                         className={usernameError ? 
                             'text-sm ml-1 mb-2 color-red-600'
-                            : 'text-sm ml-1 mb-2 color-slate-700'}
+                            : 'text-sm ml-1 mb-2 color-cyan-700'}
                     >
                         Username
                     </Text>
@@ -105,7 +105,7 @@ const login = () => {
                         placeholderTextColor={"#9CA3AF"}
                         className={usernameError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-cyan-600'}
                         style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setUsernameInput(text);
@@ -123,7 +123,7 @@ const login = () => {
                         accessible={false}
                         className={passwordError ?
                             'text-sm ml-1 mb-2 color-red-600'
-                            : 'text-sm ml-1 mb-2 color-slate-700'}
+                            : 'text-sm ml-1 mb-2 color-cyan-700'}
                     >
                         Password
                     </Text>
@@ -134,7 +134,7 @@ const login = () => {
                         placeholderTextColor={"#9CA3AF"}
                         className={passwordError ? 
                             'w-full p-4 rounded-xl bg-transparent border border-solid border-red-500'
-                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-gray-600'}
+                            : 'w-full p-4 rounded-xl bg-transparent border border-solid border-cyan-600'}
                         style={{ textAlignVertical: 'center' }}
                         onChangeText={(text) => {
                             setPasswordInput(text);
@@ -149,7 +149,7 @@ const login = () => {
                 </View>
                 <TouchableHighlight
                     id='login-button'
-                    className='w-full mt-5 py-4 flex items-center bg-slate-900 rounded-xl'
+                    className='w-full mt-5 py-4 flex items-center bg-cyan-700 rounded-xl'
                     onPress={() => handleLogin()}
                     underlayColor="gray"
                     accessible={true}

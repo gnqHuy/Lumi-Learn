@@ -19,11 +19,11 @@ const LessonList = ({ lessons }: LessonListProps) => {
                 id='lesson-list-scroll-view'
                 horizontal={false}
                 showsVerticalScrollIndicator={false}
-                className='relative'
+                className='relative flex-1'
             >
                 <View
                     id='lesson-list-container'
-                    className='flex-col items-center gap-3 pb-8'
+                    className='flex-col flex-1 items-center gap-3 pb-8'
                 >
                     {lessons?.map((lesson, index) => (
                         <LessonItem key={index} lesson={lesson} lessonNumber={index + 1}/>

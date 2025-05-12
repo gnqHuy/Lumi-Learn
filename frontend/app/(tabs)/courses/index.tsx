@@ -121,6 +121,8 @@ const MyCourseScreen = () => {
                 instructorName: course.instructor,
                 timestamp: new Date(course.timestamp),
                 rating: course.rating,
+                numberOfRatings: course.numberOfRatings,
+                numberOfLessons: course.numberOfLessons,
                 isUserEnrolled: course.isUserEnrolled, 
                 topic: course.topic
             }));
@@ -317,11 +319,14 @@ const MyCourseScreen = () => {
                     <CourseList courses={filteredCourses}/>
                 }
                 {(isTeacher() && displaySearch === false) ? 
-                <View className='w-full px-4 bottom-2 z-10 absolute'>
+                <View 
+                    className='w-full px-4 pb-2 pt-4 bottom-0 z-10 absolute'
+                >
                     <TouchableOpacity
                         id='submit-button'
                         className='flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
                         onPress={() => router.push('/(tabs)/courses/createCourse')}
+                        style = {{boxShadow: "0px 0px 20px 20px rgba(243, 243, 243, 0.9)"}}
                         activeOpacity={0.55}
                     >
                         <Text className='text-lg text-white font-semibold'>Create new course</Text>

@@ -12,6 +12,7 @@ namespace LumiLearn.Dtos.Course
         public string Topic { get; set; }
         public double Rating { get; set; }
         public int NumberOfRatings { get; set; }
+        public int NumberOfLessons { get; set; }
         public DateTime Timestamp { get; set; }
         public bool IsUserEnrolled { get; set; } = false;
     }

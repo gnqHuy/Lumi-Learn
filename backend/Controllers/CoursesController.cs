@@ -185,6 +185,7 @@ namespace LumiLearn.Controllers
                         Topic = e.Course.Topic.Name,
                         Rating = e.Course.Feedbacks.Any() ? Math.Round(e.Course.Feedbacks.Average(f => f.Rating), 2) : 0,
                         NumberOfRatings = e.Course.Feedbacks.Count,
+                        NumberOfLessons = e.Course.Lessons.Count,
                         Timestamp = e.Course.Timestamp,
                         IsUserEnrolled = true,
                     })
@@ -206,6 +207,7 @@ namespace LumiLearn.Controllers
                         Topic = c.Topic.Name,
                         Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
                         NumberOfRatings = c.Feedbacks.Count,
+                        NumberOfLessons = c.Lessons.Count,
                         Timestamp = c.Timestamp,
                         IsUserEnrolled = true, // This course is belong to this user (teacher)
                     })
@@ -300,6 +302,7 @@ namespace LumiLearn.Controllers
                     Topic = c.Topic.Name,
                     Rating = c.Feedbacks.Any() ? Math.Round(c.Feedbacks.Average(f => f.Rating), 2) : 0,
                     NumberOfRatings = c.Feedbacks.Count,
+                    NumberOfLessons = c.Lessons.Count,
                     Timestamp = c.Timestamp,
                     IsUserEnrolled = enrolledCourseIds.Contains(c.Id)
                 })

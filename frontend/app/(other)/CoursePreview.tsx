@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, ImageBackground, Pressable, StatusBar, Text, TouchableOpacity, View } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Entypo } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import useCourseStore from '@/zustand/courseStore'
 import { getCourseOverview } from '@/api/courseApi'
@@ -10,11 +10,16 @@ import { JoinCourseApi } from '@/api/enrollmentApi'
 import { S3_URL_PREFIX } from '@/const/AmazonS3'
 import { LinearGradient } from 'expo-linear-gradient';
 import { showNotification } from '@/components/Toast/Toast'
+import useAuthStore from '@/zustand/authStore'
 
 const CoursePreview = () => {
     const selectedCourseId = useCourseStore((state) => state.selectedCourseId);
     const screenWidth = Dimensions.get('window').width;
+    const currentUser = useAuthStore.getState().authState?.user;
 
+    const isTeacher = () => {
+        return currentUser?.role == 'Teacher';
+    }
     // course
     const [courseOverview, setCourseOverview] = useState<CourseOverview>();
 
@@ -36,129 +41,114 @@ const CoursePreview = () => {
         }).catch(err => showNotification('error', 'Enrollment Failed', 'An error occurred while trying to join the course. Please try again later.')
     );
     }
+    const lessonCount = courseOverview?.lessons?.length ?? 0;
+    const [showFullDesc, setShowFullDesc] = useState(false);
   return (
-    <View className = "flex-1 bg-gray-200">
-        {/* <StatusBar barStyle="light-content"/> */}
-        {/* <Image
-            id="cover-pic"
-            source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
-            style={{
-            position: 'absolute',
-            right: screenWidth * 0.1,
-            height: '40%',
-            width: screenWidth * 0.8,
-            resizeMode: 'cover',
-            }}
-        />
-        <LinearGradient
-            colors={['#083344', 'transparent']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={{
-                position: 'absolute',
-                left: screenWidth * 0.1,
-                width: screenWidth * 0.5,
-                height: '100%',
-            }}
-        />
-        <LinearGradient
-            colors={['#083344', 'transparent']}
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 0 }}
-            style={{
-                position: 'absolute',
-                right: screenWidth * 0.1,
-                width: screenWidth * 0.5,
-                height: '100%',
-            }}
-        /> */}
-        <View className = "mt-14 flex-1 flex-col">
-            {/* close button */}
-            <View 
-                id='cover'
-                className='w-full'
-            >
-                <View 
-                    id='cover-content'
-                    className='w-full flex-col gap-4 z-10'
-                >
-                    <View className='w-full px-6'>
-                        <Pressable className = "">
-                            <AntDesign color='black' name = "close" size = {24} onPress={() => {
-                                router.push('/(tabs)/home');
-                            }}/>
-                        </Pressable>
-                    </View>
-                    {/* course name and topic */}
-                    <View className='flex-row justify-between w-full px-6'>
-                        <View className = "w-2/3 flex-col gap-3">
-                            <Text className = "text-3xl text-cyan-900 font-extrabold">{courseOverview?.title}</Text>
-                            <Pressable className = "border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-[1rem] py-[0.4rem] w-auto self-start">
-                                <Text className = "text-cyan-700 font-semibold">{courseOverview?.topic}</Text>
-                            </Pressable>
-                        </View>
-                        <View 
-                            id="cover-pic"
-                            className='mt-2 border-2 border-cyan-800 rounded-xl self-start'    
-                        >
-                            <Image
-                                source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
-                                width={80}
-                                height={80}
-                                borderRadius={8}
-                            />
-                        </View>
-                    </View>
+    <View className="flex-1 bg-white">
+        <View className="mt-14 px-5 flex-row items-center justify-between mb-2">
+            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.back()} />
+            <Text className="text-2xl font-bold text-cyan-800">Course Preview</Text>
+            <View className="mx-2" />
+        </View>
+
+        <View className="mt-4 px-6">
+            <Image
+                source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
+                className="w-full h-56 rounded-2xl"
+                resizeMode="cover"
+            />
+        </View>
+
+        <View className="flex-1 px-6 pt-4 pb-4">
+            <View className='flex-row mb-2 justify-between'>
+                <Text className="text-2xl font-bold text-cyan-800">{courseOverview?.title}</Text>
+                <View className="flex-row items-center mr-1">
+                    <AntDesign name="star" size={16} color="#facc15" />
+                    <Text className="text-base text-gray-600 font-medium ml-1">
+                        {courseOverview?.rating}
+                    </Text>
                 </View>
-                
             </View>
-            {/* course info */}
-            <View className = "absolute bottom-0 h-3/4 p-8 bg-white rounded-t-[30px]">
-                <View className='flex-col flex-1 gap-4'>
-                    <View>
-                        <Text className = "text-2xl font-bold text-cyan-800">{courseOverview?.title}</Text>
-                        <Text className = "text-lg mt-1">{`${courseOverview?.lessons.length} lesson(s)`}</Text>
-                    </View>
-                    {/* description */}
-                    <View>
-                        <Text className = "text-xl font-bold text-cyan-800">Descriptions</Text>
-                        <Text className = "text-lg mt-1">{courseOverview?.description}</Text>
-                    </View>
-                    {/* lesson lists */}
-                    <View className='flex-1 mt-2'>
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
-                        >
-                            <View className='flex-col gap-6'>
-                                {courseOverview?.lessons?.map((lesson, index) => {
-                                    const index_ = index + 1;
-                                    return (
-                                        <View className = "flex-row items-center gap-[2rem]" key = {index}>
-                                            <Text className = "font-bold text-4xl text-cyan-800">{index_.toString().padStart(2, "0")}</Text>
-                                            <View className = "relative">
-                                                <Text className = "text-lg text-cyan-800 font-bold">{lesson.title}</Text>
-                                                <Text className = "text-base text-yellow-600">{`${lesson.flashcardSets.length} flashcard(s)`}</Text>
-                                            </View>
-                                        </View>
-                                    )
-                                })}
-                            </View>
-                        </ScrollView>
-                    </View>
-                    <View className = "sticky z-10 bottom-0 w-full flex-row justify-center">
-                        <TouchableOpacity 
-                            className = "w-full flex items-center bg-cyan-900 py-4 rounded-2xl" 
-                            onPress={handleJoinCourse}
-                            activeOpacity={0.6}
-                        >
-                            <Text className = "text-lg text-white font-semibold">Join course</Text>
-                        </TouchableOpacity>
+            <View className="mt-3 mb-4 flex-row items-start justify-between">
+                <View className='flex-row'>
+                    <Image
+                        source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                        className="w-12 h-12 rounded-full my-auto"
+                    />
+                    <View className="ml-3 items-start">
+                        <Text className="text-lg font-bold text-cyan-800">
+                            Instructor
+                        </Text>
+                        <Text className="text-lg font-medium text-gray-700">
+                        {courseOverview?.instructor}
+                        </Text>
                     </View>
                 </View>
+                <Pressable className="border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
+                    <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
+                </Pressable>
+            </View>
+
+            <View className="mb-2 flex-1">
+                <ScrollView showsVerticalScrollIndicator={false} stickyHeaderIndices={[1]}>
+                    <View className="mb-2">
+                    <Text className="text-xl font-bold text-cyan-800">Descriptions</Text>
+
+                    {courseOverview?.description && (
+                        <>
+                        <Text
+                            className="text-base mt-1 text-gray-700"
+                            numberOfLines={showFullDesc ? undefined : 3}
+                        >
+                            {courseOverview.description}
+                        </Text>
+
+                        {courseOverview.description.length > 100 && (
+                            <View className="flex-row justify-end mt-1">
+                            <TouchableOpacity onPress={() => setShowFullDesc(!showFullDesc)}>
+                                <Text className="text-base text-cyan-800 font-semibold">
+                                {showFullDesc ? 'Read less' : 'Read more'}
+                                </Text>
+                            </TouchableOpacity>
+                            </View>
+                        )}
+                        </>
+                    )}
+                    </View>
+                    <View className="bg-white py-2">
+                        <Text className="text-xl font-bold text-cyan-800">{`${lessonCount} Lesson${lessonCount >= 2 ? 's' : ''}`}</Text>
+                    </View>
+                    <View className="flex-col gap-4">
+                        {courseOverview?.lessons?.map((lesson, index) => (
+                        <View className="flex-row items-center gap-8" key={index}>
+                            <Text className="font-bold text-2xl text-cyan-800">
+                            {(index + 1).toString().padStart(2, '0')}
+                            </Text>
+                            <View>
+                                <Text className="text-lg text-cyan-800 font-bold">{lesson.title}</Text>
+                                <Text className="text-base text-yellow-600">
+                                    {`${lesson.flashcardSets.length} flashcard(s)`}
+                                </Text>
+                            </View>
+                        </View>
+                        ))}
+                    </View>
+                </ScrollView>
             </View>
         </View>
+        {!isTeacher() && <View className="px-6 pb-6 bg-white">
+            <TouchableOpacity
+                className="w-full bg-cyan-900 py-4 rounded-2xl items-center"
+                onPress={handleJoinCourse}
+                activeOpacity={0.6}
+            >
+                <Text className="text-lg text-white font-semibold">Join course</Text>
+            </TouchableOpacity>
+        </View>
+        }
+        
     </View>
-  )
+    );
 }
 
 export default CoursePreview

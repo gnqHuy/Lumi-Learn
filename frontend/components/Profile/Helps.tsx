@@ -1,19 +1,42 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 
 interface HelpsProps {
     setupDisplayHelp: (display: boolean) => void;
 }
 
-const Helps = ({setupDisplayHelp}: HelpsProps) => {
+const Helps = ({ setupDisplayHelp }: HelpsProps) => {
+    const [accessibleRender, setAccessibleRender] = useState(false);
+             
+    useEffect(() => {
+    const timeout = setTimeout(() => {
+        setAccessibleRender(true);
+    }, 0);
+
+    return () => {
+        clearTimeout(timeout);
+    }
+    }, []); 
+
   return (
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[1rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold">Helps</Text>
-            <Pressable className = "absolute left-8 top-1" onPress={() => setupDisplayHelp(false)}>
-                <AntDesign name = "left" size = {26} />
+            <Text className = "text-center text-3xl font-bold"
+                accessible={true}
+                accessibilityLabel='Helps'
+                accessibilityRole='header'
+            >
+                Helps</Text>
+            <Pressable className = "absolute left-8 top-1"
+                onPress={() => setupDisplayHelp(false)}
+                accessible={true}
+                accessibilityLabel='Back'
+                accessibilityRole='button'
+                accessibilityHint='Double tab to return to Profile page'
+            >
+                <AntDesign name = "arrowleft" size = {24} />
             </Pressable>
         </View>
 

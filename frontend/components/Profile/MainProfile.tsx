@@ -20,8 +20,15 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
         {/* username and avatar */}
         <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-cyan-700">
             <View>
-                <Image source = {require('../../assets/images/userAvatarTest.png')} alt = "" className = "w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem]" />
-                <Text className = "text-center text-2xl text-cyan-800 font-bold mt-[0.5rem]">{userProfile.username}</Text>
+                  <Image source={require('../../assets/images/userAvatarTest.png')} alt="" className="w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem]"
+                      accessible={true}
+                      accessibilityLabel='User Avatar'
+                      accessibilityRole='image'
+                  />
+                  <Text className="text-center text-2xl text-cyan-800 font-bold mt-[0.5rem]"
+                      accessible={true}
+                      accessibilityLabel={`username: ${userProfile.username}`}
+                  >{userProfile.username}</Text>
             </View>
         </View>
 
@@ -31,11 +38,23 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayInformation(true)}>
+                  <Pressable className="w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3"
+                      onPress={() => setupDisplayInformation(true)}
+                      accessible={true}
+                      accessibilityLabel='Information'
+                      accessibilityRole='button'
+                      accessibilityHint='Double tab to open Account Information screen'
+                  >
                     <Text className = "text-lg">Information</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
-                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayChangePassword(true)}>
+                  <Pressable className="w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3"
+                      onPress={() => setupDisplayChangePassword(true)}
+                      accessible={true}
+                      accessibilityLabel='Change password'
+                      accessibilityRole='button'
+                      accessibilityHint='Double tab to open Change Password screen'
+                  >
                     <Text className = "text-lg">Change password</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
@@ -48,11 +67,23 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
             {/* options */}
             <View className = "flex-col mt-[0.5rem]">
                 {/* information */}
-                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayPolicy(true)}>
+                  <Pressable className="w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-tl-2xl rounded-tr-2xl bg-slate-100 flex-row justify-between px-3"
+                      onPress={() => setupDisplayPolicy(true)}
+                      accessible={true}
+                      accessibilityLabel='Policy'
+                      accessibilityRole='button'
+                      accessibilityHint='Double tab to open Policy screen'
+                  >
                     <Text className = "text-lg">Policy</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
-                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayHelp(true)}>
+                  <Pressable className="w-[90%] border-solid border-cyan-800 border-[1px] border-t-[0px] pl-[1rem] py-[0.7rem] rounded-bl-2xl rounded-br-2xl bg-slate-100 flex-row justify-between px-3"
+                      onPress={() => setupDisplayHelp(true)}
+                      accessible={true}
+                      accessibilityLabel='Helps'
+                      accessibilityRole='button'
+                      accessibilityHint='Double tab to open Helps screen'
+                  >
                     <Text className = "text-lg">Helps</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>

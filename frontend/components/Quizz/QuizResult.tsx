@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, TouchableHighlight, Image, AccessibilityInfo, findNodeHandle } from 'react-native'
+import React, { useEffect, useRef } from 'react'
 import { QuizResult } from '@/types/quizResult'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -13,6 +13,14 @@ export type QuizResultProps = {
 const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) => {
     const router = useRouter();
     const { courseId } = useLocalSearchParams();
+    const resultRef = useRef(null);
+
+    useEffect(() => {
+        const node = findNodeHandle(resultRef.current);
+        if (node) {
+            AccessibilityInfo.setAccessibilityFocus(node);
+        }
+    }, []);
     return (
         <View
             id='quiz-result-screen'
@@ -24,7 +32,9 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                 height={150}
                 borderRadius={12}
             />
-            <View className='flex flex-col items-center justify-center gap-5'
+            <View
+                ref={resultRef}
+                className='flex flex-col items-center justify-center gap-5'
                 accessible={true}
                 accessibilityLabel={`Congratulation! You have completed quiz: ${quizTitle}. Here's your result.
                     Quiz score: ${quizResult.score}.

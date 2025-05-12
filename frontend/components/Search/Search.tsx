@@ -10,14 +10,15 @@ interface SearchProps {
     recentSearches: SearchInfo[],
     deleteSearchHistory: (content: any) => void
     displaySearchResult: boolean,
-    searchedCourses: CourseItemProps[]
+    searchedCourses: CourseItemProps[],
+    handleAutoFillAndSearchKeyword: (val: string) => void;
 }
 
 type SearchInfo  = {
     content: string
 }
 
-const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses}: SearchProps) => {
+const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses, handleAutoFillAndSearchKeyword}: SearchProps) => {
     const [option, setOption] = useState(1);
   return (
     <ScrollView>
@@ -29,12 +30,12 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
                     <View className = "flex-col gap-8 mt-[1rem] relative left-[4%]">
                         {recentSearches.map((search, index) => {
                             return (
-                                <View className = "flex-row" key = {index}>
+                                <Pressable className = "flex-row" key = {index} onPress = {() => handleAutoFillAndSearchKeyword(search.content)}>
                                     <Text className = "text-lg">{search.content}</Text>
-                                    <Pressable className = "absolute right-14" onPress={() => deleteSearchHistory(search.content)}>
+                                    <Pressable className = "absolute right-14 z-[20]" onPress={() => deleteSearchHistory(search.content)}>
                                         <AntDesgin name = "close" size = {24}/>
                                     </Pressable>
-                                </View>
+                                </Pressable>
                             )
                         })}
                     </View>
@@ -50,9 +51,12 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
                     contentContainerStyle = {{paddingBottom: 20}}
                 >
                     <View className = "flex-col w-full items-center" id='my-course-screen'>
-                        <CourseList 
-                            courses={searchedCourses}
-                        />
+                        {searchedCourses.length ? 
+                            <CourseList 
+                                courses={searchedCourses}
+                            /> : 
+                            <Text className = "mt-[1rem] text-lg">{`No courses found for your search`}</Text>
+                        }
                     </View>
                 </ScrollView>
             </View>

@@ -179,10 +179,36 @@ const MyCourseScreen = () => {
     // handle search key word
     const searchCourseByKeyword = (keyword: string) => {
         setDisplaySearchResult(true);
-        const filteredCourse = courses.filter((course) => course.courseName.toLowerCase().includes(keyword.toLowerCase()));
-        setSearchedCourses(filteredCourse);
+        searchCourse(keyword)
+        .then((res) => {
+        const mappedCourses: CourseItemProps[] = res.data.map(
+            (course: any) => ({
+            id: course.id,
+            imgUrl: course.thumbnail,
+            courseName: course.title,
+            instructorName: course.instructor,
+            timestamp: new Date(course.timestamp),
+            rating: course.rating,
+            numberOfRatings: course.numberOfRatings,
+            numberOfLessons: course.numberOfLessons,
+            isUserEnrolled: course.isUserEnrolled,
+            topic: course.topic
+            })
+        );
+        setSearchedCourses(mappedCourses.filter(course => course.isUserEnrolled === true));
+        setSearchTrigger((prev) => !prev);
+        })
+        .catch((err) => {
+        console.log(err);
+        });
         setSearchTrigger((prev) => !prev);
     };
+
+    // handle auto fill and search keyword
+    const handleAutoFillAndSearchKeyword = (val: string) => {
+        setKeyword(val);
+        searchCourseByKeyword(val);
+    } 
 
     // set up display search
     const setupDisplaySearch = (display: boolean) => {
@@ -219,15 +245,18 @@ const MyCourseScreen = () => {
         topics: string[],
         length: number[]
       ) => {
-        const basicFiltered = courses.filter(course =>
-          course.rating >= rating[0] &&
-          course.rating <= rating[1] &&
-          topics.includes(course.topic)
-        );
+        const ratingFiltered = courses.filter(course =>
+            course.rating >= rating[0] &&
+            course.rating <= rating[1]
+          );
       
-        const finalFiltered = await filterByLength(basicFiltered, length[0], length[1]);
-        setSearchedCourses(finalFiltered);
-        console.log(finalFiltered);
+          const ratingAndTopicFiltered = ratingFiltered.filter(course => {
+              return topics[0] === "All" || topics.includes(course.topic);
+          })
+        
+          const finalFiltered = await filterByLength(ratingAndTopicFiltered, length[0], length[1]);
+          setSearchedCourses(finalFiltered);
+          console.log(finalFiltered);
     
         setDisplaySearchResult(true);
         setDisplaySearch(true);
@@ -252,12 +281,14 @@ const MyCourseScreen = () => {
                             setDisplaySearch(false);
                             setDisplaySearchResult(false);
                             }}
-                            className="relative left-[4%]"
+                            className="relative left-[2%] flex-row mb-[0.5rem] gap-3"
                         >
                             <AntDesign
                                 name="arrowleft"
                                 size={24}
+                                className = "relative top-[0.3rem]"
                             />
+                            <Text className = "text-3xl text-cyan-800 font-extrabold mb-[0.5rem]">Search</Text>
                         </Pressable>
                     </View>
                 }
@@ -266,10 +297,10 @@ const MyCourseScreen = () => {
                 <View className="flex-row w-full px-4 items-center justify-between">
                     {/* search bar */}
                     <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
-                        <Feather name="search" color={"gray"} size={22} className=" z-[20]" />
+                        <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]" />
                         <TextInput
                             placeholder="Find courses here"
-                            className="font-semibold w-3/4"
+                            className="font-semibold w-3/4 pt-[0.2rem]"
                             style={{ textAlignVertical: "center" }}
                             editable={displaySearch === false ? false : true}
                             placeholderTextColor={"gray"}
@@ -293,10 +324,10 @@ const MyCourseScreen = () => {
                     </Pressable>
                     {/* filter  */}
                     <Pressable
-                        className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.7rem]"
+                        className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.45rem]"
                         onPress={() => setDisplaySearchFilter(true)}
                     >
-                        <AntDesign name="filter" color={"gray"} size={24} />
+                        <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
                     </Pressable>
                 </View>
 
@@ -342,6 +373,7 @@ const MyCourseScreen = () => {
                             deleteSearchHistory={deleteSearchHistory}
                             displaySearchResult={displaySearchResult}
                             searchedCourses={searchedCourses}
+                            handleAutoFillAndSearchKeyword={handleAutoFillAndSearchKeyword}
                         />
                     </View>
                 )}

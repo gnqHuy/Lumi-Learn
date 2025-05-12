@@ -50,6 +50,22 @@ namespace LumiLearn.Controllers
             return Ok(feedbacks);
         }
 
+        [HttpGet("MyRating")]
+        [Authorize]
+        public async Task<IActionResult> GetMyRating([FromQuery] Guid courseId)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var feedback = await dbContext.Feedbacks.FirstOrDefaultAsync(f => f.UserId == userId && f.CourseId == courseId);
+
+            if (feedback != null)
+            {
+                return Ok(feedback.Rating);
+            }
+
+            return Ok(0);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<FeedbackDto>> UserAddFeedback(AddFeedbackRequest request)

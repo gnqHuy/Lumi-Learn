@@ -351,7 +351,7 @@ const MyCourseScreen = () => {
                 }
                 {(isTeacher() && displaySearch === false) ? 
                 <View 
-                    className='w-full px-4 pb-2 pt-4 bottom-0 z-10 absolute'
+                    className='w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute'
                 >
                     <TouchableOpacity
                         id='submit-button'

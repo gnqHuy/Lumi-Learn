@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, TouchableHighlight } from 'react-native'
+import { View, Text, Pressable, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { LessonOverview } from '@/types/lesson';
@@ -148,36 +148,36 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                         id='buttons'
                         className='flex-col gap-3 px-2'
                     >
-                        <TouchableHighlight
+                        <TouchableOpacity
                             id='create-flashcard-set-button'
-                            className='w-full px-3 py-4 rounded-lg bg-gray-400'
+                            className='w-full px-3 py-4 rounded-xl bg-cyan-600'
                             onPress={() => router.push({
                                 pathname: `/(tabs)/courses/${courseId}/flashcardset/create`,
                                 params: { lessonId: lesson.id }
                             })}
-                            underlayColor={'rgba(0,0,0,0.2)'}
+                            activeOpacity={0.7}
                         >
                             <View className='flex-row justify-center items-center'>
                                 <Text className='text-base font-semibold text-white'>
                                     Create flashcard set
                                 </Text>
                             </View>
-                        </TouchableHighlight>
-                        <TouchableHighlight
+                        </TouchableOpacity>
+                        <TouchableOpacity
                             id='create-quiz-button'
-                            className='w-full px-3 py-4 rounded-lg bg-gray-400'
+                            className='w-full px-3 py-4 rounded-xl bg-cyan-600'
                             onPress={() => router.push({
                                 pathname: `/(tabs)/courses/${courseId}/quiz/create`,
                                 params: { lessonId: lesson.id }
                             })}
-                            underlayColor={'rgba(0,0,0,0.2)'}
+                            activeOpacity={0.7}
                         >
                             <View className='flex-row justify-center items-center'>
                                 <Text className='text-base font-semibold text-white'>
                                     Create quiz
                                 </Text>
                             </View>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
                 : <></>}

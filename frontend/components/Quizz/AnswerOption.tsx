@@ -14,7 +14,7 @@ const AnswerOption: React.FC<Props> = ({ option, isSelected, onSelect }) => {
             onPress={() => {
                 onSelect(option.id);
             }}
-            className={`w-full border-2 rounded-xl p-4 mb-2 ${isSelected ? 'border-cyan-800 bg-cyan-100' : 'border-zinc-300'}`}
+            className={`w-full border-2 rounded-xl p-4 mb-2 ${isSelected ? 'border-cyan-700 bg-cyan-100' : 'border-zinc-300'}`}
             activeOpacity={0.35}
             accessibilityLabel={`${option.content}. ${isSelected ? 'Selected': 'Double tab to select this option'}`}
         >

@@ -185,7 +185,7 @@ const QuizPage = () => {
             <View className="flex-row w-full justify-between mt-6">
                 <TouchableOpacity 
                     onPress={prev} 
-                    className="flex-row gap-2 items-center bg-cyan-800 pl-3 pr-8 py-3 rounded-xl"
+                    className="flex-row gap-2 items-center bg-cyan-700 pl-3 pr-8 py-3 rounded-xl"
                     activeOpacity={0.55}
                     accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Return to previous question'}`}
                     accessibilityRole='button'
@@ -195,7 +195,7 @@ const QuizPage = () => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={next} 
-                    className="flex-row gap-2 items-center bg-cyan-800 pl-8 pr-3 py-3 rounded-xl"
+                    className="flex-row gap-2 items-center bg-cyan-700 pl-8 pr-3 py-3 rounded-xl"
                     activeOpacity={0.55}
                     accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Move to next question'}`}
                     accessibilityRole='button'
@@ -211,7 +211,7 @@ const QuizPage = () => {
             {userHasCompletedQuiz() ? 
             <TouchableOpacity
                 id='submit-button'
-                className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
+                className='absolute bottom-4 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
                 onPress={() => submitQuiz()}
                 activeOpacity={0.55}
                 accessibilityLabel='Submiz quiz'

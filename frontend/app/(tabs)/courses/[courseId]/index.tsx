@@ -46,7 +46,6 @@ const CourseOverviewPage = () => {
         });
 
         getMyRating(courseId as string).then((res) => {
-            console.log('My Rating: ', res.data);
             setRating(res.data);
 
             if (res.data != 0) {
@@ -104,7 +103,7 @@ const CourseOverviewPage = () => {
                         source={{ uri: courseOverview?.thumbnail as string | undefined }}
                         width={84}
                         height={84}
-                        borderRadius={8}
+                        borderRadius={6}
                     >
                     </Image>
                 </View>

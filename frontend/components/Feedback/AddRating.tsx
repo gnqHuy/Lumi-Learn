@@ -19,14 +19,12 @@ const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setR
     }
 
     const handleSubmitRating = () => {
-        console.log('CourseId: ', courseId);
         const request: AddFeedbackRequest = {
             courseId: courseId,
             rating: rating
         };
 
         addFeedback(request).then(() => {
-            console.log('Rating submitted');
             setIsRatedByUser(true);
         }).catch((err) => {
             console.log(err.message);
@@ -34,7 +32,7 @@ const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setR
     }
 
     return (
-        <View className={`flex-1 flex-col ${isRatedByUser ? '' : 'items-center'} gap-10`}>
+        <View className={`flex-1 flex-col ${isRatedByUser ? '' : 'items-center'}`}>
             <View
                 id='rating'
                 className='flex-row items-center gap-3'
@@ -48,6 +46,9 @@ const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setR
                     </Pressable>
                 ))]}
             </View>
+            {!isRatedByUser ? 
+            <Text className='text-gray-300 my-6'>Tap on stars to add rating</Text>
+            : <></>}
             {(!isRatedByUser && rating != 0) ?
             <TouchableOpacity
                 id='submit-button'

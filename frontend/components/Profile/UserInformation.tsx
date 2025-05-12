@@ -7,11 +7,12 @@ import { Entypo } from '@expo/vector-icons';
 
 interface UserInformationProps {
     setupDisplayInformation: (display: boolean) => void;
-    userProfile: User | undefined;
+    userProfile: User;
     setupDisplayChangeProfile: (display: boolean) => void;
+    changeBirthdayState: boolean
 }
 
-const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChangeProfile}: UserInformationProps) => {
+const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChangeProfile, changeBirthdayState}: UserInformationProps) => {
     const handleDisplayChangeProfile = () => {
         setupDisplayInformation(false);
         setupDisplayChangeProfile(true);
@@ -108,7 +109,15 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                 accessibilityHint='Double tab to open Update Information Page'
             >
                 <Pressable className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress = {handleDisplayChangeProfile}>
-                    <Text className = "text-lg">{userProfile?.birthday.toString().substring(0,10)}</Text>
+                    <Text className = "text-lg">{new Date(
+                        new Date(userProfile.birthday).getUTCFullYear(), 
+                        new Date(userProfile.birthday).getUTCMonth(), 
+                        new Date(userProfile.birthday).getUTCDate()
+                    ).toLocaleDateString('en-US', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    }).replace(/ /g, ' ')}</Text>
                     <Entypo name = "chevron-right" size = {20}/>  
                 </Pressable>
             </View>

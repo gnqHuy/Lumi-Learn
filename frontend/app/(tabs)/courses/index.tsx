@@ -107,6 +107,15 @@ const MyCourseScreen = () => {
     // courses based on search result
     const [searchedCourses, setSearchedCourses] = useState<CourseItemProps[]>([]);
 
+    // rating filter of course
+    const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+
+    // course length range
+    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+
+    // topics chosen
+    const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
+
     const isTeacher = () => {
         return user?.role == "Teacher";
     }
@@ -387,6 +396,12 @@ const MyCourseScreen = () => {
                         setupDisplaySearch={setupDisplaySearch}
                         setupDisplaySearchResult={setupDisplaySearchResult}
                         handleFilterCourse={handleFilterCourse}
+                        ratingRange={ratingRange}
+                        setRatingRange={setRatingRange}
+                        courseLengthRange={courseLengthRange}
+                        setCourseLengthRange={setCourseLengthRange}
+                        selectedTopics={selectedTopics}
+                        setSelectedTopics={setSelectedTopics}
                     />
                 </View>
             }

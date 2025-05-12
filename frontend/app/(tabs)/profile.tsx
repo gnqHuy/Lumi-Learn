@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import MainProfile from '@/components/Profile/MainProfile';
 import UserInformation from '@/components/Profile/UserInformation';
 import ChangePassword from '@/components/Profile/ChangePassword';
-import ChangeTheme from '@/components/Profile/ChangeTheme';
 import Policy from '@/components/Profile/Policy';
 import Helps from '@/components/Profile/Helps';
 import { User } from '@/types/user';
@@ -15,7 +14,6 @@ import ChangeProfile from '@/components/Profile/ChangeProfile';
 const ProfilePage = () => {
   const [displayInformation, setDisplayInformation] = useState(false);
   const [displayChangePassword, setDisplayChangePassword] = useState(false);
-  const [displayChangeTheme, setDisplayChangeTheme] = useState(false);
   const [displayChangeProfile, setDisplayChangeProfile] = useState(false);
   const [displayPolicy, setDisplayPolicy] = useState(false);
   const [displayHelp, setDisplayHelp] = useState(false);
@@ -24,6 +22,9 @@ const ProfilePage = () => {
   const authState = useAuthStore((state) => state.authState);
   const logOutAuthState = useAuthStore((state) => state.logOut);
   const saveAuthState = useAuthStore((state) => state.saveAuthState);
+
+  // test state to change birthday
+  const [changeBirthdayState, setChangeBirthdayState] = useState(false);
 
   // user profile
   const [userProfile, setUserProfile] = useState<User>({
@@ -48,10 +49,6 @@ const ProfilePage = () => {
 
   const setupDisplayChangePassword = (display: boolean) => {
     setDisplayChangePassword(display);
-  }
-
-  const setupDisplayChangeTheme = (display: boolean) => {
-    setDisplayChangeTheme(display);
   }
 
   const setupDisplayPolicy = (display: boolean) => {
@@ -86,6 +83,11 @@ const ProfilePage = () => {
       }
       router.push('/(auth)/login');
   }
+
+  // activate change birthday
+  const activateChangeBirthday = () => {
+    setChangeBirthdayState(true);
+  }
   return (
     <View className='bg-white flex-1'>
       <View>
@@ -94,7 +96,6 @@ const ProfilePage = () => {
             <MainProfile 
               setupDisplayInformation={setupDisplayInformation}
               setupDisplayChangePassword={setDisplayChangePassword}
-              setupDisplayChangeTheme={setupDisplayChangeTheme}
               setupDisplayPolicy={setupDisplayPolicy}
               setupDisplayHelp={setupDisplayHelp}
               handleLogOut={handleLogOut}
@@ -108,6 +109,7 @@ const ProfilePage = () => {
               setupDisplayInformation={setupDisplayInformation}
               userProfile={userProfile}
               setupDisplayChangeProfile={setupDisplayChangeProfile}
+              changeBirthdayState = {changeBirthdayState}
           />
         }
 
@@ -126,14 +128,7 @@ const ProfilePage = () => {
                   setupDisplayInformation={setupDisplayInformation}
                   userProfile={userProfile}
                   resetProfile={resetProfile}
-              />
-          </View>
-        }
-
-        {displayChangeTheme === true && 
-          <View className = "absolute top-[70vh] z-[50]">
-              <ChangeTheme 
-                  setupDisplayChangeTheme={setupDisplayChangeTheme}
+                  activateChangeBirthday={activateChangeBirthday}
               />
           </View>
         }
@@ -150,10 +145,6 @@ const ProfilePage = () => {
           />
         }
       </View>
-      {/* overlay */}
-      {displayChangeTheme === true && 
-        <Pressable className = "bg-gray-600 absolute left-0 top-0 w-[100vw] h-[100vh] z-[10] opacity-50" onPress={() => setDisplayChangeTheme(false)}></Pressable>
-      }
     </View>
   )
 };

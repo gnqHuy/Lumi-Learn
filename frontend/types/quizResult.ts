@@ -15,4 +15,5 @@ export type QuizResult = {
     totalQuestions: number;
     correctAnswers: number;
     wrongAnswers: number;
+    
 }

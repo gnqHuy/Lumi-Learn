@@ -121,6 +121,8 @@ const HomePage = () => {
           instructorName: course.instructor,
           timestamp: new Date(course.timestamp),
           rating: course.rating,
+          numberOfRatings: course.numberOfRatings,
+          numberOfLessons: course.numberOfLessons,
           isUserEnrolled: course.isUserEnrolled,
           topic: course.topic
         })
@@ -147,6 +149,8 @@ const HomePage = () => {
             instructorName: course.instructor,
             timestamp: new Date(course.timestamp),
             rating: course.rating,
+            numberOfRatings: course.numberOfRatings,
+            numberOfLessons: course.numberOfLessons,
             isUserEnrolled: course.isUserEnrolled,
             topic: course.topic
           })
@@ -167,6 +171,8 @@ const HomePage = () => {
             instructorName: course.instructor,
             timestamp: new Date(course.timestamp),
             rating: course.rating,
+            numberOfRatings: course.numberOfRatings,
+            numberOfLessons: course.numberOfLessons,
             isUserEnrolled: course.isUserEnrolled,
             topic: course.topic
           })
@@ -240,6 +246,8 @@ const HomePage = () => {
             instructorName: course.instructor,
             timestamp: new Date(course.timestamp),
             rating: course.rating,
+            numberOfRatings: course.numberOfRatings,
+            numberOfLessons: course.numberOfLessons,
             isUserEnrolled: course.isUserEnrolled,
             topic: course.topic
           })

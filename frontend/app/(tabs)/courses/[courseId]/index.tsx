@@ -1,184 +1,194 @@
-import { View, Text, Pressable, ScrollView, TouchableOpacity, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import { View, Text, ScrollView, TouchableOpacity, Image, Pressable, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+
 import { getCourseOverview } from '@/api/courseApi';
+import { getMyRating } from '@/api/feedbackApi';
 import { CourseOverview } from '@/types/course';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
+
 import AntDesign from '@expo/vector-icons/AntDesign';
-import LessonItem from '@/components/Lesson/LessonItem';
+
 import LessonList from '@/components/Lesson/LessonList';
 import useAuthStore from '@/zustand/authStore';
-import CreateCourseModal from '@/components/Course/CreateCourseModal';
 import CreateLessonModal from '@/components/Lesson/CreateLessonModal';
 import AddRating from '@/components/Feedback/AddRating';
-import { getMyRating } from '@/api/feedbackApi';
 
 const CourseOverviewPage = () => {
-    const [ courseOverview, setCourseOverview ] = useState<CourseOverview | undefined>(undefined);
-    const [ isLessonModalOpen, setIsLessonModalOpen ] = useState(false);
-    const [ isRatedByUser, setIsRatedByUser ] = useState(false);
-    const [ rating, setRating ] = useState(0);
-    const [ refreshPage, setRefreshPage ] = useState(false);
-    const { courseId } = useLocalSearchParams();
-    const user = useAuthStore((state) => state.authState?.user);
-    const router = useRouter();
+  const [courseOverview, setCourseOverview] = useState<CourseOverview | undefined>(undefined);
+  const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
+  const [isRatedByUser, setIsRatedByUser] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [refreshPage, setRefreshPage] = useState(false);
+  const [activeTab, setActiveTab] = useState<'lesson' | 'about'>('lesson');
 
-    const isTeacher = () => {
-        return user?.role == "Teacher";
+  const { courseId } = useLocalSearchParams();
+  const router = useRouter();
+  const user = useAuthStore((state) => state.authState?.user);
+
+  const isTeacher = () => user?.role === 'Teacher';
+
+  useEffect(() => {
+    if (refreshPage) {
+      getCourseOverview(courseId as string)
+        .then((res) => setCourseOverview(res.data))
+        .catch(console.log);
+
+      setRefreshPage(false);
     }
+  }, [refreshPage]);
 
-    useEffect(() => {
-        if (refreshPage) {
-            getCourseOverview(courseId as string).then((res) => {
-                setCourseOverview(res.data);
-            }).catch((err) => {
-                console.log(err);
-            })
-            setRefreshPage(false);
-        }
-    }, [refreshPage]);
+  useEffect(() => {
+    getCourseOverview(courseId as string)
+      .then((res) => setCourseOverview(res.data))
+      .catch(console.log);
 
-    useEffect(() => {
-        getCourseOverview(courseId as string).then((res) => {
-            setCourseOverview(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
+    getMyRating(courseId as string)
+      .then((res) => {
+        setRating(res.data);
+        if (res.data !== 0) setIsRatedByUser(true);
+      })
+      .catch(console.log);
+  }, []);
 
-        getMyRating(courseId as string).then((res) => {
-            setRating(res.data);
-
-            if (res.data != 0) {
-                setIsRatedByUser(true);
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, [])
-    return (
-        <View
-            id='course-overview-screen'
-            className='flex-1 flex-col items-center bg-white'
-        >
-            <View
-                id='top-nav'
-                className='flex-row pt-14 px-6 w-full'
-            >
-                <Pressable
-                    onPress={() => { 
-                        router.push(`/(tabs)/courses`);
-                    }}
-                >
-                    <AntDesign name='arrowleft' size={24}/>
-                </Pressable>
+  return (
+    <View className='bg-white'>
+    <ScrollView className='bg-white mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+        <View className=" px-5 pt-5 pb-2 flex-row bg-white items-center justify-between mb-2">
+            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.back()} />
+            <Text className="text-2xl font-bold text-cyan-800">Course Details</Text>
+            <View className="mx-2" />
+        </View>
+        <View id="course-overview-screen" className="flex-1">
+            <View className="mt-4 px-6">
+                <Image
+                id="course-thumbnail"
+                source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                className="w-full h-56 rounded-2xl"
+                resizeMode="cover"
+                />
             </View>
-            <View
-                id='course-overview-section'
-                className='flex-row justify-between px-6 py-8 w-full'
-            >
-                <View
-                    id='course-overview-info'
-                    className='flex-col gap-3 w-2/3'
+            <View id="course-overview-section" className="px-6 py-8 w-full">
+                <View className="flex-row justify-between items-start mb-3">
+                <Text
+                    id="course-name"
+                    className="text-2xl font-bold text-cyan-800 flex-1 pr-4 my-auto"
                 >
-                    <Text
-                        id='course-name'
-                        className='text-2xl font-bold text-cyan-800'
-                    >
-                        {courseOverview?.title}
+                    {courseOverview?.title}
+                </Text>
+                <View className="flex-row mt-1 mr-2 items-center">
+                    <AntDesign name="star" size={16} color="#facc15" />
+                    <Text className="text-base text-gray-600 font-medium ml-1">
+                        {courseOverview?.rating}
                     </Text>
-                    <Text
-                        id='course-description'
-                        className='font-normal'
-                    >
-                        {courseOverview?.description}
-                    </Text>
-                </View>
-                {/* Replace with course thumbnail later */}
-                <View 
-                    id="cover-pic"
-                    className='border-[3px] border-cyan-700 rounded-xl self-start'    
-                >
-                    <Image
-                        id='course-thumbnail'
-                        source={{ uri: courseOverview?.thumbnail as string | undefined }}
-                        width={84}
-                        height={84}
-                        borderRadius={6}
-                    >
-                    </Image>
-                </View>
-            </View>
-            <ScrollView
-                horizontal={false}
-                showsVerticalScrollIndicator={false}
-            >
-                <View className='flex-1 pb-10'>
-                    <View
-                        id='Lesson-list-section'
-                        className='flex-col gap-4 flex-1 w-full px-6'
-                    >
-                        <View id='lesson-list-title'>
-                            <Text className='text-lg text-cyan-800 font-bold'>Lessons in this course</Text>
-                        </View>
-                        <LessonList lessons={courseOverview?.lessons}/>
                     </View>
-                    {!isTeacher() ?
-                        isRatedByUser ?
-                        <View
-                            id='rating-section'
-                            className='flex-row items-center gap-6 w-full px-6'
-                        >
-                            <View id='lesson-list-title'>
-                                <Text className='text-lg text-cyan-800 font-bold'>Your rating</Text>
-                            </View>
-                            <AddRating
-                                size={20}
-                                courseId={courseId as string}
-                                rating={rating}
-                                setRating={setRating}
-                                isRatedByUser={isRatedByUser}
-                                setIsRatedByUser={setIsRatedByUser}
-                            />
-                        </View>
-                        : 
-                        <View
-                            id='rating-section'
-                            className='flex-col flex-1 gap-10 px-6'
-                        >
-                            <View id='lesson-list-title'>
-                                <Text className='text-lg text-cyan-800 font-bold'>Rate this course</Text>
-                            </View>
-                            <AddRating
-                                courseId={courseId as string}
-                                rating={rating}
-                                setRating={setRating}
-                                isRatedByUser={isRatedByUser}
-                                setIsRatedByUser={setIsRatedByUser}
-                            />
-                        </View>
-                    : <></>}
                 </View>
-            </ScrollView>
-            {isTeacher() ? 
-            <View 
-                className='w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute'
-            >
+                <View className="mt-2 flex-row items-start justify-between">
+                    <View className='flex-row'>
+                        <Image
+                            source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                            className="w-12 h-12 rounded-full my-auto"
+                        />
+                        <View className="ml-3 items-start">
+                            <Text className="text-lg font-bold text-cyan-800">
+                                Instructor
+                            </Text>
+                            <Text className="text-lg font-medium text-gray-700">
+                            {courseOverview?.instructor}
+                            </Text>
+                        </View>
+                    </View>
+                    <Pressable className="border-solid bg-yellow-500 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
+                        <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
+                    </Pressable>
+                </View>
+            </View>
+
+            <View className="flex-row border-b border-gray-200">
                 <TouchableOpacity
-                    id='submit-button'
-                    className='flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl'
-                    onPress={() => setIsLessonModalOpen(true)}
-                    style = {{boxShadow: "0px 0px 20px 20px rgba(243, 243, 243, 0.9)"}}
-                    activeOpacity={0.55}
+                    className={`w-1/2 items-center pb-2 ${activeTab === 'lesson' ? 'border-b-2 border-cyan-800' : ''}`}
+                    onPress={() => setActiveTab('lesson')}
                 >
-                    <Text className='text-lg text-white font-semibold'>Add lesson</Text>
+                    <Text className={`text-lg font-semibold ${activeTab === 'lesson' ? 'text-cyan-800' : 'text-gray-500'}`}>
+                    Lessons
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    className={`w-1/2 items-center pb-2 ${activeTab === 'about' ? 'border-b-2 border-cyan-800' : ''}`}
+                    onPress={() => setActiveTab('about')}
+                >
+                    <Text className={`text-lg font-semibold ${activeTab === 'about' 
+                        
+                        
+                        ? 'text-cyan-800' : 'text-gray-500'}`}>
+                    About Course
+                    </Text>
                 </TouchableOpacity>
             </View>
-            : <></>}
-            {isLessonModalOpen ? 
-                <CreateLessonModal onClose={setIsLessonModalOpen} setRefresh={setRefreshPage}/>
-            : <></>}
-        </View>
-    )
-}
 
-export default CourseOverviewPage
+            <View className="flex-1 pb-10">
+            {activeTab === 'lesson' ? (
+                <View id="Lesson-list-section" className="flex-col gap-4 flex-1 w-full px-6 mt-4">
+                <LessonList lessons={courseOverview?.lessons} />
+                </View>
+            ) : (
+                <View id="about-section" className="flex-col gap-2 flex-1 w-full px-6 mt-4">
+                <Text className="text-xl font-bold text-cyan-800">Descriptions</Text>
+                <Text className="text-base text-gray-700">{courseOverview?.description}</Text>
+
+                {!isTeacher() && (
+                    <>
+                    {isRatedByUser ? (
+                        <View id="rating-section" className="flex-row items-center gap-6 w-full mt-6">
+                        <Text className="text-lg text-cyan-800 font-bold">Your rating</Text>
+                        <AddRating
+                            size={20}
+                            courseId={courseId as string}
+                            rating={rating}
+                            setRating={setRating}
+                            isRatedByUser={isRatedByUser}
+                            setIsRatedByUser={setIsRatedByUser}
+                        />
+                        </View>
+                    ) : (
+                        <View id="rating-section" className="gap-4 mt-6">
+                        <Text className="text-lg text-cyan-800 font-bold">Rate this course</Text>
+                        <AddRating
+                            courseId={courseId as string}
+                            rating={rating}
+                            setRating={setRating}
+                            isRatedByUser={isRatedByUser}
+                            setIsRatedByUser={setIsRatedByUser}
+                        />
+                        </View>
+                    )}
+                    </>
+                )}
+                </View>
+            )}
+            </View>
+        
+            {isTeacher() && activeTab === 'lesson' && (
+                <View className="w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute">
+                <TouchableOpacity
+                    id="submit-button"
+                    className="flex justify-center items-center w-full py-4 bg-cyan-800 rounded-xl"
+                    onPress={() => setIsLessonModalOpen(true)}
+                    activeOpacity={0.55}
+                    style={{ boxShadow: '0px 0px 20px 20px rgba(243, 243, 243, 0.9)' }}
+                >
+                    <Text className="text-lg text-white font-semibold">Add lesson</Text>
+                </TouchableOpacity>
+                </View>
+            )}
+        </View>
+
+      {isLessonModalOpen && (
+        <CreateLessonModal onClose={setIsLessonModalOpen} setRefresh={setRefreshPage} />
+      )}
+    </ScrollView>
+
+    </View>
+  );
+};
+
+export default CourseOverviewPage;

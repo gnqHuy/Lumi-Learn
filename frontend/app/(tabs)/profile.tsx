@@ -23,6 +23,7 @@ const ProfilePage = () => {
   // zustand auth state and logout
   const authState = useAuthStore((state) => state.authState);
   const logOutAuthState = useAuthStore((state) => state.logOut);
+  const saveAuthState = useAuthStore((state) => state.saveAuthState);
 
   // user profile
   const [userProfile, setUserProfile] = useState<User>({
@@ -69,6 +70,10 @@ const ProfilePage = () => {
   const resetProfile = () => {
     getUserProfile().then((response) => {
       setUserProfile(response.data);
+      saveAuthState({
+        user: response.data,
+        accessToken: authState?.accessToken!
+      });
     })
   }
 

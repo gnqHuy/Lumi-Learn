@@ -78,15 +78,7 @@ const HomePage = () => {
   const [selectedFilter, setSelectedFilter] = useState<string[]>(["All"]);
 
   // user profile
-  const [userProfile, setUserProfile] = useState<User>({
-    id: "",
-    username: "",
-    name: "",
-    email: "",
-    phone: "",
-    birthday: new Date(),
-    role: "",
-  });
+  const userProfile = useAuthStore.getState().authState?.user;
 
   const handleOnClick = () => {
     const request = {
@@ -133,11 +125,11 @@ const HomePage = () => {
 
   // get user's courses
   useEffect(() => {
-    getUserProfile()
-      .then((response) => {
-        setUserProfile(response.data);
-      })
-      .catch((err) => console.error(err));
+    // getUserProfile()
+    //   .then((response) => {
+    //     setUserProfile(response.data);
+    //   })
+    //   .catch((err) => console.error(err));
     
     getMyCourses()
       .then((res) => {
@@ -333,7 +325,7 @@ const HomePage = () => {
         {/* username */}
         {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">
-            <Text className="text-3xl text-cyan-800 font-extrabold">{userProfile.name || userProfile.username}</Text>
+            <Text className="text-3xl text-cyan-800 font-extrabold">{userProfile?.name || userProfile?.username}</Text>
           </View>
         ) : (
           <Pressable

@@ -1,7 +1,7 @@
 import { User } from '@/types/user';
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { updateProfileApi } from '@/api/userApi';
@@ -181,10 +181,14 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
             </View>
 
             {/* update button */}
-            <View className = "mt-[5rem]">
-                <Pressable className = "w-[90%] relative self-start left-[5%] py-[0.5rem] rounded-2xl bg-cyan-800" onPress={handleUpdateProfile}>
-                    <Text className = "text-center text-lg text-white">Update</Text>
-                </Pressable>
+            <View className = "mt-[3rem]">
+                <TouchableOpacity 
+                    className = "w-[90%] relative self-start left-[5%] py-4 rounded-2xl bg-cyan-700" 
+                    onPress={handleUpdateProfile}
+                    activeOpacity={0.8}
+                >
+                    <Text className = "text-center text-lg font-semibold text-white">Update</Text>
+                </TouchableOpacity>
             </View>
         </View>
     </ScrollView>

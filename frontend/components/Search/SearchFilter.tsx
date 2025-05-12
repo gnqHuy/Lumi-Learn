@@ -13,13 +13,13 @@ interface SearchFilterProps {
 }
 const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySearchResult, handleFilterCourse}: SearchFilterProps) => {
     // rating filter of course
-    const [ratingRange, setRatingRange] = useState<number[]>([2, 8]);
+    const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
 
     // course length range
     const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
 
     // topics chosen
-    const [ selectedTopics, setSelectedTopics ] = useState<string[]>([]);
+    const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
 
     // state of buttons
     const [ isClearButtonPressed, setClearButtonPressed ] = useState(false);
@@ -31,14 +31,14 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
     // some attribute to calculate
     const screenWidth = Dimensions.get('window').width;
     const sliderWidth = screenWidth - 28 * 2;
-    const positionPerStep = sliderWidth / 10;
-    const positionPerStepCourseLengthSlider = sliderWidth / 50;
+    const positionPerStep = sliderWidth / 5;
+    const positionPerStepCourseLengthSlider = sliderWidth / 30;
 
     useEffect(() => {
         GetAllTopics().then((res) => {
             const data = res.data;
             const names = data.map((topic: any) => topic.name);
-            setTopics(names);
+            setTopics(["All", ...names]);
         }).catch((err) => {
             console.log(err.message);
         });
@@ -107,7 +107,7 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
                         sliderLength={screenWidth - 2 * 28}
                         onValuesChange={setRatingRange}
                         min={0}
-                        max={10}
+                        max={5}
                         step={1}
                         snapped={true}
                         selectedStyle={{backgroundColor: "#155e75"}}
@@ -153,8 +153,8 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
                         sliderLength={screenWidth - 2 * 28}
                         onValuesChange={setCourseLengthRange}
                         min={0}
-                        max={50}
-                        step={2}
+                        max={30}
+                        step={1}
                         snapped={true}
                         selectedStyle={{backgroundColor: "#155e75"}}
                         unselectedStyle={{backgroundColor: "#e5e7eb"}}

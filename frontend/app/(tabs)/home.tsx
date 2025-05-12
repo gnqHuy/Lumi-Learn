@@ -260,6 +260,12 @@ const HomePage = () => {
       });
   };
 
+  // handle auto fill and search keyword
+  const handleAutoFillAndSearchKeyword = (val: string) => {
+    setKeyword(val);
+    searchCourseByKeyword(val);
+  } 
+
   // update recent search
   const refreshRecentSearches = () => {
     getMySearchHistories().then((response) => {
@@ -303,13 +309,16 @@ const HomePage = () => {
     topics: string[],
     length: number[]
   ) => {
-    const basicFiltered = allCourses.filter(course =>
+    const ratingFiltered = allCourses.filter(course =>
       course.rating >= rating[0] &&
-      course.rating <= rating[1] &&
-      topics.includes(course.topic)
+      course.rating <= rating[1]
     );
+
+    const ratingAndTopicFiltered = ratingFiltered.filter(course => {
+        return topics[0] === "All" || topics.includes(course.topic);
+    })
   
-    const finalFiltered = await filterByLength(basicFiltered, length[0], length[1]);
+    const finalFiltered = await filterByLength(ratingAndTopicFiltered, length[0], length[1]);
     setSearchedCourses(finalFiltered);
     console.log(finalFiltered);
 
@@ -332,12 +341,14 @@ const HomePage = () => {
               setDisplaySearch(false);
               setDisplaySearchResult(false);
             }}
+            className = "relative left-[4%] flex-row mb-[0.5rem] gap-3"
           >
             <AntDesign
               name="arrowleft"
               size={24}
-              className="relative left-[5%]"
+              className="relative top-[0.3rem]"
             />
+            <Text className = "text-3xl text-cyan-800 font-extrabold">Search</Text>
           </Pressable>
         )}
 
@@ -345,10 +356,10 @@ const HomePage = () => {
         <View className="flex-row w-full items-center justify-between gap-3 px-4">
           {/* search bar */}
           <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
-            <Feather name="search" color={"gray"} size={22} className=" z-[20]" />
+            <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]" />
             <TextInput
               placeholder="Find courses here"
-              className="font-semibold w-3/4"
+              className="font-semibold w-3/4 pt-[0.2rem]"
               style={{ textAlignVertical: "center" }}
               editable={displaySearch === false ? false : true}
               placeholderTextColor={"gray"}
@@ -372,10 +383,10 @@ const HomePage = () => {
           </Pressable>
           {/* filter  */}
           <Pressable
-            className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.7rem]"
+            className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.5rem]"
             onPress={() => setDisplaySearchFilter(true)}
           >
-            <AntDesign name="filter" color={"gray"} size={24} />
+            <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
           </Pressable>
         </View>
 
@@ -402,6 +413,7 @@ const HomePage = () => {
                 deleteSearchHistory={deleteSearchHistory}
                 displaySearchResult={displaySearchResult}
                 searchedCourses={searchedCourses}
+                handleAutoFillAndSearchKeyword={handleAutoFillAndSearchKeyword}
               />
             )}
           </View>

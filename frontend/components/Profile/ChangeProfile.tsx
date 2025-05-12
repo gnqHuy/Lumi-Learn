@@ -1,6 +1,6 @@
 import { User } from '@/types/user';
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -80,16 +80,40 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
             }
         }
     }
+
+    const [accessibleRender, setAccessibleRender] = useState(false);
+    
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setAccessibleRender(true);
+        }, 0);
+
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, []);
+
   return (
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight h-full">
         {/* header */}
         <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold text-cyan-700">Update information</Text>
-            <Pressable className = "absolute left-8 top-1" onPress = {() => {
-                setupDisplayChangeProfile(false);
-                setupDisplayInformation(true);
-            }}>
-                <AntDesign name = "left" size = {26} />
+            <Text className = "text-center text-3xl font-bold text-cyan-700"
+                accessible={true}
+                accessibilityLabel='Update Information'
+                accessibilityRole='header'
+            >
+                Update information</Text>
+            <Pressable className = {!accessibleRender ? 'hidden' : "absolute left-8 top-1"} 
+                onPress={() => {
+                    setupDisplayChangeProfile(false);
+                    setupDisplayInformation(true);
+                }}
+                accessible={true}
+                accessibilityLabel='Back'
+                accessibilityRole='button'
+                accessibilityHint='Double tab to return to Information page'
+            >
+                <AntDesign name = "arrowleft" size = {24} />
             </Pressable>
         </View>
 
@@ -97,13 +121,18 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
         <View className = "mt-[3rem]">
             {/* full name */}
             <View className = "mt-[1rem] relative left-[5%]">
-                <Text className = {fullNameError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Full name</Text>
+                <Text className={fullNameError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}
+                    accessible={false}
+                >
+                    Full name</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
                         className = {fullNameError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {fullNameInput}
                         onChangeText={setFullNameInput}
                         onFocus={() => setFullNameError("")}
+                        accessible={true}
+                        accessibilityLabel="Full name"
                     />
                 </View>
                 {fullNameError && 
@@ -113,8 +142,13 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* birthday */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {birthdayError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Birthday</Text>
-                <View className = "flex-col mt-[0.5rem]">
+                <Text className = {birthdayError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}
+                    accessible={false}
+                >
+                    Birthday</Text>
+                  <View className="flex-col mt-[0.5rem]"
+                        accessible={true}
+                        accessibilityLabel={`Birthday: ${birthdayInput?.toString().substring(0,10)}`}>
                     <Pressable className = {birthdayError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"} onPress = {() => {
                         setDisplayDatePicker(true);
                         setBirthdayError("");
@@ -150,13 +184,17 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* email */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {emailError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Email</Text>
+                <Text className = {emailError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}
+                    accessible={false}
+                >
+                    Email</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
                         className = {emailError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {emailInput}
                         onChangeText={setEmailInput}
                         onFocus={() => setEmailError("")}
+                        accessibilityLabel="Email"
                     />
                 </View>
                 {emailError && 
@@ -166,13 +204,17 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* phone number */}
             <View className = "mt-[1.5rem] relative left-[5%]">
-                <Text className = {phoneError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}>Phone number</Text>
+                <Text className = {phoneError ? "text-lg font-bold text-red-500" : "text-lg font-bold"}
+                    accessible={false}
+                >
+                    Phone number</Text>
                 <View className = "flex-col mt-[0.5rem]">
                     <TextInput 
                         className = {phoneError ? "w-[90%] border-solid border-red-500 border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl" : "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.9rem] rounded-2xl bg-slate-100"}
                         value = {phoneInput}
                         onChangeText={setPhoneInput}
                         onFocus={() => setPhoneError("")}
+                        accessibilityLabel="Phone number"
                     />
                 </View>
                 {phoneError && 
@@ -181,14 +223,16 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
             </View>
 
             {/* update button */}
-            <View className = "mt-[3rem]">
-                <TouchableOpacity 
-                    className = "w-[90%] relative self-start left-[5%] py-4 rounded-2xl bg-cyan-700" 
+            <View className = "mt-[5rem]">
+                <Pressable className = "w-[90%] relative self-start left-[5%] py-[0.5rem] rounded-2xl bg-cyan-800"
                     onPress={handleUpdateProfile}
-                    activeOpacity={0.8}
+                    accessible={true}
+                    accessibilityLabel='Update'
+                    accessibilityRole='button'
+                    accessibilityHint='Double tab to Update Information'
                 >
-                    <Text className = "text-center text-lg font-semibold text-white">Update</Text>
-                </TouchableOpacity>
+                    <Text className = "text-center text-lg text-white">Update</Text>
+                </Pressable>
             </View>
         </View>
     </ScrollView>

@@ -454,7 +454,7 @@ const HomePage = () => {
 
         {/* search filter */}
         {displaySearchFilter === true && (
-          <View className="absolute left-0 bottom-0 z-[50]">
+          <View className="absolute flex-1 left-0 top-40 z-[50]">
             <SearchFilter 
               disableSearchFilter={disableSearchFilter} 
               setupDisplaySearch={setupDisplaySearch}

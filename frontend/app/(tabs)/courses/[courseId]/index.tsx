@@ -167,6 +167,7 @@ const CourseOverviewPage = () => {
             </Pressable>
         </View>
         <View id="course-overview-screen" className="flex-1">
+            {isTeacher() ? 
             <TouchableOpacity 
                 className="mt-4 px-6"
                 onPress={handleImagePicker}
@@ -186,6 +187,17 @@ const CourseOverviewPage = () => {
                 resizeMode="cover"
                 />
             </TouchableOpacity>
+
+            :
+            <View className="mt-4 px-6">
+                <Image
+                    id="course-thumbnail"
+                    source={{ uri: getCourseThumbnail(courseId as string) }}
+                    className="w-full h-56 rounded-2xl"
+                    resizeMode="cover"
+                />
+            </View>
+            }
             <View id="course-overview-section" className="px-6 py-8 w-full">
                 <View 
                     accessible={true}

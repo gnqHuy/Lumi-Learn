@@ -49,6 +49,8 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                 onPress={() => handleExtendItem()}
                 onPressIn={() => setIsPressed(true)}
                 onPressOut={() => setIsPressed(false)}
+                accessible={true}
+                accessibilityLabel={`Lesson ${lessonNumber}: ${lesson.title}. Dropdown. ${isOpen ? 'Opened' : 'Double tab to open'}`}
             >
                 <View className='flex-row gap-2'>
                     <Text
@@ -96,6 +98,10 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                                     className='w-full px-3 py-4 rounded-lg bg-white'
                                     onPress={() => router.push(`/(tabs)/courses/${courseId}/flashcardset/${flashcardSet.id}`)}
                                     underlayColor={'rgba(0,0,0,0.08)'}
+                                    accessible={true}
+                                    accessibilityLabel={`Flashcard set ${index + 1}: ${flashcardSet.title}`}
+                                    accessibilityRole='button'
+                                    accessibilityHint='Double tab to enter this Flashcard set'
                                 >
                                     <View className='flex-row gap-2 items-center'>
                                         <AntDesign name='filetext1' size={22} color={'#0e7490'}></AntDesign>
@@ -125,6 +131,10 @@ const LessonItem = ({ lesson, lessonNumber }: LessonItemProps) => {
                                     className='w-full px-3 py-4 rounded-lg bg-white'
                                     onPress={() => router.push(`/(tabs)/courses/${courseId}/quiz/${quiz.id}`)}
                                     underlayColor={'rgba(0,0,0,0.08)'}
+                                    accessible={true}
+                                    accessibilityLabel={`Quiz ${index + 1}: ${quiz.title}`}
+                                    accessibilityRole='button'
+                                    accessibilityHint='Double tab to enter this quiz'
                                 >
                                     <View className='flex-row gap-2 items-center'>
                                         <AntDesign name='barschart' size={22} color={'#ca8a04'}></AntDesign>

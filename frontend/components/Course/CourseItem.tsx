@@ -40,6 +40,11 @@ const CourseItem = (props: CourseItemProps) => {
             }}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}
+            accessible={true}
+            accessibilityLabel={`Course: ${props.courseName}, Topic: ${props.topic}, Instructor: ${props.instructorName}
+            ${props.numberOfLessons} Lessons, Rating: ${props.rating}/5, ${props.numberOfRatings} rate.`}
+            accessibilityRole='button'
+            accessibilityHint='Double tab to open Course Preview'
         >
             <View
                 id='course-item-content'
@@ -47,10 +52,14 @@ const CourseItem = (props: CourseItemProps) => {
             >
                 {/* Replace with real thumbnail image later */}
                 <Image
-                  source={{ uri: getCourseThumbnail(props.id) }}
-                  width={90}
-                  height={90}
-                  borderRadius={8}
+                    source={props.imgUrl 
+                        ? { uri: props.imgUrl }
+                        : require('../../assets/images/default-course.jpg')
+                    }
+                    className='w-[90px] h-[90px]'
+                    width={90}
+                    height={90}
+                    borderRadius={8}
                 />
 
                 <View

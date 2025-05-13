@@ -225,7 +225,7 @@ const MyCourseScreen = () => {
         <View className='flex-1'>
             <View
                 id='my-course-screen'
-                className='flex-1 pt-20 bg-white'
+                className='flex-1 pt-[68px] bg-white'
             >
                 {displaySearch === false && 
                     <View className='w-full px-4'>

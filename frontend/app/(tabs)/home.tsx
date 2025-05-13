@@ -340,7 +340,7 @@ const HomePage = () => {
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
-      <View className="flex-1 flex-col gap-3 mt-20 pb-4">
+      <View className="flex-1 flex-col gap-3 mt-[68px] pb-4">
         {/* username */}
         {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">

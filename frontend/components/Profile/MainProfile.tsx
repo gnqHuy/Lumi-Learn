@@ -15,7 +15,7 @@ interface MainProfileProps {
 }
 const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayPolicy, setupDisplayHelp, handleLogOut, userProfile}: MainProfileProps) => {
   return (
-    <ScrollView className = "mt-[4rem] animate-slideRightFromLeft">
+    <ScrollView className = "animate-slideRightFromLeft">
         {/* username and avatar */}
         <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-cyan-700">
             <View>

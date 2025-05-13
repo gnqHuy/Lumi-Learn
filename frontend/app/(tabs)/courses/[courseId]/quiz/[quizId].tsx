@@ -118,7 +118,7 @@ const QuizPage = () => {
     return (
         <View 
             id='quiz-screen'
-            className="flex-1 flex-col items-center bg-white px-6 py-4">
+            className="flex-1 flex-col items-center bg-white px-6">
         
         {showQuizResult == true 
         ? 
@@ -127,35 +127,35 @@ const QuizPage = () => {
         </View>
         : <>{quizDetail && currentQuestion ? (
             <>
-            <View
-                id='top-nav'
-                className='flex-row mt-14 px-2 w-full'
-                accessible={false}
-            >
+            <View className="mt-14 px-4 mb-4 w-full flex-row relative items-center justify-center h-16 ">
+                <View className="absolute left-4 right-4 text-center items-center">
+                    <Text
+                        className="text-[22px] font-semibold text-cyan-800 text-center"
+                        accessible={true}
+                        numberOfLines={1}
+                    >
+                        {quizDetail.title}
+                    </Text>
+                    <Text
+                        className="text-sm text-gray-500 mt-1"
+                        accessible={false}
+                    >
+                        Question {currentIndex + 1}/{quizDetail.questions.length}
+                    </Text>
+                </View>
+
+                {/* Nút quay lại */}
                 <Pressable
-                    className='z-10 pr-2'
+                    className="absolute left-0 top-1 z-10 p-2"
                     accessible={true}
-                    accessibilityLabel='Back button. Double tab to back to course detail'
-                    onPress={() => { 
-                        router.back();
-                    }}
+                    accessibilityLabel="Back button. Double tap to go back to course detail"
+                    onPress={() => router.back()}
                 >
-                    <AntDesign name='arrowleft' size={24}/>
+                    <AntDesign name="arrowleft" size={24} />
                 </Pressable>
-                <Text 
-                    className="absolute left-0 right-0 text-center text-xl font-semibold"
-                    accessible={true}
-                >
-                    Quiz: {quizDetail.title}
-                </Text>
             </View>
-            <Text
-                id='quiz-length'
-                className="text-sm text-gray-500 mb-4"
-                accessible={false}
-            >
-                Question {currentIndex + 1}/{quizDetail.questions.length}
-            </Text>
+
+
     
             <View
                 ref={currentQuestionRef}
@@ -164,7 +164,7 @@ const QuizPage = () => {
                  ${currentQuestion.content}. Choose the answer below`}
                 className="flex items-center justify-center p-2 w-full h-1/4 border-2 border-zinc-300 rounded-xl mb-4"
             >
-                <Text className="text-lg font-semibold">
+                <Text className="text-lg text-center font-semibold">
                     {currentQuestion.content}
                 </Text>
             </View>

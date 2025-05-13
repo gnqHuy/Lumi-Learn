@@ -262,27 +262,20 @@ const FlashcardSetPage = () => {
         ?
         <>
             {!isCompleted ? 
-                <View className="flex-1 bg-orange-300">
-                    <View className="w-full h-full bg-white px-6 py-4">
-                        <View 
-                            id="top-nav"
-                            className="flex-row mt-14 mb-4 items-center px-2 w-full"
-                        >
-                            <Pressable className="z-10 pr-2" onPress={() => router.back()}
+                <View className="flex-1 bg-white">
+                    <View className="w-full h-full mt-14 px-5">
+                        <View className="flex-row items-center bg-white justify-between mb-4">
+                            <Text className="text-[22px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3" numberOfLines={2}>{flashcardSetTitle}</Text>
+                            <Pressable onPress={() => router.back()}
                                 accessible={true}
-                                accessibilityLabel="Back button. Double tab to return to Course Detail"
+                                accessibilityLabel='Back button. Double tab to return Course Detail.'
+                                className='p-3'
                             >
-                                <AntDesign name="arrowleft" size={24} />
+                                <AntDesign name="arrowleft" size={24}/>  
                             </Pressable>
-                            <View className="absolute left-0 right-0 items-center">
-                                <Text className="w-full text-center text-xl font-semibold"
-                                >
-                                    Flashcard Set: {flashcardSetTitle}
-                                </Text>
-                            </View>
                         </View>
 
-                        <View className="flex-row justify-between items-center px-2 mt-4">
+                        <View className="flex-row justify-between items-center">
                             <View className={`w-10 h-10 rounded-full border-2 border-orange-500 ${isLearning ? 'bg-orange-500' : ''} items-center justify-center`}
                                 accessible={true}
                                 accessibilityLabel={`Learning Flashcard: ${learningCount}`}

@@ -31,29 +31,28 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
     }, []);
 
   return (
-    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-16 animate-slideLeftFromRight">
         {/* header */}
-        <View className="w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold text-cyan-700"
+        <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
+            <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"
                 accessible={true}
                 accessibilityLabel='Information'
-                accessibilityRole='header'
-            >
-                Information
+                accessibilityRole='header'>
+                    Information
             </Text>
-          <Pressable className={!accessibleRender ? 'hidden' : "absolute left-8 top-1"}
+            <Pressable className={!accessibleRender ? 'hidden' : " p-3 mb-2"}
                 onPress={() => setupDisplayInformation(false)}
                 accessible={true}
                 accessibilityLabel='Back'
                 accessibilityRole='button'
                 accessibilityHint='Double tab to return Profile page'
-            >
-                <AntDesign name = "arrowleft" size = {24} />
+                >
+                <AntDesign name = "arrowleft" size = {24} color={'#155e75'}/>
             </Pressable>
         </View>
 
         {/* avatar and change */}
-          <View className="mt-[3rem]">
+          <View className="mt-[2rem]">
             <Image source = {require("../../assets/images/userAvatarTest.png")} className = "w-[6rem] h-[6rem] relative left-[40%] border-gray-500 border-solid border-[1px] rounded-full"/>
             <Text className = "text-xl text-center mt-[0.5rem]">Change avatar</Text>
         </View>

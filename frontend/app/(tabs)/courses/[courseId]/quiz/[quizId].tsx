@@ -111,7 +111,6 @@ const QuizPage = () => {
             setShowQuizResult(true);
             setQuizResult(res.data);
         }).catch((err) => {
-            console.log(quizSubmission);
             console.log(err.message);
         })
     }

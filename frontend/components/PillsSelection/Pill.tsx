@@ -21,7 +21,6 @@ export const Pill: React.FC<PillProps> = ({
   selectedColor = 'bg-gray-500',
   borderStyle = undefined,
   onPress }) => {
-  
   return (
     <Pressable
       className={`rounded-full py-[0.6rem] px-[1rem] mr-2 mb-2 ${

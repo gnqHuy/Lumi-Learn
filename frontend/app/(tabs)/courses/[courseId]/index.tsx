@@ -14,6 +14,7 @@ import CreateLessonModal from '@/components/Lesson/CreateLessonModal';
 import AddRating from '@/components/Feedback/AddRating';
 import { TextInput } from 'react-native-gesture-handler';
 import { ReactNativeFile } from '../createCourse';
+import { getCourseThumbnail } from '@/utils/image';
 
 const CourseOverviewPage = () => {
   const [courseOverview, setCourseOverview] = useState<CourseOverview | undefined>(undefined);
@@ -41,6 +42,7 @@ const CourseOverviewPage = () => {
         setDescriptionInput(res.data.description);
         setCourseTitleInput(res.data.title);
         setThumbnailInputUri(res.data.thumbnail);
+        console.log('ThumbnailUrl: ', res.data.thumbnail);
     })
       .catch(console.log);
 
@@ -84,7 +86,6 @@ const CourseOverviewPage = () => {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (!permission.granted) {
-            console.log('Permission to access camera roll is required!');
             return;
         }
 
@@ -166,10 +167,14 @@ const CourseOverviewPage = () => {
                 onPress={handleImagePicker}
             >
                 <Image
-                id="course-thumbnail"
-                source={{ uri: thumbnailInputUri as string | undefined }}
-                className="w-full h-56 rounded-2xl"
-                resizeMode="cover"
+                    id="course-thumbnail"
+                    source={{ uri: 
+                        thumbnailInputUri != courseOverview?.thumbnail ?
+                        thumbnailInputUri as string | undefined
+                        : getCourseThumbnail(courseId as string)
+                    }}
+                    className="w-full h-56 rounded-2xl"
+                    resizeMode="cover"
                 />
             </TouchableOpacity>
             <View id="course-overview-section" className="px-6 pt-4 pb-8 w-full">
@@ -200,7 +205,11 @@ const CourseOverviewPage = () => {
                 <View className="mt-2 flex-row items-start justify-between">
                     <View className='flex-row'>
                         <Image
-                            source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                            source={{ uri: 
+                                thumbnailInputUri != courseOverview?.thumbnail ?
+                                thumbnailInputUri as string | undefined
+                                : getCourseThumbnail(courseId as string)
+                            }}
                             className="w-12 h-12 rounded-full my-auto"
                         />
                         <View className="ml-3 items-start">

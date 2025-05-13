@@ -4,6 +4,7 @@ import { Image, Pressable, ScrollView, Text, TouchableHighlight, TouchableOpacit
 import { CourseItemProps } from '../Course/CourseItem'
 import { AntDesign, FontAwesome6 } from '@expo/vector-icons'
 import useAuthStore from '@/zustand/authStore'
+import { getCourseThumbnail } from '@/utils/image'
 
 
 interface CourseJoinedProps {
@@ -53,7 +54,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                             {/* fake thumbnail */}
                             <View className='flex-col gap-3'>
                                 <Image
-                                    src={course.imgUrl}
+                                    source={{ uri: getCourseThumbnail(course.id) }}
                                     width={165}
                                     height={105}
                                     borderRadius={12}

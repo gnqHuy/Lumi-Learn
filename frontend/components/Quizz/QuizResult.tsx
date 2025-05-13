@@ -4,6 +4,7 @@ import { QuizResult } from '@/types/quizResult'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { S3_URL_PREFIX } from '@/const/AmazonS3';
+import { getCourseThumbnail } from '@/utils/image';
 
 export type QuizResultProps = {
     quizTitle: string;
@@ -27,7 +28,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
             className='flex-1 flex-col items-center justify-center p-6 gap-5 rounded-t-3xl bg-white w-full animate-slideUpToHalf'
         >
             <Image
-                source={{ uri: `${S3_URL_PREFIX}/course/${courseId}`}}
+                source={{ uri: getCourseThumbnail(courseId as string)}}
                 width={150}
                 height={150}
                 borderRadius={12}

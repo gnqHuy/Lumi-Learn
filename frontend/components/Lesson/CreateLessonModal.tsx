@@ -32,8 +32,6 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
             courseId: courseId as string
         };
 
-        console.log(createLessonRequest);
-
         createLesson(createLessonRequest).then((res) => {
             setRefresh(true);
             onClose(false);

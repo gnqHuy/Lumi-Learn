@@ -31,11 +31,7 @@ const CreateCourseModal: React.FC<CreateCourseModalProps> = ({ onClose }) => {
         }
 
         if (!valid) return;
-
-        // ✅ Handle course creation logic here (e.g., send to API)
-        console.log({ titleInput, descriptionInput });
-
-        // Close modal
+        
         onClose(false);
     };
 

@@ -56,7 +56,6 @@ const CreateFlashcardSetScreen = () => {
             console.log(err.message);
         })
        
-        console.log("All flashcards valid. Proceed with creation.");
     };
 
     return (

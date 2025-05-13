@@ -1,8 +1,9 @@
 import { View, Text, Pressable, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'expo-router'
 import useCourseStore from '@/zustand/courseStore'
 import { AntDesign, Feather, FontAwesome6 } from '@expo/vector-icons'
+import { getCourseThumbnail } from '@/utils/image'
 
 export type CourseItemProps = {
     id: string,
@@ -46,7 +47,7 @@ const CourseItem = (props: CourseItemProps) => {
             >
                 {/* Replace with real thumbnail image later */}
                 <Image
-                  src={props.imgUrl}  
+                  source={{ uri: getCourseThumbnail(props.id) }}
                   width={90}
                   height={90}
                   borderRadius={8}

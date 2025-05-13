@@ -11,6 +11,7 @@ import { S3_URL_PREFIX } from '@/const/AmazonS3'
 import { LinearGradient } from 'expo-linear-gradient';
 import { showNotification } from '@/components/Toast/Toast'
 import useAuthStore from '@/zustand/authStore'
+import { getCourseThumbnail } from '@/utils/image'
 
 const CoursePreview = () => {
     const selectedCourseId = useCourseStore((state) => state.selectedCourseId);
@@ -35,7 +36,6 @@ const CoursePreview = () => {
             courseId: selectedCourseId
         }
         JoinCourseApi(payload).then((res) => {
-            console.log('Join course successfully!');
             showNotification('success', 'Enrollment Successful', 'You have successfully joined the course.');
             router.push(`/(tabs)/courses/${selectedCourseId}`);
         }).catch(err => 
@@ -55,7 +55,7 @@ const CoursePreview = () => {
 
         <View className="mt-4 px-6">
             <Image
-                source={{ uri: `${S3_URL_PREFIX}/course/${selectedCourseId}` }}
+                source={{ uri: getCourseThumbnail(selectedCourseId) }}
                 className="w-full h-56 rounded-2xl"
                 resizeMode="cover"
             />
@@ -78,7 +78,7 @@ const CoursePreview = () => {
             <View className="mt-3 mb-4 flex-row items-start justify-between">
                 <View className='flex-row'>
                     <Image
-                        source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                        source={{ uri: getCourseThumbnail(selectedCourseId) }}
                         className="w-12 h-12 rounded-full my-auto"
                     />
                     <View className="ml-3 items-start">

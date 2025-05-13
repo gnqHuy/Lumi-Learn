@@ -14,7 +14,7 @@ const NotificationImage: React.FC<NotificationImageProps> = ({
   // console.log(image);
   return (
     <View className="w-[64px] h-[64px] my-auto overflow-hidden relative">
-      {!image ? <Image source={require("../../assets/images/lumiLearnLogo.png")} className="w-[100%] h-[100%] rounded-full bg-blue-300" resizeMode="contain" /> : <Image source={{ uri: image }} className="w-[100%] h-[100%] rounded-full" resizeMode="cover" />}
+      {!image ? <Image source={require("../../assets/images/default-course.jpg")} className="w-[100%] h-[100%] rounded-full" resizeMode="cover" /> : <Image source={{ uri: image }} className="w-[100%] h-[100%] rounded-full" resizeMode="cover" />}
       
       <View className="absolute bottom-[0] right-[0] bg-[#b2e4b3] rounded-full p-[2px] border border-black">
         {type == 'FlashCardSet' && 

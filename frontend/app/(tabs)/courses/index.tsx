@@ -1,11 +1,11 @@
 import { View, Text, ScrollView, TouchableOpacity, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
 import { getCourseOverview, getMyCourses, searchCourse } from '@/api/courseApi'
 import useAuthStore from '@/zustand/authStore'
 import CreateCourseModal from '@/components/Course/CreateCourseModal'
-import { useRouter } from 'expo-router'
+import { useFocusEffect, useRouter } from 'expo-router'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
 import { TextInput } from 'react-native-gesture-handler'
 import { PillSelection } from '@/components/PillsSelection/PillSelection'
@@ -13,65 +13,6 @@ import SearchFilter from '@/components/Search/SearchFilter'
 import Search from '@/components/Search/Search'
 import { GetAllTopics } from '@/api/topicApi'
 import { deleteSearchHistoryByContent, getMySearchHistories } from '@/api/searchHistoriesApi'
-
-// const coursesDummyData: CourseItemProps[] = [
-//     {
-//         imgUrl: '',
-//         id: '1',
-//         courseName: 'Football',
-//         instructorName: 'Leo Messi', 
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '2',
-//         courseName: 'Billiards',
-//         instructorName: 'Fedor Gorst',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '3',
-//         courseName: 'Snooker',
-//         instructorName: `Ronnie O' Sullivan`,
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '4',
-//         courseName: '3pts Shooting',
-//         instructorName: 'Steph Curry',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '5',
-//         courseName: 'Fathering',
-//         instructorName: 'Nikola Jokic',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '6',
-//         courseName: 'Formula One',
-//         instructorName: 'Max Verstappen',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '7',
-//         courseName: 'Golf',
-//         instructorName: 'Gareth Bale',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '8',
-//         courseName: 'Swimming',
-//         instructorName: 'Michael Phelps',
-//         isUserEnrolled: false
-//     },
-// ];
 
 const MyCourseScreen = () => {
     const [ courses, setCourses ] = useState<CourseItemProps[]>([]);
@@ -106,6 +47,15 @@ const MyCourseScreen = () => {
 
     // courses based on search result
     const [searchedCourses, setSearchedCourses] = useState<CourseItemProps[]>([]);
+
+    // rating filter of course
+    const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+
+    // course length range
+    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+
+    // topics chosen
+    const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
 
     const isTeacher = () => {
         return user?.role == "Teacher";
@@ -155,6 +105,15 @@ const MyCourseScreen = () => {
         
         setFilteredCourses(sortedCourses);
     }, [selectedFilter, courses]);
+
+    // get search histories when change the router 
+    useFocusEffect(
+        useCallback(() => {
+            getMySearchHistories().then((response) => {
+            setRecentSearches(response.data);
+            });
+        }, [])
+    );
 
     useEffect(() => {
         getMySearchHistories().then((response) => {
@@ -387,6 +346,12 @@ const MyCourseScreen = () => {
                         setupDisplaySearch={setupDisplaySearch}
                         setupDisplaySearchResult={setupDisplaySearchResult}
                         handleFilterCourse={handleFilterCourse}
+                        ratingRange={ratingRange}
+                        setRatingRange={setRatingRange}
+                        courseLengthRange={courseLengthRange}
+                        setCourseLengthRange={setCourseLengthRange}
+                        selectedTopics={selectedTopics}
+                        setSelectedTopics={setSelectedTopics}
                     />
                 </View>
             }

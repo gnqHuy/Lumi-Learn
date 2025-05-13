@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, Text } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { AccessibilityInfo, findNodeHandle, Pressable, Text } from 'react-native';
 
 type PillProps = {
   value: string;
@@ -15,18 +15,24 @@ type PillProps = {
 export const Pill: React.FC<PillProps> = ({ 
   value, 
   selected, 
-  textColor,
-  selectedTextColor,
-  defaultColor, 
-  selectedColor,
-  borderStyle,
-   onPress }) => {
+  textColor = 'text-black',
+  selectedTextColor = 'text-white',
+  defaultColor = 'bg-gray-200', 
+  selectedColor = 'bg-gray-500',
+  borderStyle = undefined,
+  onPress }) => {
   return (
     <Pressable
       className={`rounded-full py-[0.6rem] px-[1rem] mr-2 mb-2 ${
         selected ? selectedColor : defaultColor
       } ${borderStyle}`}
-      onPress={onPress}
+      onPress={() => {
+        onPress();
+        setTimeout(() => {
+          AccessibilityInfo.announceForAccessibility("Selected.");
+        }, 100);
+      }}
+      accessibilityLabel={`${value}. ${selected ? 'Selected' : 'Unselected'} Filter option`}
     >
       <Text className={`${selected ? selectedTextColor : textColor}`}>{value}</Text>
     </Pressable>

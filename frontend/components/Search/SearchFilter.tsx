@@ -11,16 +11,15 @@ interface SearchFilterProps {
     setupDisplaySearch: (display: boolean) => void;
     setupDisplaySearchResult: (display: boolean) => void;
     handleFilterCourse: (rating: number[], topics: string[], length: number[]) => void;
+    ratingRange: number[];
+    setRatingRange: (ratingRange: number[]) => void;
+    courseLengthRange: number[], 
+    setCourseLengthRange: (courseLengthRange: number[]) => void;
+    selectedTopics: string[], 
+    setSelectedTopics: (selectedTopics: string[]) => void;
 }
-const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySearchResult, handleFilterCourse}: SearchFilterProps) => {
-    // rating filter of course
-    const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySearchResult, handleFilterCourse, ratingRange, setRatingRange, courseLengthRange, setCourseLengthRange, selectedTopics, setSelectedTopics}: SearchFilterProps) => {
 
-    // course length range
-    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
-
-    // topics chosen
-    const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
 
     // state of buttons
     const [ isClearButtonPressed, setClearButtonPressed ] = useState(false);

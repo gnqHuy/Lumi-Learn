@@ -156,10 +156,15 @@ const CourseOverviewPage = () => {
         stickyHeaderIndices={[0]}
         keyboardShouldPersistTaps='handled'
     >
-        <View className=" px-5 pt-5 pb-2 flex-row bg-white items-center justify-between mb-2">
-            <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.push(`/(tabs)/courses`)} />
-            <Text className="text-2xl font-bold text-cyan-800">Course Details</Text>
-            <View className="mx-2" />
+        <View className="px-5 flex-row items-center bg-white justify-between">
+            <Text className="text-2xl font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Details</Text>
+            <Pressable onPress={() => router.push(`/(tabs)/courses`)}
+                accessible={true}
+                accessibilityLabel='Back button. Double tab to return Course page.'
+                className='p-3'
+            >
+                <AntDesign name="arrowleft" size={24}/>  
+            </Pressable>
         </View>
         <View id="course-overview-screen" className="flex-1">
             {isTeacher() ? 
@@ -168,16 +173,21 @@ const CourseOverviewPage = () => {
                 onPress={handleImagePicker}
             >
                 <Image
-                    id="course-thumbnail"
-                    source={{ uri: 
-                        thumbnailInputUri != courseOverview?.thumbnail ?
-                        thumbnailInputUri as string | undefined
-                        : getCourseThumbnail(courseId as string)
-                    }}
-                    className="w-full h-56 rounded-2xl"
-                    resizeMode="cover"
+                id="course-thumbnail"
+                source={courseOverview?.thumbnail || thumbnailInputUri
+                    ?
+                    {
+                        uri: thumbnailInputUri != courseOverview?.thumbnail
+                            ? thumbnailInputUri
+                            : courseOverview?.thumbnail
+                    }
+                    : require('../../../../assets/images/default-course.jpg')
+                }
+                className="w-full h-56 rounded-2xl"
+                resizeMode="cover"
                 />
             </TouchableOpacity>
+
             :
             <View className="mt-4 px-6">
                 <Image
@@ -188,53 +198,55 @@ const CourseOverviewPage = () => {
                 />
             </View>
             }
-            <View id="course-overview-section" className="px-6 pt-4 pb-8 w-full">
-                <View className="flex-row items-center justify-between items-start mb-3">
-                {isTeacher() ?
-                <TextInput
-                    value={courseTitleInput}
-                    multiline
-                    className='text-2xl font-bold w-5/6 text-cyan-800 my-auto'
-                    onChangeText={(text) => {
-                        setCourseTitleInput(text);
-                    }}
-                />
-                : <Text
-                    id="course-name"
-                    className="text-2xl w-5/6 font-bold text-cyan-800 my-auto"
-                >
-                    {courseOverview?.title}
-                </Text> 
-                }
-                <View className="flex-row mt-1 mr-2 items-center">
-                    <AntDesign name="star" size={16} color="#facc15" />
-                    <Text className="text-base text-gray-600 font-medium ml-1">
-                        {courseOverview?.rating}
-                    </Text>
-                    </View>
-                </View>
-                <View className="mt-2 flex-row items-start justify-between">
-                    <View className='flex-row'>
-                        <Image
-                            source={{ uri: 
-                                thumbnailInputUri != courseOverview?.thumbnail ?
-                                thumbnailInputUri as string | undefined
-                                : getCourseThumbnail(courseId as string)
-                            }}
-                            className="w-12 h-12 rounded-full my-auto"
-                        />
-                        <View className="ml-3 items-start">
-                            <Text className="text-lg font-bold text-cyan-800">
-                                Instructor
-                            </Text>
-                            <Text className="text-lg font-medium text-gray-700">
-                            {courseOverview?.instructor}
-                            </Text>
+            <View id="course-overview-section" className="px-6 py-8 w-full">
+                <View 
+                    accessible={true}
+                    accessibilityLabel={`Course: ${courseOverview?.title}, Topic: ${courseOverview?.topic}, Instructor: ${courseOverview?.instructor}
+                    Rating: ${courseOverview?.rating}/5, ${courseOverview?.numberOfRatings} rate.`}
+                >              
+                    <View className="flex-row items-center justify-between items-start mb-3">
+                    {isTeacher() ?
+                    <TextInput
+                        value={courseTitleInput}
+                        multiline
+                        className='text-2xl font-bold w-5/6 text-cyan-800 my-auto'
+                        onChangeText={(text) => {
+                            setCourseTitleInput(text);
+                        }}
+                    />
+                    : <Text
+                        id="course-name"
+                        className="text-2xl w-5/6 font-bold text-cyan-800 my-auto"
+                    >
+                        {courseOverview?.title}
+                    </Text> 
+                    }
+                    <View className="flex-row mt-1 mr-2 items-center">
+                        <AntDesign name="star" size={16} color="#facc15" />
+                        <Text className="text-base text-gray-600 font-medium ml-1">
+                            {courseOverview?.rating}
+                        </Text>
                         </View>
                     </View>
-                    <Pressable className="border-solid bg-yellow-400 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
-                        <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
-                    </Pressable>
+                    <View className="mt-2 flex-row items-start justify-between">
+                        <View className='flex-row'>
+                            <Image
+                                source={require('../../../../assets/images/teacher-avatar.png')}
+                                className="w-12 h-12 rounded-full my-auto"
+                            />
+                            <View className="ml-3 items-start">
+                                <Text className="text-lg font-bold text-cyan-800">
+                                    Instructor
+                                </Text>
+                                <Text className="text-lg font-medium text-gray-700">
+                                {courseOverview?.instructor}
+                                </Text>
+                            </View>
+                        </View>
+                        <Pressable className="border-solid bg-yellow-400 border-cyan-700 border-[2px] rounded-full px-4 py-1 mr-3 my-auto w-auto">
+                            <Text className="text-cyan-700 text-lg font-semibold">{courseOverview?.topic}</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
 
@@ -242,20 +254,23 @@ const CourseOverviewPage = () => {
                 <TouchableOpacity
                     className={`w-1/2 items-center pb-2 ${activeTab === 'lesson' ? 'border-b-2 border-cyan-800' : ''}`}
                     onPress={() => setActiveTab('lesson')}
+                    accessible={true}
+                    accessibilityLabel={`Lessons Tab. ${activeTab === 'lesson' ? 'activated' : 'Double tab to switch to Lessons tab.'}`}
                 >
                     <Text className={`text-lg font-semibold ${activeTab === 'lesson' ? 'text-cyan-800' : 'text-gray-500'}`}>
-                    Lessons
+                        Lessons
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     className={`w-1/2 items-center pb-2 ${activeTab === 'about' ? 'border-b-2 border-cyan-800' : ''}`}
                     onPress={() => setActiveTab('about')}
+                    accessible={true}
+                    accessibilityLabel={`About Course Tab. ${activeTab === 'about' ? 'activated' : 'Double tab to switch to About Course tab.'}`}
                 >
                     <Text className={`text-lg font-semibold ${activeTab === 'about' 
-                        
-                        
-                        ? 'text-cyan-800' : 'text-gray-500'}`}>
-                    About Course
+                        ? 'text-cyan-800' : 'text-gray-500'}`}
+                    >
+                        About Course
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -263,50 +278,59 @@ const CourseOverviewPage = () => {
             <View className="flex-1 pb-10">
             {activeTab === 'lesson' ? (
                 <View id="Lesson-list-section" className="flex-col gap-4 flex-1 w-full px-6 mt-4">
-                <LessonList lessons={courseOverview?.lessons} />
+                    <LessonList lessons={courseOverview?.lessons} />
                 </View>
             ) : (
                 <View id="about-section" className="flex-col gap-2 flex-1 w-full px-6 mt-4">
-                <Text className="text-xl font-bold text-cyan-800">Descriptions</Text>
-                {isTeacher() ? 
-                <TextInput
-                    className='text-base text-gray-700 w-full'
-                    multiline
-                    value={descriptionInput}
-                    onChangeText={(text) => {
-                        setDescriptionInput(text);
-                    }}
-                />
-                : <Text className="text-base text-gray-700">{courseOverview?.description}</Text>}
+                    <View 
+                        accessible={true}
+                        accessibilityLabel={`Description: ${courseOverview?.description}`}
+                        className='flex-col gap-2'
+                    >
+                        <Text className="text-xl font-bold text-cyan-800">Descriptions</Text>
+                        {isTeacher() ? 
+                        <TextInput
+                            className='text-base text-gray-700 w-full'
+                            multiline
+                            value={descriptionInput}
+                            onChangeText={(text) => {
+                                setDescriptionInput(text);
+                            }}
+                        />
+                        : <Text className="text-base text-gray-700">{courseOverview?.description}</Text>}
+                    </View>
 
-                {!isTeacher() && (
-                    <>
-                    {isRatedByUser ? (
-                        <View id="rating-section" className="flex-row items-center gap-6 w-full mt-6">
-                        <Text className="text-lg text-cyan-800 font-bold">Your rating</Text>
-                        <AddRating
-                            size={20}
-                            courseId={courseId as string}
-                            rating={rating}
-                            setRating={setRating}
-                            isRatedByUser={isRatedByUser}
-                            setIsRatedByUser={setIsRatedByUser}
-                        />
-                        </View>
-                    ) : (
-                        <View id="rating-section" className="gap-4 mt-6">
-                        <Text className="text-lg text-cyan-800 font-bold">Rate this course</Text>
-                        <AddRating
-                            courseId={courseId as string}
-                            rating={rating}
-                            setRating={setRating}
-                            isRatedByUser={isRatedByUser}
-                            setIsRatedByUser={setIsRatedByUser}
-                        />
-                        </View>
+                    {!isTeacher() && (
+                        <>
+                        {isRatedByUser ? (
+                            <View id="rating-section" className="flex-row items-center gap-6 w-full mt-6"
+                                accessible={true}
+                                accessibilityLabel={`Your rating: ${rating} stars`}
+                            >
+                                <Text className="text-lg text-cyan-800 font-bold">Your rating</Text>
+                                <AddRating
+                                    size={20}
+                                    courseId={courseId as string}
+                                    rating={rating}
+                                    setRating={setRating}
+                                    isRatedByUser={isRatedByUser}
+                                    setIsRatedByUser={setIsRatedByUser}
+                                />
+                            </View>
+                        ) : (
+                            <View id="rating-section" className="gap-4 mt-6">
+                            <Text className="text-lg text-cyan-800 font-bold">Rate this course</Text>
+                            <AddRating
+                                courseId={courseId as string}
+                                rating={rating}
+                                setRating={setRating}
+                                isRatedByUser={isRatedByUser}
+                                setIsRatedByUser={setIsRatedByUser}
+                            />
+                            </View>
+                        )}
+                        </>
                     )}
-                    </>
-                )}
                 </View>
             )}
             </View>

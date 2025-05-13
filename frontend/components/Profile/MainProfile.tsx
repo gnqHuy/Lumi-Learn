@@ -8,13 +8,12 @@ import { Entypo } from '@expo/vector-icons';
 interface MainProfileProps {
     setupDisplayInformation: (display: boolean) => void;
     setupDisplayChangePassword: (display: boolean) => void;
-    setupDisplayChangeTheme: (display: boolean) => void;
     setupDisplayPolicy: (display: boolean) => void;
     setupDisplayHelp: (display: boolean) => void;
     handleLogOut: () => void;
     userProfile: User
 }
-const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayChangeTheme, setupDisplayPolicy, setupDisplayHelp, handleLogOut, userProfile}: MainProfileProps) => {
+const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setupDisplayPolicy, setupDisplayHelp, handleLogOut, userProfile}: MainProfileProps) => {
   return (
     <ScrollView className = "mt-[4rem] animate-slideRightFromLeft">
         {/* username and avatar */}
@@ -85,19 +84,6 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
                       accessibilityHint='Double tab to open Helps screen'
                   >
                     <Text className = "text-lg">Helps</Text>
-                    <Entypo name = "chevron-right" size = {20}/> 
-                </Pressable>
-            </View>
-        </View>
-
-        {/* theme controller */}
-        <View className = "mt-[3rem] relative left-[5%]">
-            <Text className = "text-lg text-cyan-800 font-bold">Theme</Text>
-            {/* options */}
-            <View className = "flex-col mt-[0.5rem]">
-                {/* information */}
-                <Pressable className = "w-[90%] border-solid border-cyan-800 border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress={() => setupDisplayChangeTheme(true)}>
-                    <Text className = "text-lg">Change</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
                 </Pressable>
             </View>

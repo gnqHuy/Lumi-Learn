@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, AccessibilityInfo } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Notification } from '@/types/notification';
 import { deleteNotification, markNotificationAsRead } from '@/api/notification';
@@ -82,7 +82,12 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
 
   return (
     <>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <TouchableOpacity onPress={() => setModalVisible(true)}
+        accessible={true}
+        accessibilityLabel={`${notification.content}. ${timeAgo}. ${!notification.isRead ? 'unread' : ''}`}
+        accessibilityRole='button'
+        accessibilityHint='Double tab to see more notifications options'
+      >
         <View className={`py-2 px-3 pb-3 ${notification.isRead ? 'bg-white' : 'bg-blue-300/20'} border-non`}>
           <View className="flex-row items-start gap-3">
             <NotificationImage
@@ -104,16 +109,20 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
           </View>
         </View>
       </TouchableOpacity>
-
-      <NotificationOptions
-        notificationContent={notification.content}
-        notificationType={notification.type}
-        notificationThumbnail={notification.thumbnail}
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onDelete={handleDelete}
-        onMarkAsRead={handleMarkAsRead}
-      />
+      {modalVisible
+        ?
+        <NotificationOptions
+          notificationContent={notification.content}
+          notificationType={notification.type}
+          notificationThumbnail={notification.thumbnail}
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onDelete={handleDelete}
+          onMarkAsRead={handleMarkAsRead}
+        />
+        :
+        <></>
+      }
     </>
   );
 };

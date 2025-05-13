@@ -8,7 +8,7 @@ import {
   Pressable,
   StatusBar,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import CoursesPage from "./courses";
 import { logIn } from "@/api/authApi";
 import useAuthStore from "@/zustand/authStore";
@@ -33,6 +33,7 @@ import { CourseItemProps } from "@/components/Course/CourseItem";
 import { getUserProfile } from "@/api/userApi";
 import { User } from "@/types/user";
 import { Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "expo-router";
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -80,6 +81,18 @@ const HomePage = () => {
   // user profile
   const userProfile = useAuthStore.getState().authState?.user;
 
+  // rating filter of course
+  const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+
+  // course length range
+  const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+
+  // topics chosen
+  const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
+
+  //
+  const [isEditing, setIsEditing] = useState(false); 
+
   const handleOnClick = () => {
     const request = {
       username: username,
@@ -125,12 +138,6 @@ const HomePage = () => {
 
   // get user's courses
   useEffect(() => {
-    // getUserProfile()
-    //   .then((response) => {
-    //     setUserProfile(response.data);
-    //   })
-    //   .catch((err) => console.error(err));
-    
     getMyCourses()
       .then((res) => {
         const mappedCourses: CourseItemProps[] = res.data.map(
@@ -181,12 +188,21 @@ const HomePage = () => {
       });
   }, []);
 
-  // get search histories
+  // get search histories when change the router 
+  useFocusEffect(
+    useCallback(() => {
+      getMySearchHistories().then((response) => {
+        setRecentSearches(response.data);
+      });
+    }, [])
+  );
+
+  // get search histories when end one search -> push new search -> update
   useEffect(() => {
     getMySearchHistories().then((response) => {
       setRecentSearches(response.data);
     });
-  }, [searchTrigger]);
+  }, [searchTrigger])
 
   // get user profile
   useEffect(() => {
@@ -230,6 +246,7 @@ const HomePage = () => {
     setDisplaySearchResult(true);
     searchCourse(keyword)
       .then((res) => {
+        setSearchTrigger((prev) => !prev);
         const mappedCourses: CourseItemProps[] = res.data.map(
           (course: any) => ({
             id: course.id,
@@ -245,7 +262,6 @@ const HomePage = () => {
           })
         );
         setSearchedCourses(mappedCourses);
-        setSearchTrigger((prev) => !prev);
       })
       .catch((err) => {
         console.log(err);
@@ -268,6 +284,7 @@ const HomePage = () => {
   // set up display search
   const setupDisplaySearch = (display: boolean) => {
       setDisplaySearch(display);
+      setSearchTrigger(prev => !prev)
   }
 
   // set up display search result
@@ -318,6 +335,8 @@ const HomePage = () => {
     setDisplaySearch(true);
   };
 
+  const textInputRef = useRef<TextInput>(null);
+
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
@@ -347,36 +366,58 @@ const HomePage = () => {
         {/* search bar and sort */}
         <View className="flex-row w-full items-center justify-between gap-3 px-4">
           {/* search bar */}
-          <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
-            <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]" />
+          <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]"
+            onPress={() => setDisplaySearch(true)}
+          >
+            <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]"/>
             <TextInput
+              ref={textInputRef}
+              accessible={true}
+              accessibilityLabel={`Search Courses field: ${keyword} . ${isEditing ? 'Editing' : '. Double tab to edit'}`}
               placeholder="Find courses here"
-              className="font-semibold w-3/4 pt-[0.2rem]"
+              className="font-semibold flex-1 h-full"
               style={{ textAlignVertical: "center" }}
-              editable={displaySearch === false ? false : true}
+              editable={displaySearch}
               placeholderTextColor={"gray"}
-              onPressIn={() => setDisplaySearch(true)}
+              onPressIn={() => {
+                setDisplaySearch(true);
+                setIsEditing(true); 
+              }}
+              onBlur={() => setIsEditing(false)}
               onChangeText={setKeyword}
               value={keyword}
               onSubmitEditing={() => searchCourseByKeyword(keyword)}
             />
-            {keyword && (
+          </Pressable>
+          {keyword && (
               <AntDesign
                 name="close"
                 color={"gray"}
                 size={20}
-                className="z-[10] ml-2"
+                className="z-[10] absolute p-3"
+                style={{
+                  right: 86
+                }}
+                accessible={true}
+                accessibilityLabel="Delete search field keyword"
                 onPress={() => {
                   setKeyword("");
                   setDisplaySearchResult(false);
+                  setSearchTrigger((prev) => !prev);
                 }}
               />
             )}
-          </Pressable>
           {/* filter  */}
           <Pressable
             className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.5rem]"
-            onPress={() => setDisplaySearchFilter(true)}
+            onPress={() => {
+              setDisplaySearchFilter(true);
+              textInputRef.current?.blur();
+            }}
+            accessible={true}
+            accessibilityLabel="Filter"
+            accessibilityRole="button"
+            accessibilityHint="Double tab to open Course Filter"
           >
             <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
           </Pressable>
@@ -419,6 +460,12 @@ const HomePage = () => {
               setupDisplaySearch={setupDisplaySearch}
               setupDisplaySearchResult={setupDisplaySearchResult}
               handleFilterCourse={handleFilterCourse}
+              ratingRange={ratingRange}
+              setRatingRange={setRatingRange}
+              courseLengthRange={courseLengthRange}
+              setCourseLengthRange={setCourseLengthRange}
+              selectedTopics={selectedTopics}
+              setSelectedTopics={setSelectedTopics}
             />
           </View>
         )}

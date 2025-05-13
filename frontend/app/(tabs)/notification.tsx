@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ScrollView as ScrollViewType } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ScrollView as ScrollViewType, AccessibilityInfo } from 'react-native';
 import NotificationItem from '@/components/Notification/NotificationItem';
 import { Notification } from '@/types/notification';
 import { GetNotification, markAllNotificationsAsRead } from '@/api/notification';
@@ -81,7 +81,10 @@ const NotificationPage = () => {
 
   return (
     <View className="flex-1 bg-white pt-20">
-      <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4">Notifications</Text>
+      <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4"
+        accessibilityRole='header'
+      >
+        Notifications</Text>
       {notifications.length === 0 && (
         <View className="flex-1 justify-center items-center">
           <Text className="text-2xl text-gray-600 font-semibold">
@@ -96,12 +99,19 @@ const NotificationPage = () => {
         {todayNotifications.length > 0 && (
           <View className="w-[100%]">
             <View className="flex-row justify-between items-center mb-2 mx-3">
-              <Text className="text-lg text-cyan-800 font-semibold">Today</Text>
+              <Text className="text-lg text-cyan-800 font-semibold"
+                accessible={true}
+                accessibilityRole='header'
+              >Today</Text>
               <TouchableOpacity
                 className="px-3 py-1 rounded-full hover:text-gray-400"
                 onPress={handleMarkAllAsRead}
+                accessible={true}
+                accessibilityRole='button'
+                accessibilityHint='Double tab to mark all notifications as read'
               >
-                <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
+                <Text className="text-cyan-800 font-medium text-sm">
+                  Mark all as read</Text>
               </TouchableOpacity>
             </View>
 
@@ -119,11 +129,17 @@ const NotificationPage = () => {
         {previousNotifications.length > 0 && (
           <View className="w-[100%] mt-3">
             <View className="flex-row justify-between items-center mb-2 mx-4">
-              <Text className="text-lg text-cyan-800 font-semibold">Earlier</Text>
+              <Text className="text-lg text-cyan-800 font-semibold"
+                accessibilityRole='header'
+              >
+                Earlier</Text>
               {todayNotifications.length === 0 && (
                 <TouchableOpacity
-                  className="rounded-full hover:text-gray-400"
+                  className="px-3 py-1 rounded-full hover:text-gray-400"
                   onPress={handleMarkAllAsRead}
+                  accessible={true}
+                  accessibilityRole='button'
+                  accessibilityHint='Double tab to mark all notifications as read'
                 >
                   <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
                 </TouchableOpacity>
@@ -152,7 +168,7 @@ const NotificationPage = () => {
           </View>
         )}
       </ScrollView>
-      <Toast />
+      {/* <Toast /> */}
     </View>
     
   );

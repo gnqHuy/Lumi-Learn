@@ -52,9 +52,19 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                             activeOpacity={0.6}
                         >
                             {/* fake thumbnail */}
-                            <View className='flex-col gap-3'>
+                            <View className='flex-col gap-3'
+                                accessible={true}
+                                accessibilityLabel={`Course: ${course.courseName}, Topic: ${course.topic}, Instructor: ${course.instructorName}
+                                ${course.numberOfLessons} Lessons, Rating: ${course.rating}/5, ${course.numberOfRatings} rate`}
+                                accessibilityRole='button'
+                                accessibilityHint='Double tab to open Course Details'
+                            >
                                 <Image
-                                    source={{ uri: getCourseThumbnail(course.id) }}
+                                    source={course.imgUrl
+                                        ? { uri: course.imgUrl }
+                                        : require('../../assets/images/default-course.jpg')
+                                    }
+                                    className='w-[165px] h-[105px]'
                                     width={165}
                                     height={105}
                                     borderRadius={12}

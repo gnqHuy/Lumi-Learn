@@ -14,65 +14,6 @@ import Search from '@/components/Search/Search'
 import { GetAllTopics } from '@/api/topicApi'
 import { deleteSearchHistoryByContent, getMySearchHistories } from '@/api/searchHistoriesApi'
 
-// const coursesDummyData: CourseItemProps[] = [
-//     {
-//         imgUrl: '',
-//         id: '1',
-//         courseName: 'Football',
-//         instructorName: 'Leo Messi', 
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '2',
-//         courseName: 'Billiards',
-//         instructorName: 'Fedor Gorst',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '3',
-//         courseName: 'Snooker',
-//         instructorName: `Ronnie O' Sullivan`,
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '4',
-//         courseName: '3pts Shooting',
-//         instructorName: 'Steph Curry',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '5',
-//         courseName: 'Fathering',
-//         instructorName: 'Nikola Jokic',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '6',
-//         courseName: 'Formula One',
-//         instructorName: 'Max Verstappen',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '7',
-//         courseName: 'Golf',
-//         instructorName: 'Gareth Bale',
-//         isUserEnrolled: false
-//     },
-//     {
-//         imgUrl: '',
-//         id: '8',
-//         courseName: 'Swimming',
-//         instructorName: 'Michael Phelps',
-//         isUserEnrolled: false
-//     },
-// ];
-
 const MyCourseScreen = () => {
     const [ courses, setCourses ] = useState<CourseItemProps[]>([]);
     const [ isCourseModalOpen, setIsCourseModalOpen ] = useState(false);

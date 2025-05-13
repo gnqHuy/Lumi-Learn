@@ -4,6 +4,7 @@ import AntDesgin from '@expo/vector-icons/AntDesign';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { PillSelection } from '../PillsSelection/PillSelection';
 import { GetAllTopics } from '@/api/topicApi';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface SearchFilterProps {
     disableSearchFilter: () => void;
@@ -60,7 +61,7 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
     }
     
   return (
-    <View className = "flex-col items-center px-4 pb-6 gap-5 rounded-t-3xl bg-white w-full animate-slideUpToHalf">
+    <View className = "flex-col flex-1 items-center px-4 pb-6 gap-5 rounded-t-3xl bg-white w-full animate-slideUpToHalf">
         <View
             id='filter-top'
             className='w-full'
@@ -72,141 +73,149 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
             </Pressable>
         </View>
 
-        {/* topics */}
-        <View 
-            id='topic-section'
-            className = "flex-col w-full gap-3"
+        <ScrollView
+            className='flex-1'
         >
-            <Text className = "text-xl font-semibold text-cyan-800">Topics</Text>
-            {/* list of topics */}
-            <PillSelection
-                values={topics}
-                multiSelect={true}
-                selected={selectedTopics}
-                setSelected={setSelectedTopics}
-                wrap={true}
-                defaultColor='bg-zinc-100'
-                selectedColor='bg-cyan-700'
-                textColor='text-cyan-700'
-            />
-        </View>
-
-        {/* rating */}
-        <View 
-            id='rating-section'
-            className = "flex-col w-full gap-3"
-        >
-            <Text className = "text-xl font-semibold text-cyan-800">Rating</Text>
-            <View
-                id='slider-container'
-                className='flex-col items-center px-3 w-full'
-            >
-                <View id='slider'>
-                    <MultiSlider 
-                        values={ratingRange}
-                        sliderLength={screenWidth - 2 * 28}
-                        onValuesChange={setRatingRange}
-                        min={0}
-                        max={5}
-                        step={1}
-                        snapped={true}
-                        selectedStyle={{backgroundColor: "#155e75"}}
-                        unselectedStyle={{backgroundColor: "#e5e7eb"}}
-                        markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
+            <View className='flex-col items-center gap-5 pb-6'>
+                {/* topics */}
+                <View 
+                    id='topic-section'
+                    className = "flex-col w-full gap-3"
+                >
+                    <Text className = "text-xl font-semibold text-cyan-800">Topics</Text>
+                    {/* list of topics */}
+                    <PillSelection
+                        values={topics}
+                        multiSelect={true}
+                        selected={selectedTopics}
+                        setSelected={setSelectedTopics}
+                        wrap={true}
+                        defaultColor='bg-zinc-100'
+                        selectedColor='bg-cyan-700'
+                        textColor='text-cyan-700'
+                        extendable={true}
+                        visibleRows={4}
                     />
                 </View>
-                {/* Start value label */}
-                <Text
-                    className="absolute top-[3rem] text-cyan-700"
-                    style={{
-                        left: ratingRange[0] * positionPerStep + 9,
-                    }}
-                >
-                    {Math.floor(ratingRange[0])}
-                </Text>
 
-                {/* End value label */}
-                <Text
-                    className="absolute top-[3rem] text-cyan-700"
-                    style={{
-                        left: ratingRange[1] * positionPerStep + 9,
-                    }}
+                {/* rating */}
+                <View 
+                    id='rating-section'
+                    className = "flex-col w-full gap-3"
                 >
-                    {Math.floor(ratingRange[1])}
-                </Text>
-            </View>
-        </View>
+                    <Text className = "text-xl font-semibold text-cyan-800">Rating</Text>
+                    <View
+                        id='slider-container'
+                        className='flex-col items-center px-3 w-full'
+                    >
+                        <View id='slider'>
+                            <MultiSlider 
+                                values={ratingRange}
+                                sliderLength={screenWidth - 2 * 28}
+                                onValuesChange={setRatingRange}
+                                min={0}
+                                max={5}
+                                step={1}
+                                snapped={true}
+                                selectedStyle={{backgroundColor: "#155e75"}}
+                                unselectedStyle={{backgroundColor: "#e5e7eb"}}
+                                markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
+                            />
+                        </View>
+                        {/* Start value label */}
+                        <Text
+                            className="absolute top-[3rem] text-cyan-700"
+                            style={{
+                                left: ratingRange[0] * positionPerStep + 9,
+                            }}
+                        >
+                            {Math.floor(ratingRange[0])}
+                        </Text>
 
-        {/* course length */}
-        <View 
-            id='course-length-section'
-            className = "flex-col gap-3 w-full"
-        >
-            <Text className = "text-xl font-semibold text-cyan-800">Course length</Text>
-            <View
-                id='slider-container'
-                className='flex-col items-center px-3 w-full'
-            >
-                <View id='slider'>
-                    <MultiSlider 
-                        values={courseLengthRange}
-                        sliderLength={screenWidth - 2 * 28}
-                        onValuesChange={setCourseLengthRange}
-                        min={0}
-                        max={30}
-                        step={1}
-                        snapped={true}
-                        selectedStyle={{backgroundColor: "#155e75"}}
-                        unselectedStyle={{backgroundColor: "#e5e7eb"}}
-                        markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
-                    />
+                        {/* End value label */}
+                        <Text
+                            className="absolute top-[3rem] text-cyan-700"
+                            style={{
+                                left: ratingRange[1] * positionPerStep + 9,
+                            }}
+                        >
+                            {Math.floor(ratingRange[1])}
+                        </Text>
+                    </View>
                 </View>
-                {/* Start value label */}
-                <Text
-                    className="absolute top-[3rem] text-cyan-700"
-                    style={{
-                        left: courseLengthRange[0] * positionPerStepCourseLengthSlider + 9,
-                    }}
-                >
-                    {Math.floor(courseLengthRange[0])}
-                </Text>
 
-                {/* End value label */}
-                <Text
-                    className="absolute top-[3rem] text-cyan-700"
-                    style={{
-                        left: courseLengthRange[1] * positionPerStepCourseLengthSlider + 9,
-                    }}
+                {/* course length */}
+                <View 
+                    id='course-length-section'
+                    className = "flex-col gap-3 w-full"
                 >
-                    {Math.floor(courseLengthRange[1])}
-                </Text>
+                    <Text className = "text-xl font-semibold text-cyan-800">Course length</Text>
+                    <View
+                        id='slider-container'
+                        className='flex-col items-center px-3 w-full'
+                    >
+                        <View id='slider'>
+                            <MultiSlider 
+                                values={courseLengthRange}
+                                sliderLength={screenWidth - 2 * 28}
+                                onValuesChange={setCourseLengthRange}
+                                min={0}
+                                max={30}
+                                step={1}
+                                snapped={true}
+                                selectedStyle={{backgroundColor: "#155e75"}}
+                                unselectedStyle={{backgroundColor: "#e5e7eb"}}
+                                markerStyle={{backgroundColor: "white", borderColor: "#155e75", borderStyle: "solid", borderWidth: 2, width: 20, height: 20}}
+                            />
+                        </View>
+                        {/* Start value label */}
+                        <Text
+                            className="absolute top-[3rem] text-cyan-700"
+                            style={{
+                                left: courseLengthRange[0] * positionPerStepCourseLengthSlider + 9,
+                            }}
+                        >
+                            {Math.floor(courseLengthRange[0])}
+                        </Text>
+
+                        {/* End value label */}
+                        <Text
+                            className="absolute top-[3rem] text-cyan-700"
+                            style={{
+                                left: courseLengthRange[1] * positionPerStepCourseLengthSlider + 9,
+                            }}
+                        >
+                            {Math.floor(courseLengthRange[1])}
+                        </Text>
+                    </View>
+                </View>
+
+                {/* buttons */}
+                <View 
+                    id='button-container'
+                    className = "flex-row justify-between w-full px-6"
+                >
+                    <Pressable 
+                        className = {`py-[0.5rem] w-[48%] rounded-xl border-solid border-[1px]
+                            ${isClearButtonPressed ? 'border-cyan-800 bg-gray-300' : 'border-cyan-700 bg-gray-200'}`}
+                        onPress={() => clearSearchFilter()}
+                        onPressIn={() => setClearButtonPressed(true)}
+                        onPressOut={() => setClearButtonPressed(false)}
+                    >
+                        <Text className = "text-lg font-semibold text-center text-cyan-700">Clear filter</Text>
+                    </Pressable>
+                    <Pressable 
+                        className = {`py-[0.5rem] w-[48%] rounded-xl
+                            ${isApplyButtonPressed ? 'bg-cyan-700' : 'bg-cyan-600'}`}
+                        onPress={() => applyFilter()}
+                        onPressIn={() => setApplyButtonPressed(true)}
+                        onPressOut={() => setApplyButtonPressed(false)}
+                    >
+                        <Text className = {`text-lg font-semibold text-center text-white`}>Apply filter</Text>
+                    </Pressable>
+                </View>
             </View>
-        </View>
-
-        {/* buttons */}
-        <View 
-            id='button-container'
-            className = "flex-row justify-between w-full px-6"
-        >
-            <Pressable 
-                className = {`py-[0.5rem] w-[48%] rounded-xl border-solid border-[1px]
-                    ${isClearButtonPressed ? 'border-cyan-800 bg-gray-300' : 'border-cyan-700 bg-gray-200'}`}
-                onPress={() => clearSearchFilter()}
-                onPressIn={() => setClearButtonPressed(true)}
-                onPressOut={() => setClearButtonPressed(false)}
-            >
-                <Text className = "text-lg font-semibold text-center text-cyan-700">Clear filter</Text>
-            </Pressable>
-            <Pressable 
-                className = {`py-[0.5rem] w-[48%] rounded-xl
-                    ${isApplyButtonPressed ? 'bg-cyan-700' : 'bg-cyan-600'}`}
-                onPress={() => applyFilter()}
-                onPressIn={() => setApplyButtonPressed(true)}
-                onPressOut={() => setApplyButtonPressed(false)}
-            >
-                <Text className = {`text-lg font-semibold text-center text-white`}>Apply filter</Text>
-            </Pressable>
-        </View>
+        </ScrollView>
     </View>
   )
 }

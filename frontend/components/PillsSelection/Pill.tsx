@@ -15,11 +15,11 @@ type PillProps = {
 export const Pill: React.FC<PillProps> = ({ 
   value, 
   selected, 
-  textColor = 'text-black',
-  selectedTextColor = 'text-white',
-  defaultColor = 'bg-gray-200', 
-  selectedColor = 'bg-gray-500',
-  borderStyle = undefined,
+  textColor,
+  selectedTextColor,
+  defaultColor, 
+  selectedColor,
+  borderStyle,
    onPress }) => {
   return (
     <Pressable

@@ -122,10 +122,16 @@ const CreateCoursePage = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (topics && selectedTopics.length != 0) {
+      setTopicError(false);
+    }
+  }, [selectedTopics])
+
   return (
     <View className="flex-col flex-1 bg-white items-center justify-center px-6">
-      <ScrollView horizontal={false} showsVerticalScrollIndicator={false} className="w-full">
-        <View className="w-full flex-col items-center justify-center">
+      <ScrollView horizontal={false} showsVerticalScrollIndicator={false} className="flex-1">
+        <View className="flex-1 flex-col pb-6 items-center justify-center">
           <TouchableOpacity onPress={handleImagePicker}>
           <View className="w-32 h-32 items-center justify-center rounded-xl bg-gray-200 border-[3px] border-gray-300 mb-6 mt-20">
               {thumbnailUri ? (
@@ -194,13 +200,16 @@ const CreateCoursePage = () => {
               </Text>
               <PillSelection
                 values={topics}
+                setValues={setTopics}
                 defaultColor='bg-zinc-100'
-                selectedColor='bg-cyan-700'
+                selectedColor='bg-cyan-600'
                 textColor='text-cyan-700'
                 selected={selectedTopics}
                 setSelected={setSelectedTopics}
                 multiSelect={false}
                 wrap={true}
+                extendable={true}
+                allowAddValue={true}
               />
               {topicError && (
                 <Text className="text-sm ml-1 mt-2 mb-2 text-red-600">{topicErrorMessage}</Text>

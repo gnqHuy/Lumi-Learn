@@ -80,7 +80,7 @@ const NotificationPage = () => {
   };
 
   return (
-    <View className="flex-1 bg-white pt-20">
+    <View className="flex-1 bg-white pt-[68px]">
       <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4"
         accessibilityRole='header'
       >
@@ -98,13 +98,13 @@ const NotificationPage = () => {
       >
         {todayNotifications.length > 0 && (
           <View className="w-[100%]">
-            <View className="flex-row justify-between items-center mb-2 mx-3">
+            <View className="flex-row justify-between items-center mb-2 mx-5">
               <Text className="text-lg text-cyan-800 font-semibold"
                 accessible={true}
                 accessibilityRole='header'
               >Today</Text>
               <TouchableOpacity
-                className="px-3 py-1 rounded-full hover:text-gray-400"
+                className="py-1 rounded-full hover:text-gray-400"
                 onPress={handleMarkAllAsRead}
                 accessible={true}
                 accessibilityRole='button'
@@ -128,14 +128,14 @@ const NotificationPage = () => {
 
         {previousNotifications.length > 0 && (
           <View className="w-[100%] mt-3">
-            <View className="flex-row justify-between items-center mb-2 mx-4">
+            <View className="flex-row justify-between items-center mb-2 mx-5">
               <Text className="text-lg text-cyan-800 font-semibold"
                 accessibilityRole='header'
               >
                 Earlier</Text>
               {todayNotifications.length === 0 && (
                 <TouchableOpacity
-                  className="px-3 py-1 rounded-full hover:text-gray-400"
+                  className="py-1 rounded-full hover:text-gray-400"
                   onPress={handleMarkAllAsRead}
                   accessible={true}
                   accessibilityRole='button'

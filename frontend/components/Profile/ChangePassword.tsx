@@ -65,23 +65,23 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
   }, []);
 
   return (
-    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-14 animate-slideLeftFromRight">
         {/* header */}
-        <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold text-cyan-700"
-              accessible={true}
-              accessibilityLabel='Change Password'
-              accessibilityRole='header'
-            >
+        <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
+            <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"
+                accessible={true}
+                accessibilityLabel='Change Password'
+                accessibilityRole='header'
+                >
               Change password</Text>
-            <Pressable className = {!accessibleRender ? 'hidden' : "absolute left-8 top-1"}
-              onPress={() => setupDisplayChangePassword(false)}
-              accessible={true}
-              accessibilityLabel='Back'
-              accessibilityRole='button'
-              accessibilityHint='Double tab to return to Profile page'
-            >
-              <AntDesign name = "arrowleft" size = {24} />
+            <Pressable className={!accessibleRender ? 'hidden' : " p-3 mb-2"}
+                onPress={() => setupDisplayChangePassword(false)}
+                accessible={true}
+                accessibilityLabel='Back'
+                accessibilityRole='button'
+                accessibilityHint='Double tab to return to Profile page'
+                >
+                <AntDesign name = "arrowleft" size = {24} color={'#155e75'}/> 
             </Pressable>
         </View>
 

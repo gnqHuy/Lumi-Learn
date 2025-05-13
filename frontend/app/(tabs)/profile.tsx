@@ -93,6 +93,10 @@ const ProfilePage = () => {
       <View>
         {(displayInformation === false && displayChangePassword === false && displayPolicy === false && displayHelp === false && displayChangeProfile === false) && 
           <View>
+             <Text className="text-3xl pt-[68px] text-cyan-800 font-extrabold ml-6"
+              accessibilityRole='header'
+            >
+              Profile</Text>
             <MainProfile 
               setupDisplayInformation={setupDisplayInformation}
               setupDisplayChangePassword={setDisplayChangePassword}

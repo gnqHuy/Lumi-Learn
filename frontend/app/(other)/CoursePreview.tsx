@@ -50,13 +50,13 @@ const CoursePreview = () => {
     <View className="flex-1 bg-white">
         <ScrollView className='mt-14' showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
             <View className="px-5 flex-row items-center bg-white justify-between">
-                <Text className="text-2xl font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Preview</Text>
+                <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Preview</Text>
                 <Pressable onPress={() => router.back()}
                     accessible={true}
                     accessibilityLabel='Back button. Double tab to return Home page.'
                     className='p-3'
                 >
-                    <AntDesign name="arrowleft" size={24}/>  
+                    <AntDesign name="arrowleft" size={24} color={'#155e75'}/>  
                 </Pressable>
             </View>
 

@@ -1,17 +1,19 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Pressable, StatusBar } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image, Pressable, StatusBar, KeyboardAvoidingView, Platform, TouchableHighlight } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
-import { getCourseOverview } from '@/api/courseApi';
+import { getCourseOverview, updateCourse } from '@/api/courseApi';
 import { getMyRating } from '@/api/feedbackApi';
-import { CourseOverview } from '@/types/course';
+import { CourseOverview, UpdateCourseRequest } from '@/types/course';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import * as ImagePicker from 'expo-image-picker';
 import LessonList from '@/components/Lesson/LessonList';
 import useAuthStore from '@/zustand/authStore';
 import CreateLessonModal from '@/components/Lesson/CreateLessonModal';
 import AddRating from '@/components/Feedback/AddRating';
+import { TextInput } from 'react-native-gesture-handler';
+import { ReactNativeFile } from '../createCourse';
 
 const CourseOverviewPage = () => {
   const [courseOverview, setCourseOverview] = useState<CourseOverview | undefined>(undefined);
@@ -20,6 +22,11 @@ const CourseOverviewPage = () => {
   const [rating, setRating] = useState(0);
   const [refreshPage, setRefreshPage] = useState(false);
   const [activeTab, setActiveTab] = useState<'lesson' | 'about'>('lesson');
+  const [ courseTitleInput, setCourseTitleInput ] = useState<string>('');
+  const [ descriptionInput, setDescriptionInput ] = useState<string>('');
+  const [ thumbnailInput, setThumbnailInput ] = useState<ReactNativeFile | null>(null);
+  const [ thumbnailInputUri, setThumbnailInputUri ] = useState<string | null>(null);
+  const [ courseUpdated, setCourseUpdated ] = useState<boolean>(false);
 
   const { courseId } = useLocalSearchParams();
   const router = useRouter();
@@ -28,18 +35,13 @@ const CourseOverviewPage = () => {
   const isTeacher = () => user?.role === 'Teacher';
 
   useEffect(() => {
-    if (refreshPage) {
-      getCourseOverview(courseId as string)
-        .then((res) => setCourseOverview(res.data))
-        .catch(console.log);
-
-      setRefreshPage(false);
-    }
-  }, [refreshPage]);
-
-  useEffect(() => {
     getCourseOverview(courseId as string)
-      .then((res) => setCourseOverview(res.data))
+      .then((res) => {
+        setCourseOverview(res.data);
+        setDescriptionInput(res.data.description);
+        setCourseTitleInput(res.data.title);
+        setThumbnailInputUri(res.data.thumbnail);
+    })
       .catch(console.log);
 
     getMyRating(courseId as string)
@@ -50,31 +52,144 @@ const CourseOverviewPage = () => {
       .catch(console.log);
   }, []);
 
+  useEffect(() => {
+    if (refreshPage) {
+      getCourseOverview(courseId as string)
+        .then((res) => {
+            setCourseOverview(res.data);
+            setDescriptionInput(res.data.description);
+            setCourseTitleInput(res.data.title);
+            setThumbnailInputUri(res.data.thumbnail);
+        })
+        .catch(console.log);
+
+      setRefreshPage(false);
+    }
+  }, [refreshPage]);
+
+  useEffect(() => {
+    if (courseOverview) {
+        if (courseTitleInput !== courseOverview.title 
+            || descriptionInput !== courseOverview.description
+            || thumbnailInputUri !== courseOverview.thumbnail
+        ) {
+            setCourseUpdated(true);
+        } else {
+            setCourseUpdated(false);
+        }
+    }
+  }, [courseTitleInput, descriptionInput, thumbnailInputUri]);
+
+    const handleImagePicker = async () => {
+        const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (!permission.granted) {
+            console.log('Permission to access camera roll is required!');
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+            base64: false,
+        });
+
+        if (result.canceled || !result.assets || result.assets.length === 0) return;
+
+        const selectedAsset = result.assets[0];
+        const uri = selectedAsset.uri;
+        setThumbnailInputUri(uri);
+
+        const fileName = selectedAsset.fileName || uri.split('/').pop() || 'thumbnail.jpg';
+        const imageType = fileName.split('.').pop()?.toLowerCase() || 'jpg';
+        const mimeType = `image/${imageType == 'jpg' ? 'jpeg' : imageType}`;
+
+        const file: ReactNativeFile = {
+            uri,
+            name: fileName,
+            type: mimeType,
+        };
+
+        setThumbnailInput(file);
+    }
+
+    const handleUpdateCourse = () => {
+        if (!courseTitleInput.trim() && !descriptionInput.trim() && !thumbnailInput) return;
+        const formData = new FormData();
+        formData.append('Title', courseTitleInput);
+        formData.append('Description', descriptionInput);
+
+        if (thumbnailInput) {
+            formData.append('Thumbnail', {
+                uri: thumbnailInput.uri,
+                name: thumbnailInput.name,
+                type: thumbnailInput.type,
+            } as any);
+        }
+
+        const updateRequest: UpdateCourseRequest = {
+            id: courseId as string,
+            updateCourseRequest: formData
+        }
+
+        updateCourse(updateRequest).then((res) => {
+            router.push(`/(tabs)/courses/${courseId}`)
+        }).catch((err) => {
+            console.log(err.message);
+        })
+    }
+
   return (
-    <View className='bg-white'>
-    <ScrollView className='bg-white h-full mt-14' horizontal={false} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+    <View className='bg-white flex-1'>
+    <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1, backgroundColor: 'transparent'}}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+    >
+    <ScrollView 
+        className='bg-white h-full mt-14' 
+        horizontal={false} 
+        showsVerticalScrollIndicator={false} 
+        stickyHeaderIndices={[0]}
+        keyboardShouldPersistTaps='handled'
+    >
         <View className=" px-5 pt-5 pb-2 flex-row bg-white items-center justify-between mb-2">
             <AntDesign name="arrowleft" size={24} color="#155e75" onPress={() => router.push(`/(tabs)/courses`)} />
             <Text className="text-2xl font-bold text-cyan-800">Course Details</Text>
             <View className="mx-2" />
         </View>
         <View id="course-overview-screen" className="flex-1">
-            <View className="mt-4 px-6">
+            <TouchableOpacity 
+                className="mt-4 px-6"
+                onPress={handleImagePicker}
+            >
                 <Image
                 id="course-thumbnail"
-                source={{ uri: courseOverview?.thumbnail as string | undefined }}
+                source={{ uri: thumbnailInputUri as string | undefined }}
                 className="w-full h-56 rounded-2xl"
                 resizeMode="cover"
                 />
-            </View>
-            <View id="course-overview-section" className="px-6 py-8 w-full">
-                <View className="flex-row justify-between items-start mb-3">
-                <Text
+            </TouchableOpacity>
+            <View id="course-overview-section" className="px-6 pt-4 pb-8 w-full">
+                <View className="flex-row items-center justify-between items-start mb-3">
+                {isTeacher() ?
+                <TextInput
+                    value={courseTitleInput}
+                    multiline
+                    className='text-2xl font-bold w-5/6 text-cyan-800 my-auto'
+                    onChangeText={(text) => {
+                        setCourseTitleInput(text);
+                    }}
+                />
+                : <Text
                     id="course-name"
-                    className="text-2xl font-bold text-cyan-800 flex-1 pr-4 my-auto"
+                    className="text-2xl w-5/6 font-bold text-cyan-800 my-auto"
                 >
                     {courseOverview?.title}
-                </Text>
+                </Text> 
+                }
                 <View className="flex-row mt-1 mr-2 items-center">
                     <AntDesign name="star" size={16} color="#facc15" />
                     <Text className="text-base text-gray-600 font-medium ml-1">
@@ -133,7 +248,16 @@ const CourseOverviewPage = () => {
             ) : (
                 <View id="about-section" className="flex-col gap-2 flex-1 w-full px-6 mt-4">
                 <Text className="text-xl font-bold text-cyan-800">Descriptions</Text>
-                <Text className="text-base text-gray-700">{courseOverview?.description}</Text>
+                {isTeacher() ? 
+                <TextInput
+                    className='text-base text-gray-700 w-full'
+                    multiline
+                    value={descriptionInput}
+                    onChangeText={(text) => {
+                        setDescriptionInput(text);
+                    }}
+                />
+                : <Text className="text-base text-gray-700">{courseOverview?.description}</Text>}
 
                 {!isTeacher() && (
                     <>
@@ -173,20 +297,35 @@ const CourseOverviewPage = () => {
         <CreateLessonModal onClose={setIsLessonModalOpen} setRefresh={setRefreshPage} />
       )}
     </ScrollView>
-      {isTeacher() && activeTab === 'lesson' && (
+    {isTeacher() && activeTab === 'lesson' && !courseUpdated && (
         <View className="w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute">
         <TouchableOpacity
             id="submit-button"
             className="flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl"
             onPress={() => setIsLessonModalOpen(true)}
-            activeOpacity={0.55}
+            activeOpacity={0.7}
             style={{ boxShadow: '0px 0px 20px 20px rgba(243, 243, 243, 0.5)' }}
         >
             <Text className="text-lg text-white font-semibold">Add lesson</Text>
         </TouchableOpacity>
         </View>
     )}
+    {courseUpdated && (
+        <View className="w-full px-6 pb-2 pt-4 bottom-0 z-10 absolute">
+        <TouchableHighlight
+            id="submit-button"
+            className="flex justify-center border border-cyan-600 items-center w-full py-4 bg-slate-200 rounded-xl"
+            onPress={handleUpdateCourse}
+            underlayColor={"#cbd5e1"}
+            style={{ boxShadow: '0px 0px 20px 20px rgba(243, 243, 243, 0.5)' }}
+        >
+            <Text className="text-lg text-cyan-700 font-semibold">Update course</Text>
+        </TouchableHighlight>
+        </View>
+    )}
+    </KeyboardAvoidingView>
     </View>
+    
   );
 };
 

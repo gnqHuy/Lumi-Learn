@@ -31,3 +31,8 @@ export type CourseDto = {
     timestamp: Date;
     isUserEnrolled: boolean;
 }
+
+export type UpdateCourseRequest = {
+    id: string;
+    updateCourseRequest: FormData;
+}

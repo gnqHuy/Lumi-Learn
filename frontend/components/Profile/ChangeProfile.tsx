@@ -225,8 +225,8 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
             </View>
 
             {/* update button */}
-            <View className = "mt-[5rem]">
-                <Pressable className = "w-[90%] relative self-start left-[5%] py-[0.5rem] rounded-2xl bg-cyan-800"
+            <View className = "mt-[3rem]">
+                <Pressable className = "w-[90%] relative self-start left-[5%] py-[1rem] rounded-2xl bg-cyan-800"
                     onPress={handleUpdateProfile}
                     accessible={true}
                     accessibilityLabel='Update'

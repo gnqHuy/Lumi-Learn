@@ -1,11 +1,11 @@
 import { View, Text, ScrollView, TouchableOpacity, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
 import { getCourseOverview, getMyCourses, searchCourse } from '@/api/courseApi'
 import useAuthStore from '@/zustand/authStore'
 import CreateCourseModal from '@/components/Course/CreateCourseModal'
-import { useRouter } from 'expo-router'
+import { useFocusEffect, useRouter } from 'expo-router'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
 import { TextInput } from 'react-native-gesture-handler'
 import { PillSelection } from '@/components/PillsSelection/PillSelection'
@@ -164,6 +164,15 @@ const MyCourseScreen = () => {
         
         setFilteredCourses(sortedCourses);
     }, [selectedFilter, courses]);
+
+    // get search histories when change the router 
+    useFocusEffect(
+        useCallback(() => {
+            getMySearchHistories().then((response) => {
+            setRecentSearches(response.data);
+            });
+        }, [])
+    );
 
     useEffect(() => {
         getMySearchHistories().then((response) => {

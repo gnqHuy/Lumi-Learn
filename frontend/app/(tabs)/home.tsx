@@ -8,7 +8,7 @@ import {
   Pressable,
   StatusBar,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CoursesPage from "./courses";
 import { logIn } from "@/api/authApi";
 import useAuthStore from "@/zustand/authStore";
@@ -33,6 +33,7 @@ import { CourseItemProps } from "@/components/Course/CourseItem";
 import { getUserProfile } from "@/api/userApi";
 import { User } from "@/types/user";
 import { Feather } from "@expo/vector-icons";
+import { useFocusEffect } from "expo-router";
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -134,12 +135,6 @@ const HomePage = () => {
 
   // get user's courses
   useEffect(() => {
-    // getUserProfile()
-    //   .then((response) => {
-    //     setUserProfile(response.data);
-    //   })
-    //   .catch((err) => console.error(err));
-    
     getMyCourses()
       .then((res) => {
         const mappedCourses: CourseItemProps[] = res.data.map(
@@ -190,12 +185,21 @@ const HomePage = () => {
       });
   }, []);
 
-  // get search histories
+  // get search histories when change the router 
+  useFocusEffect(
+    useCallback(() => {
+      getMySearchHistories().then((response) => {
+        setRecentSearches(response.data);
+      });
+    }, [])
+  );
+
+  // get search histories when end one search -> push new search -> update
   useEffect(() => {
     getMySearchHistories().then((response) => {
       setRecentSearches(response.data);
     });
-  }, [searchTrigger]);
+  }, [searchTrigger])
 
   // get user profile
   useEffect(() => {
@@ -239,6 +243,7 @@ const HomePage = () => {
     setDisplaySearchResult(true);
     searchCourse(keyword)
       .then((res) => {
+        setSearchTrigger((prev) => !prev);
         const mappedCourses: CourseItemProps[] = res.data.map(
           (course: any) => ({
             id: course.id,
@@ -258,7 +263,6 @@ const HomePage = () => {
       .catch((err) => {
         console.log(err);
       });
-      setSearchTrigger((prev) => !prev);
   };
 
   // handle auto fill and search keyword
@@ -379,10 +383,12 @@ const HomePage = () => {
                 onPress={() => {
                   setKeyword("");
                   setDisplaySearchResult(false);
+                  setSearchTrigger((prev) => !prev);
                 }}
               />
             )}
           </Pressable>
+
           {/* filter  */}
           <Pressable
             className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.5rem]"

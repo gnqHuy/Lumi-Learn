@@ -3,6 +3,7 @@ import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { addFeedback } from '@/api/feedbackApi';
 import { AddFeedbackRequest } from '@/types/feedback';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export type AddRatingProps = {
     size?: number;
@@ -14,6 +15,8 @@ export type AddRatingProps = {
 };
 
 const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setRating, isRatedByUser, setIsRatedByUser }) => {
+    const router = useRouter();
+
     const handleRating = (score: number) => {
         if (!isRatedByUser) {
             setRating(score);
@@ -28,6 +31,7 @@ const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setR
 
         addFeedback(request).then(() => {
             setIsRatedByUser(true);
+            router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);
         })

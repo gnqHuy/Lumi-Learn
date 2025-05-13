@@ -8,7 +8,7 @@ import { PillSelection } from '@/components/PillsSelection/PillSelection';
 import { createCourse } from '@/api/courseApi';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 
-type ReactNativeFile = {
+export type ReactNativeFile = {
   uri: string;
   name: string;
   type: string;
@@ -127,7 +127,7 @@ const CreateCoursePage = () => {
       <ScrollView horizontal={false} showsVerticalScrollIndicator={false} className="w-full">
         <View className="w-full flex-col items-center justify-center">
           <TouchableOpacity onPress={handleImagePicker}>
-            <View className="w-32 h-32 items-center justify-center rounded-xl bg-gray-200 border-4 border-gray-300 mb-6 mt-20">
+          <View className="w-32 h-32 items-center justify-center rounded-xl bg-gray-200 border-[3px] border-gray-300 mb-6 mt-20">
               {thumbnailUri ? (
                 <Image
                   source={{ uri: thumbnailUri }}
@@ -140,7 +140,7 @@ const CreateCoursePage = () => {
           </TouchableOpacity>
 
           <View className="w-full flex-col items-center justify-center gap-6">
-            <View className="w-full bg-red-100">
+            <View className="w-full">
               <Text className={`text-sm ml-1 mb-2 ${titleError ? 'text-red-600' : 'text-slate-700'}`}>
                 Course title
               </Text>

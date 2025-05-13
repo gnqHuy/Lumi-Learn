@@ -1,4 +1,4 @@
-import { CreateCourseRequest } from "@/types/course";
+import { CreateCourseRequest, UpdateCourseRequest } from "@/types/course";
 import api from "./api";
 
 const URL_PREFIX = 'api/Courses'
@@ -21,4 +21,8 @@ export function getAllCourses() {
 
 export function searchCourse(keyword: string) {
     return api.get(`${URL_PREFIX}/search?keyword=${keyword}`)
+}
+
+export function updateCourse(request: UpdateCourseRequest) {
+    return api.patch(`${URL_PREFIX}/${request.id}`, request.updateCourseRequest);
 }

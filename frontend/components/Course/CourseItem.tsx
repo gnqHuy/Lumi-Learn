@@ -61,7 +61,7 @@ const CourseItem = (props: CourseItemProps) => {
                             id='course-name'
                             className='text-gray-600 font-bold text-lg'
                         >
-                            {trim(props.courseName, 20)}
+                            {trim(props.courseName, 17)}
                         </Text>
                         <View className='flex-row items-center'>
                             <Text className='text-sm text-gray-400 mr-2'>

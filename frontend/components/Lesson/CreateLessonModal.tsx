@@ -59,7 +59,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
                     className="flex-col gap-4 items-center w-11/12 bg-white rounded-2xl p-6 shadow-lg"
                     onStartShouldSetResponder={() => true}
                 >
-                    <Text className="text-xl text-cyan-700 font-bold mb-4">Create New Lesson</Text>
+                    <Text className="text-xl text-gray-900 font-semibold mb-4">Create New Lesson</Text>
 
                     <View
                         id='create-lesson-form'

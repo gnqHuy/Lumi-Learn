@@ -439,14 +439,17 @@ namespace LumiLearn.Controllers
                 course.Description = request.Description;
             }
 
-            string key = $"course/{id}";
-            using var stream = new MemoryStream();
-            await request.Thumbnail.CopyToAsync(stream);
-            var uploadRespone = await s3Services.UploadFileAsync(stream, key, request.Thumbnail.ContentType);
-
-            if (request.Thumbnail != null && uploadRespone.FileURL != course.Thumbnail)
+            if (request.Thumbnail != null && request.Thumbnail?.Length != 0)
             {
-                course.Thumbnail = uploadRespone.FileURL;
+                string key = $"course/{id}";
+                using var stream = new MemoryStream();
+                await request.Thumbnail.CopyToAsync(stream);
+                var uploadRespone = await s3Services.UploadFileAsync(stream, key, request.Thumbnail.ContentType);
+
+                if (request.Thumbnail != null && uploadRespone.FileURL != course.Thumbnail)
+                {
+                    course.Thumbnail = uploadRespone.FileURL;
+                }
             }
 
             if (request.Topic != null && request.Topic != course.Topic.Name)

@@ -38,9 +38,11 @@ const CoursePreview = () => {
             console.log('Join course successfully!');
             showNotification('success', 'Enrollment Successful', 'You have successfully joined the course.');
             router.push(`/(tabs)/courses/${selectedCourseId}`);
-        }).catch(err => showNotification('error', 'Enrollment Failed', 'An error occurred while trying to join the course. Please try again later.')
-    );
+        }).catch(err => 
+            showNotification('error', 'Enrollment Failed', 'An error occurred while trying to join the course. Please try again later.')
+        );
     }
+
     const lessonCount = courseOverview?.lessons?.length ?? 0;
     const [showFullDesc, setShowFullDesc] = useState(false);
   return (
@@ -60,8 +62,12 @@ const CoursePreview = () => {
         </View>
 
         <View className="flex-1 px-6 pt-4 pb-4">
-            <View className='flex-row mb-2 justify-between'>
-                <Text className="text-2xl font-bold text-cyan-800">{courseOverview?.title}</Text>
+            <View className='flex-row items-center mb-2 justify-between'>
+                <Text 
+                    className="text-2xl w-5/6 font-bold text-cyan-800"
+                >
+                    {courseOverview?.title}
+                </Text>
                 <View className="flex-row items-center mr-1">
                     <AntDesign name="star" size={16} color="#facc15" />
                     <Text className="text-base text-gray-600 font-medium ml-1">

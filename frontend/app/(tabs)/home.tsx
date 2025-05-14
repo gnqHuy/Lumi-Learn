@@ -352,10 +352,6 @@ const HomePage = () => {
           <View>
             <Pressable
               className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
-              onPress={() => {
-                setDisplaySearch(false);
-                setDisplaySearchResult(false);
-              }}
               accessible={true}
               accessibilityLabel="Back"
               accessibilityRole="button"
@@ -364,6 +360,10 @@ const HomePage = () => {
               <AntDesign
                 name="arrowleft"
                 size={24}
+                onPress={() => {
+                  setDisplaySearch(false);
+                  setDisplaySearchResult(false);
+                }}
               />
             </Pressable>
             <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
@@ -382,13 +382,15 @@ const HomePage = () => {
               accessible={true}
               accessibilityLabel={`Search Courses field: ${keyword} . ${isEditing ? 'Editing' : '. Double tab to edit'}`}
               placeholder="Find courses here"
-              className="font-semibold flex-1 h-full relative top-[0.05rem]"
+              className="font-semibold flex-1 h-full relative top-[0.05rem] z-[50]"
               style={{ textAlignVertical: "center" }}
               editable={displaySearch}
               placeholderTextColor={"gray"}
-              onPressIn={() => {
+              onPress={() => {
                 setDisplaySearch(true);
                 setIsEditing(true); 
+                setDisplaySearchResult(false);
+                setSearchTrigger((prev) => !prev);
               }}
               onBlur={() => setIsEditing(false)}
               onChangeText={setKeyword}

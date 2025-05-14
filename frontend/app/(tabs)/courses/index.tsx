@@ -95,7 +95,7 @@ const MyCourseScreen = () => {
             sortedCourses.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
             break;
         
-            case 'Rating':
+            case 'Highest Rated':
             sortedCourses.sort((a, b) => b.rating - a.rating);
             break;
         

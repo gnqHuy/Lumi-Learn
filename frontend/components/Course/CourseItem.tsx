@@ -72,7 +72,7 @@ const CourseItem = (props: CourseItemProps) => {
                             className='text-gray-600 font-bold text-lg flex-1 pr-2'
                             numberOfLines={11}
                         >
-                            {props.courseName}
+                            {trim(props.courseName, 18)}
                         </Text>
 
                         <View className='flex-row items-center flex-shrink-0'>

@@ -107,7 +107,7 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
             {/* options */}
             <View className="flex-col mt-[0.5rem]"
                 accessible={true}
-                accessibilityLabel={`Birthday: ${userProfile?.birthday.toString().substring(0,10)}`}
+                accessibilityLabel={`Birthday: ${userProfile?.birthday && userProfile.birthday.toString().substring(0,10)}`}
                 accessibilityRole='button'
                 accessibilityHint='Double tab to open Update Information Page'
             >

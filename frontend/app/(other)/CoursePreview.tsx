@@ -43,6 +43,11 @@ const CoursePreview = () => {
         );
     }
 
+    const trim = (input: string, maxLength: number) => {
+        if (input.length <= maxLength) return input;
+        return `${input.substring(0, maxLength - 3)}...`;
+    }
+
     const lessonCount = courseOverview?.lessons?.length ?? 0;
     const [showFullDesc, setShowFullDesc] = useState(false);
   return (
@@ -149,7 +154,7 @@ const CoursePreview = () => {
                             {(index + 1).toString().padStart(2, '0')}
                             </Text>
                             <View>
-                                <Text className="text-lg text-cyan-800 font-bold">{lesson.title}</Text>
+                                <Text className="text-lg text-cyan-800 font-bold">{trim(lesson.title, 35)}</Text>
                                 <Text className="text-base text-yellow-600">
                                     {`${lesson.flashcardSets.length} flashcard${lesson.flashcardSets.length > 1 ? 's' : ''}, ${lesson.quizzes.length} quiz${lesson.quizzes.length > 1 ? 'zes' : ''}`}
                                 </Text>

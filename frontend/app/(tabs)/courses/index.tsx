@@ -227,6 +227,13 @@ const MyCourseScreen = () => {
     };
 
     const textInputRef = useRef<TextInput>(null);
+    useEffect(() => {
+        if (displaySearch) {
+          if (textInputRef.current) {
+            textInputRef.current.focus();
+          }
+        }
+      }, [displaySearch]);
 
     return (
         <View className='flex-1'>

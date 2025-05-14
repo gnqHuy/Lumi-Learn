@@ -236,16 +236,16 @@ const MyCourseScreen = () => {
                 {displaySearch === true && 
                     <View className='w-full px-4'>
                         <Pressable
-                            onPress={() => {
-                            setDisplaySearch(false);
-                            setDisplaySearchResult(false);
-                            }}
                             className="relative left-[1%] flex-row mb-[0.5rem] gap-3"
                         >
                             <AntDesign
                                 name="arrowleft"
                                 size={24}
                                 className = "relative top-[0.3rem] px-2"
+                                onPress={() => {
+                                    setDisplaySearch(false);
+                                    setDisplaySearchResult(false);
+                                }}
                             />
                             <Text className = "text-3xl text-cyan-800 font-extrabold mb-[0.7rem]">Search</Text>
                         </Pressable>

@@ -26,25 +26,36 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
             <View className = "relative left-[4%] animate-slideLeftFromRight">
                 {/* recent searches */}
                 <View className = "">
-                    <Text className = "text-lg font-semibold">Recent searches</Text>
-                    <View className = "flex-col gap-8 mt-[1rem] relative left-[4%]">
+                    <Text className = "text-lg font-semibold py-1">Recent searches</Text>
+                    <View className = "flex-col gap-2 mt-[1rem] relative left-[4%]">
                         {recentSearches.map((search, index) => {
                             return (
-                                <TouchableOpacity 
+                                <View 
                                     className = "flex-row" 
                                     key = {index} 
-                                    onPress = {() => handleAutoFillAndSearchKeyword(search.content)}
-                                    activeOpacity={0.5}
+                                    // activeOpacity={0.5}
                                 >
-                                    <Text className = "text-lg">{search.content}</Text>
+                                    <Pressable
+                                        onPress={() => handleAutoFillAndSearchKeyword(search.content)}
+                                        accessible={true}
+                                        accessibilityLabel={`${search.content}. Seacher Content`}
+                                        accessibilityHint='Double tab to search course by this content'
+                                        className="w-full"
+                                    >
+                                        <Text className = "text-lg py-2">{search.content}</Text>
+                                    </Pressable>
                                     <TouchableOpacity
-                                        className = "absolute right-14 z-[20]" 
+                                        className = "absolute right-14 z-[20] p-2" 
                                         onPress={() => deleteSearchHistory(search.content)}
                                         activeOpacity={0.7}
+                                        accessible={true}
+                                        accessibilityLabel='Delete'
+                                        accessibilityRole='button'
+                                        accessibilityHint='Double tab to delete this search content'
                                     >
                                         <AntDesgin name = "close" size = {24}/>
                                     </TouchableOpacity>
-                                </TouchableOpacity>
+                                </View>
                             )
                         })}
                     </View>

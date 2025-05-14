@@ -52,12 +52,12 @@ const CreateFlashcardSetScreen = () => {
         }
 
         createFlashcardSet(request).then((res) => {
-            showNotification('success', 'Success', 'Topic is created successfully!');
+            showNotification('success', 'Success!', 'Topic is created successfully!');
             router.push(`/(tabs)/courses/${courseId}`);
             
         }).catch((err) => {
             console.log(err.message);
-            showNotification('error', 'Error', err.message);
+            showNotification('error', 'Error!', err.message);
         })
        
     };

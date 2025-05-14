@@ -65,10 +65,10 @@ const NotificationPage = () => {
         setUnreadCount(0);
         return updated;
       });
-      showNotification('success', 'Success', 'All notifications have been marked as read.');
+      showNotification('success', 'Success!', 'All notifications have been marked as read.');
     } catch (error) {
       console.error('Error marking all as read:', error);
-      showNotification('error', 'Error !', 'Something is wrong');
+      showNotification('error', 'Error!', 'Something is wrong');
     }
   };
 

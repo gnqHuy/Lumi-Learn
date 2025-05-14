@@ -60,7 +60,7 @@ const login = () => {
     }
 
     if (authState?.user != null) {
-        return <Redirect href="/(tabs)/notification"/>;
+        return <Redirect href="/(tabs)/home"/>;
     }
 
   return (

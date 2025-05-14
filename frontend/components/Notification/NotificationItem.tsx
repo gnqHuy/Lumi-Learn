@@ -60,9 +60,9 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
     try {
       await deleteNotification(notification.notificationId);
       onDelete(notification.notificationId);
-      showNotification('success', 'Success !', 'Notification was deleted');
+      showNotification('success', 'Success!', 'Notification was deleted');
     } catch (error) {
-      showNotification('error', 'Error !', 'Something is wrong');
+      showNotification('error', 'Error!', 'Something is wrong');
     } finally {
       setModalVisible(false);
     }
@@ -72,9 +72,9 @@ const NotificationItem = ({ notification, onDelete, onRead }: Props) => {
     try {
       await markNotificationAsRead(notification.notificationId);
       onRead(notification.notificationId);
-      showNotification('success', 'Success !', 'Notification is marked as read');
+      showNotification('success', 'Success!', 'Notification is marked as read');
     } catch (error) {
-      showNotification('error', 'Error !', 'Something is wrong');
+      showNotification('error', 'Error!', 'Something is wrong');
     } finally {
       setModalVisible(false);
     }

@@ -108,7 +108,7 @@ const CreateCoursePage = () => {
     createCourse(formData)
       .then((res) => {
         const courseId = res.data.id;
-        showNotification('success', 'Success', 'Course is created successfully!');
+        showNotification('success', 'Success!', 'Course is created successfully!');
         router.push(`/(tabs)/courses/${courseId}`);
       })
       .catch((err) => {

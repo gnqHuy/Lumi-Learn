@@ -265,7 +265,11 @@ const FlashcardSetPage = () => {
                 <View className="flex-1 bg-white">
                     <View className="w-full h-full mt-14 px-5">
                         <View className="flex-row items-center bg-white justify-between mb-4">
-                            <Text className="text-[22px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3" numberOfLines={2}>{flashcardSetTitle}</Text>
+                            <Text className="text-[22px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3" numberOfLines={2}
+                                accessible={true}
+                                accessibilityLabel={`Flashcard set: ${flashcardSetTitle}`} 
+                            >
+                                {flashcardSetTitle}</Text>
                             <Pressable onPress={() => router.back()}
                                 accessible={true}
                                 accessibilityLabel='Back button. Double tab to return Course Detail.'

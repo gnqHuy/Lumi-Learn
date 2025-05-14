@@ -1,4 +1,4 @@
-import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import useAuthStore, { AuthState } from '@/zustand/authStore';
 import { logIn, register } from '@/api/authApi';
@@ -106,14 +106,18 @@ const signup = () => {
             id='login-container'
             className='flex flex-col items-center p-4 h-fit w-4/5 gap-3'
         >
-            <View
+            <Image
                 id='lumilearn-logo'
-                className=''
+                className='mb-8'
+                source={require("../../assets/images/lumiLearnLogoWithText.png")}
+                style={{
+                    height: 120,
+                    resizeMode: 'contain',
+                    alignSelf: 'center',
+                }}
                 accessible={true}
-                accessibilityLabel="Lumi Learn Logo, Sign Up Page"
-            >
-                <Text className='text-4xl pb-6 font-bold color-cyan-700'>Logo</Text>
-            </View>
+                accessibilityLabel="Lumi Learn Logo, Login Page"
+            />
             <View
                 id='login-form'
                 className='relative flex flex-col gap-5 w-full color-orange-300'

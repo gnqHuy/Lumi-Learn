@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Pressable } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
 import { getCourseOverview, getMyCourses, searchCourse } from '@/api/courseApi'
@@ -132,7 +132,7 @@ const MyCourseScreen = () => {
         deleteSearchHistoryByContent(content)
           .then((res) => {
             setSearchTrigger((prev) => !prev);
-            showNotification('success', 'Success', 'Search history is deleted!');
+            showNotification('success', 'Success!', 'Search history is deleted!');
           })
           .catch((err) => console.error(err));
     };
@@ -181,6 +181,8 @@ const MyCourseScreen = () => {
         setDisplaySearchResult(display);
     }
 
+    const [isEditing, setIsEditing] = useState(false); 
+
     async function filterByLength(
         courses: CourseItemProps[],
         minLength: number,
@@ -224,6 +226,8 @@ const MyCourseScreen = () => {
         setDisplaySearch(true);
     };
 
+    const textInputRef = useRef<TextInput>(null);
+
     return (
         <View className='flex-1'>
             <View
@@ -244,14 +248,14 @@ const MyCourseScreen = () => {
                             accessibilityLabel="Back"
                             accessibilityRole="button"
                             accessibilityHint="Double tab to return homepage"
-                        >
-                            <AntDesign
-                            name="arrowleft"
-                            size={24}
                             onPress={() => {
                                 setDisplaySearch(false);
                                 setDisplaySearchResult(false);
                             }}
+                        >
+                            <AntDesign
+                            name="arrowleft"
+                            size={24}
                             />
                         </Pressable>
                         <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
@@ -259,41 +263,66 @@ const MyCourseScreen = () => {
                 }
 
                 {/* search bar and sort */}
-                <View className="flex-row w-full px-4 items-center justify-between">
+                <View className="flex-row w-full items-center justify-between gap-3 px-4">
                     {/* search bar */}
-                    <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]">
-                        <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]" />
-                        <TextInput
-                            placeholder="Find courses here"
-                            className="font-semibold w-3/4 pt-[0.2rem]"
-                            style={{ textAlignVertical: "center" }}
-                            editable={displaySearch === false ? false : true}
-                            placeholderTextColor={"gray"}
-                            onPressIn={() => setDisplaySearch(true)}
-                            onChangeText={setKeyword}
-                            value={keyword}
-                            onSubmitEditing={() => searchCourseByKeyword(keyword)}
-                        />
-                        {keyword && (
+                    <Pressable className="flex-row items-center px-4 gap-3 bg-zinc-100 rounded-full w-5/6 z-[10] h-[3.3rem]"
+                        onPress={() => setDisplaySearch(true)}
+                    >
+                    <Feather name="search" color={"gray"} size={22} className=" z-[20] relative top-[0.1rem]"/>
+                    <TextInput
+                        ref={textInputRef}
+                        accessible={true}
+                        accessibilityLabel={`Search Courses field: ${keyword} . ${isEditing ? 'Editing' : '. Double tab to edit'}`}
+                        placeholder="Find courses here"
+                        className="font-semibold flex-1 h-full relative top-[0.05rem] z-[50]"
+                        style={{ textAlignVertical: "center" }}
+                        editable={displaySearch}
+                        placeholderTextColor={"gray"}
+                        onPress={() => {
+                            setDisplaySearch(true);
+                            setIsEditing(true); 
+                            setDisplaySearchResult(false);
+                            setSearchTrigger((prev) => !prev);
+                        }}
+                        onBlur={() => setIsEditing(false)}
+                        onChangeText={setKeyword}
+                        value={keyword}
+                        onSubmitEditing={() => searchCourseByKeyword(keyword)}
+                        autoFocus={displaySearch}
+                    />
+                    </Pressable>
+                    {keyword && (
                         <AntDesign
                             name="close"
                             color={"gray"}
                             size={20}
-                            className="z-[20] ml-2"
+                            className="z-[10] absolute p-3"
+                            style={{
+                                right: 86
+                            }}
+                            accessible={true}
+                            accessibilityLabel="Delete search field keyword"
                             onPress={() => {
-                            setKeyword("");
-                            setDisplaySearchResult(false);
+                                setKeyword("");
+                                setDisplaySearchResult(false);
+                                setSearchTrigger((prev) => !prev);
                             }}
                         />
-                        )}
-                    </Pressable>
+                    )}
                     {/* filter  */}
                     <TouchableOpacity
-                        className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.45rem]"
-                        onPress={() => setDisplaySearchFilter(true)}
-                        activeOpacity={0.7}
+                    className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.5rem]"
+                    onPress={() => {
+                        setDisplaySearchFilter(true);
+                        textInputRef.current?.blur();
+                    }}
+                    accessible={true}
+                    accessibilityLabel="Filter"
+                    accessibilityRole="button"
+                    accessibilityHint="Double tab to open Course Filter"
+                    activeOpacity={0.7}
                     >
-                        <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
+                    <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
                     </TouchableOpacity>
                 </View>
 

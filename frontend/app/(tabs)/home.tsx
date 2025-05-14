@@ -35,6 +35,7 @@ import { getUserProfile } from "@/api/userApi";
 import { User } from "@/types/user";
 import { Feather } from "@expo/vector-icons";
 import { useFocusEffect } from "expo-router";
+import { showNotification } from "@/components/Toast/Toast";
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
@@ -238,6 +239,7 @@ const HomePage = () => {
     deleteSearchHistoryByContent(content)
       .then((res) => {
         setSearchTrigger((prev) => !prev);
+        showNotification('success', 'Success!', 'Search history is deleted!');
       })
       .catch((err) => console.error(err));
   };
@@ -338,6 +340,13 @@ const HomePage = () => {
   };
 
   const textInputRef = useRef<TextInput>(null);
+  useEffect(() => {
+    if (displaySearch) {
+      if (textInputRef.current) {
+        textInputRef.current.focus();
+      }
+    }
+  }, [displaySearch]);
 
   return (
     <View className="flex-1 bg-white">
@@ -356,14 +365,14 @@ const HomePage = () => {
               accessibilityLabel="Back"
               accessibilityRole="button"
               accessibilityHint="Double tab to return homepage"
+              onPress={() => {
+                setDisplaySearch(false);
+                setDisplaySearchResult(false);
+              }}
             >
               <AntDesign
                 name="arrowleft"
                 size={24}
-                onPress={() => {
-                  setDisplaySearch(false);
-                  setDisplaySearchResult(false);
-                }}
               />
             </Pressable>
             <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
@@ -396,6 +405,7 @@ const HomePage = () => {
               onChangeText={setKeyword}
               value={keyword}
               onSubmitEditing={() => searchCourseByKeyword(keyword)}
+              autoFocus={displaySearch}
             />
           </Pressable>
           {keyword && (

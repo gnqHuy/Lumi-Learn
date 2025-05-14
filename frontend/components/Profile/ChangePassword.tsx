@@ -41,7 +41,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
       }
       changePasswordApi(payload).then((res) => {
         console.log("Change password successfully");
-        showNotification('success', 'Password Changed', 'Your password has been changed successfully.');
+        showNotification('success', 'Password Changed!', 'Your password has been changed successfully!');
         router.push('/(tabs)/profile');
         setupDisplayChangePassword(false);
       }).catch((err) => {

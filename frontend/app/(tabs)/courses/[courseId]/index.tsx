@@ -137,7 +137,7 @@ const CourseOverviewPage = () => {
         }
 
         updateCourse(updateRequest).then((res) => {
-            showNotification('success', 'Success', 'Update course successfully');
+            showNotification('success', 'Success!', 'Update course successfully');
             router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);

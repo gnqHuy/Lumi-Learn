@@ -112,7 +112,7 @@ const QuizResultScreen: React.FC<QuizResultProps> = ({ quizTitle, quizResult }) 
                 accessible={true}
                 accessibilityLabel='Back to Course'
                 accessibilityRole='button'
-                accessibilityHint='Double tab to return to My Course Tab'
+                accessibilityHint='Double tab to return to Course Detail'
             >
                 <Text className='text-lg text-white font-semibold'>Back to course</Text>
             </TouchableHighlight>

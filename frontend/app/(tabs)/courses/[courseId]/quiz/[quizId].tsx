@@ -95,7 +95,6 @@ const QuizPage = () => {
     };
 
     const prev = () => {
-        if (!isCurrentQuestionAnswered()) return;
         if (currentIndex > 0) {
             setSuppressAccessibility(true);
             setCurrentIndex(currentIndex - 1);
@@ -139,6 +138,7 @@ const QuizPage = () => {
                     <Text
                         className="text-[22px] font-semibold text-cyan-800 text-center p-3"
                         accessible={true}
+                        accessibilityLabel={`Quiz: ${quizDetail.title}`}
                         numberOfLines={1}
                     >
                         {quizDetail.title}
@@ -191,8 +191,8 @@ const QuizPage = () => {
             <View className="flex-row w-full justify-between mt-6">
                 <TouchableOpacity 
                     onPress={prev}
-                    disabled={!isCurrentQuestionAnswered() || currentIndex === 0}
-                    className={`flex-row gap-2 items-center bg-cyan-700 pl-3 pr-8 py-3 rounded-xl ${!isCurrentQuestionAnswered() || currentIndex === 0 ? 'opacity-50' : ''}`}
+                    disabled={currentIndex === 0}
+                    className={`flex-row gap-2 items-center bg-cyan-700 pl-3 pr-8 py-3 rounded-xl ${currentIndex === 0 ? 'opacity-50' : ''}`}
                     activeOpacity={0.55}
                     accessibilityLabel={`${suppressAccessibility ? `Pressed Prev` : 'Return to previous question'}`}
                     accessibilityRole='button'

@@ -83,10 +83,10 @@ const HomePage = () => {
   const userProfile = useAuthStore.getState().authState?.user;
 
   // rating filter of course
-  const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+  const [ratingRange, setRatingRange] = useState<number[]>([0, 5]);
 
   // course length range
-  const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+  const [courseLengthRange, setCourseLengthRange] = useState<number[]>([0,20]);
 
   // topics chosen
   const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
@@ -349,20 +349,25 @@ const HomePage = () => {
             <Text className="text-3xl text-cyan-800 font-extrabold">{userProfile?.name || userProfile?.username}</Text>
           </View>
         ) : (
-          <Pressable
-            onPress={() => {
-              setDisplaySearch(false);
-              setDisplaySearchResult(false);
-            }}
-            className = "relative left-[4%] flex-row mb-[0.5rem] gap-3"
-          >
-            <AntDesign
-              name="arrowleft"
-              size={24}
-              className="relative top-[0.3rem] px-2"
-            />
-            <Text className = "text-3xl text-cyan-800 font-extrabold">Search</Text>
-          </Pressable>
+          <View>
+            <Pressable
+              className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
+              onPress={() => {
+                setDisplaySearch(false);
+                setDisplaySearchResult(false);
+              }}
+              accessible={true}
+              accessibilityLabel="Back"
+              accessibilityRole="button"
+              accessibilityHint="Double tab to return homepage"
+            >
+              <AntDesign
+                name="arrowleft"
+                size={24}
+              />
+            </Pressable>
+            <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
+          </View>
         )}
 
         {/* search bar and sort */}

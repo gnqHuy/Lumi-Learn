@@ -77,7 +77,13 @@ const QuizPage = () => {
         }
     };
 
+    const isCurrentQuestionAnswered = () => {
+        const questionId = currentQuestion?.id;
+        return questionId ? selectedOptions[questionId] !== undefined : false;
+    };
+
     const next = () => {
+        if (!isCurrentQuestionAnswered()) return;
         if (currentIndex < quizDetail?.questions.length! - 1) {
             setSuppressAccessibility(true);
             setCurrentIndex(currentIndex + 1);
@@ -89,6 +95,7 @@ const QuizPage = () => {
     };
 
     const prev = () => {
+        if (!isCurrentQuestionAnswered()) return;
         if (currentIndex > 0) {
             setSuppressAccessibility(true);
             setCurrentIndex(currentIndex - 1);
@@ -128,9 +135,9 @@ const QuizPage = () => {
         : <>{quizDetail && currentQuestion ? (
             <>
             <View className="mt-14 px-4 mb-4 w-full flex-row relative items-center justify-center h-16 ">
-                <View className="absolute left-4 right-4 text-center items-center">
+                <View className="absolute left-4 right-4 top-1 text-center items-center">
                     <Text
-                        className="text-[22px] font-semibold text-cyan-800 text-center"
+                        className="text-[22px] font-semibold text-cyan-800 text-center p-3"
                         accessible={true}
                         numberOfLines={1}
                     >
@@ -146,7 +153,7 @@ const QuizPage = () => {
 
                 {/* Nút quay lại */}
                 <Pressable
-                    className="absolute left-0 top-1 z-10 p-2"
+                    className="absolute left-0 top-1 z-10 p-3"
                     accessible={true}
                     accessibilityLabel="Back button. Double tap to go back to course detail"
                     onPress={() => router.back()}
@@ -162,7 +169,7 @@ const QuizPage = () => {
                 accessible={true}
                 accessibilityLabel={`Question ${currentIndex + 1} of ${quizDetail.questions.length}.
                  ${currentQuestion.content}. Choose the answer below`}
-                className="flex items-center justify-center p-2 w-full h-1/4 border-2 border-zinc-300 rounded-xl mb-4"
+                className="flex items-center justify-center p-2 w-full h-1/4 border-2 border-zinc-300 rounded-xl my-4"
             >
                 <Text className="text-lg text-center font-semibold">
                     {currentQuestion.content}
@@ -183,20 +190,22 @@ const QuizPage = () => {
     
             <View className="flex-row w-full justify-between mt-6">
                 <TouchableOpacity 
-                    onPress={prev} 
-                    className="flex-row gap-2 items-center bg-cyan-700 pl-3 pr-8 py-3 rounded-xl"
+                    onPress={prev}
+                    disabled={!isCurrentQuestionAnswered() || currentIndex === 0}
+                    className={`flex-row gap-2 items-center bg-cyan-700 pl-3 pr-8 py-3 rounded-xl ${!isCurrentQuestionAnswered() || currentIndex === 0 ? 'opacity-50' : ''}`}
                     activeOpacity={0.55}
-                    accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Return to previous question'}`}
+                    accessibilityLabel={`${suppressAccessibility ? `Pressed Prev` : 'Return to previous question'}`}
                     accessibilityRole='button'
                 >
                     <Entypo name='chevron-left' size={14} color={'white'}/>
                     <Text className="text-white font-semibold text-base">Prev</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={next} 
-                    className="flex-row gap-2 items-center bg-cyan-700 pl-8 pr-3 py-3 rounded-xl"
+                    onPress={next}
+                    disabled={!isCurrentQuestionAnswered() || currentIndex === quizDetail?.questions.length! - 1}
+                    className={`flex-row gap-2 items-center bg-cyan-700 pl-8 pr-3 py-3 rounded-xl ${!isCurrentQuestionAnswered() || currentIndex === quizDetail?.questions.length! - 1 ? 'opacity-50' : ''}`}
                     activeOpacity={0.55}
-                    accessibilityLabel={`${suppressAccessibility ? `Pressed` : 'Move to next question'}`}
+                    accessibilityLabel={`${suppressAccessibility ? `Pressed Next` : 'Move to next question'}`}
                     accessibilityRole='button'
                 >
                     <Text 

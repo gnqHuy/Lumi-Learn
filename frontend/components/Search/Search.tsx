@@ -38,7 +38,7 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
                                     <Pressable
                                         onPress={() => handleAutoFillAndSearchKeyword(search.content)}
                                         accessible={true}
-                                        accessibilityLabel={`${search.content}. Seacher Content`}
+                                        accessibilityLabel={`${search.content}. search content`}
                                         accessibilityHint='Double tab to search course by this content'
                                         className="w-full"
                                     >

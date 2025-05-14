@@ -19,15 +19,19 @@ const MainProfile = ({setupDisplayInformation, setupDisplayChangePassword, setup
         {/* username and avatar */}
         <View className = "w-[100vw] pb-[1rem] border-solid border-b-[1px] border-b-cyan-700">
             <View>
-                  <Image source={require('../../assets/images/userAvatarTest.png')} alt="" className="w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem]"
+                  <Image source={userProfile.role === "Teacher"
+                    ? require("../../assets/images/teacher-avatar.png")
+                    : require("../../assets/images/student-avatar.png")}
+                      alt=""
+                      className="w-[7rem] h-[7rem] relative left-[39vw] mt-[3rem] border-gray-500 border-solid border-[1px] rounded-full"
                       accessible={true}
                       accessibilityLabel='User Avatar'
                       accessibilityRole='image'
                   />
                   <Text className="text-center text-2xl text-cyan-800 font-bold mt-[0.5rem]"
                       accessible={true}
-                      accessibilityLabel={`username: ${userProfile.username}`}
-                  >{userProfile.username}</Text>
+                      accessibilityLabel={`username: ${userProfile.name || userProfile.username}`}
+                  >{userProfile.name || userProfile.username}</Text>
             </View>
         </View>
 

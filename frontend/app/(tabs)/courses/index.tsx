@@ -49,10 +49,10 @@ const MyCourseScreen = () => {
     const [searchedCourses, setSearchedCourses] = useState<CourseItemProps[]>([]);
 
     // rating filter of course
-    const [ratingRange, setRatingRange] = useState<number[]>([1, 3]);
+    const [ratingRange, setRatingRange] = useState<number[]>([0, 5]);
 
     // course length range
-    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([1,5]);
+    const [courseLengthRange, setCourseLengthRange] = useState<number[]>([0, 20]);
 
     // topics chosen
     const [ selectedTopics, setSelectedTopics ] = useState<string[]>(["All"]);
@@ -193,8 +193,9 @@ const MyCourseScreen = () => {
           )
         );
       
+        // 20 <=> max course length
         return courseDetails.filter(course =>
-          course.length >= minLength && course.length <= maxLength
+          course.length >= minLength && (maxLength === 20 || course.length <= maxLength)
         );
       }
       
@@ -234,21 +235,24 @@ const MyCourseScreen = () => {
                 }
 
                 {displaySearch === true && 
-                    <View className='w-full px-4'>
+                    <View>
                         <Pressable
-                            className="relative left-[1%] flex-row mb-[0.5rem] gap-3"
+                            className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
+                            onPress={() => {
+                            setDisplaySearch(false);
+                            setDisplaySearchResult(false);
+                            }}
+                            accessible={true}
+                            accessibilityLabel="Back"
+                            accessibilityRole="button"
+                            accessibilityHint="Double tab to return homepage"
                         >
                             <AntDesign
-                                name="arrowleft"
-                                size={24}
-                                className = "relative top-[0.3rem] px-2"
-                                onPress={() => {
-                                    setDisplaySearch(false);
-                                    setDisplaySearchResult(false);
-                                }}
+                            name="arrowleft"
+                            size={24}
                             />
-                            <Text className = "text-3xl text-cyan-800 font-extrabold mb-[0.7rem]">Search</Text>
                         </Pressable>
+                        <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
                     </View>
                 }
 

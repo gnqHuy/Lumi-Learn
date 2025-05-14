@@ -32,7 +32,7 @@ export const Pill: React.FC<PillProps> = ({
           AccessibilityInfo.announceForAccessibility("Selected.");
         }, 100);
       }}
-      accessibilityLabel={`${value}. ${selected ? 'Selected' : 'Unselected'} Filter option`}
+      accessibilityLabel={`${value}. ${selected ? 'Selected Filter option' : 'Unselected Filter option. Double tab to choose this filter'}`}
       activeOpacity={0.7}
     >
       <Text className={`${selected ? selectedTextColor : textColor}`}>{value}</Text>

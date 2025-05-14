@@ -1,6 +1,7 @@
 import { View, Text, Modal, Pressable, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { CreateTopic } from '@/api/topicApi';
+import { showNotification } from '../Toast/Toast';
 
 export type AddValueModalProps = {
     setShowModal: (val: boolean) => void;
@@ -25,12 +26,13 @@ const AddValueModal: React.FC<AddValueModalProps> = ({ setShowModal, values, set
             setValueErrorMessage('Duplicate topic name');
             return;
         }
-
         CreateTopic(valueInput).then((res) => {
             setValueError(false);
             setValues([...values, valueInput]);
             setShowModal(false);
+            showNotification('success', 'Success', 'Topic is created successfully!');
         }).catch((err) => {
+            showNotification('error', 'Error', err.message);
             console.log(err.message);
         });
     }

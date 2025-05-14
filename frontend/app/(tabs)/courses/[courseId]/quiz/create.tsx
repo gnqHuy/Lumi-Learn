@@ -6,6 +6,7 @@ import { QuestionWithContent } from '@/types/question';
 import { CreateQuizRequest } from '@/types/quizz';
 import CreateQuestion from '@/components/Quizz/CreateQuestion';
 import { createQuizWithContent } from '@/api/quizApi';
+import { showNotification } from '@/components/Toast/Toast';
 
 const CreateQuizScreen = () => {
     const [questions, setQuestions] = useState<QuestionWithContent[]>([]);
@@ -54,8 +55,10 @@ const CreateQuizScreen = () => {
         };
 
         createQuizWithContent(request).then(() => {
+            showNotification('success', 'Success', 'Quiz is created successfully!');
             router.push(`/(tabs)/courses/${courseId}`);
         }).catch(err => {
+            showNotification('error', 'Error', err.message);
             console.log(err.message);
         });
     };

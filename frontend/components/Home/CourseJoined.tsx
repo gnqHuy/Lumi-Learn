@@ -61,7 +61,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                             >
                                 <Image
                                     source={course.imgUrl
-                                        ? { uri: course.imgUrl }
+                                        ? { uri: getCourseThumbnail(course.id) }
                                         : require('../../assets/images/default-course.jpg')
                                     }
                                     className='w-[165px] h-[105px]'

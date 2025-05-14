@@ -13,6 +13,7 @@ import SearchFilter from '@/components/Search/SearchFilter'
 import Search from '@/components/Search/Search'
 import { GetAllTopics } from '@/api/topicApi'
 import { deleteSearchHistoryByContent, getMySearchHistories } from '@/api/searchHistoriesApi'
+import { showNotification } from '@/components/Toast/Toast'
 
 const MyCourseScreen = () => {
     const [ courses, setCourses ] = useState<CourseItemProps[]>([]);
@@ -131,6 +132,7 @@ const MyCourseScreen = () => {
         deleteSearchHistoryByContent(content)
           .then((res) => {
             setSearchTrigger((prev) => !prev);
+            showNotification('success', 'Success', 'Search history is deleted!');
           })
           .catch((err) => console.error(err));
     };

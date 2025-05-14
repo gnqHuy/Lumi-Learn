@@ -242,6 +242,7 @@ const signup = () => {
                     onPress={() => router.push("/(auth)/login")}
                     accessibilityLabel="Already had an account? Log In"
                     accessibilityHint="Double Tab to Navigate to the Log In screen"
+                    underlayColor={"transparent"}
                 >
                     <Text className="text-sm color-slate-700">
                     Already had an account?{" "}

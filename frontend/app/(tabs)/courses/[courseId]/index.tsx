@@ -15,6 +15,7 @@ import AddRating from '@/components/Feedback/AddRating';
 import { TextInput } from 'react-native-gesture-handler';
 import { ReactNativeFile } from '../createCourse';
 import { getCourseThumbnail } from '@/utils/image';
+import { showNotification } from '@/components/Toast/Toast';
 
 const CourseOverviewPage = () => {
   const [courseOverview, setCourseOverview] = useState<CourseOverview | undefined>(undefined);
@@ -136,7 +137,8 @@ const CourseOverviewPage = () => {
         }
 
         updateCourse(updateRequest).then((res) => {
-            router.push(`/(tabs)/courses/${courseId}`)
+            showNotification('success', 'Success', 'Update course successfully');
+            router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);
         })
@@ -157,7 +159,7 @@ const CourseOverviewPage = () => {
         keyboardShouldPersistTaps='handled'
     >
         <View className="px-5 flex-row items-center bg-white justify-between">
-            <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Details</Text>
+            <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Details</Text>
             <Pressable onPress={() => router.push(`/(tabs)/courses`)}
                 accessible={true}
                 accessibilityLabel='Back button. Double tab to return Course page.'

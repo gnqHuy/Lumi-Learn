@@ -6,6 +6,7 @@ import { CreateFlashcardRequest } from '@/types/flashcard'
 import CreateFlashcard from '@/components/Flashcard/CreateFlashcard'
 import { CreateFlashcardSetRequest } from "@/types/flashcardSet";
 import { createFlashcardSet } from '@/api/flashcardSetApi'
+import { showNotification } from '@/components/Toast/Toast'
 
 const CreateFlashcardSetScreen = () => {
     const [ flashcards, setFlashcards ] = useState<CreateFlashcardRequest[]>([]);
@@ -51,9 +52,12 @@ const CreateFlashcardSetScreen = () => {
         }
 
         createFlashcardSet(request).then((res) => {
+            showNotification('success', 'Success', 'Topic is created successfully!');
             router.push(`/(tabs)/courses/${courseId}`);
+            
         }).catch((err) => {
             console.log(err.message);
+            showNotification('error', 'Error', err.message);
         })
        
     };

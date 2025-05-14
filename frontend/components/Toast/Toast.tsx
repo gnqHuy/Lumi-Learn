@@ -59,9 +59,9 @@ const { NotificationsProvider, useNotifications } = createNotifications({
         description: description,
       },
     });
-    setTimeout(() => {
-      AccessibilityInfo.announceForAccessibility(`${title}! ${description}`);
-    }, 1500);
+    // setTimeout(() => {
+    //   AccessibilityInfo.announceForAccessibility(`${title}! ${description}`);
+    // }, 300);
   };
     
 

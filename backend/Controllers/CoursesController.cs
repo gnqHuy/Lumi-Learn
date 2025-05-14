@@ -81,7 +81,7 @@ namespace LumiLearn.Controllers
             var instructor = await dbContext.Users.FindAsync(course.InstructorId);
             var topic = await dbContext.Topics.FindAsync(course.TopicId);
             var feedbacks = await dbContext.Feedbacks.Where(f => f.CourseId == id).Select(f => f.Rating).ToListAsync();
-            var lessons = await dbContext.Lessons.Where(l => l.CourseId == id).ToListAsync();
+            var lessons = await dbContext.Lessons.Where(l => l.CourseId == id).OrderBy(l => l.Timestamp).ToListAsync();
 
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var isEnrolledCourse = await dbContext.Enrollments

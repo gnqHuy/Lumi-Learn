@@ -19,7 +19,7 @@ export type CourseItemProps = {
 }
 
 const CourseItem = (props: CourseItemProps) => {
-    const [ isPressed, setIsPressed ] = useState(false);
+    const [isPressed, setIsPressed] = useState(false);
     const router = useRouter();
     
     const trim = (input: string, maxLength: number) => {
@@ -44,7 +44,7 @@ const CourseItem = (props: CourseItemProps) => {
             accessibilityLabel={`Course: ${props.courseName}, Topic: ${props.topic}, Instructor: ${props.instructorName}
             ${props.numberOfLessons} Lessons, Rating: ${props.rating}/5, ${props.numberOfRatings} rate.`}
             accessibilityRole='button'
-            accessibilityHint='Double tab to open Course Preview'
+            accessibilityHint={`Double tab to open Course ${props.isUserEnrolled ? 'Details' : 'Preview'}`}
         >
             <View
                 id='course-item-content'

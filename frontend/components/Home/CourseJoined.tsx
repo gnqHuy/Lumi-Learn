@@ -81,7 +81,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                                 </View>
                                 <View className='left-[5%] flex-row items-center gap-2'>
                                     <Image 
-                                        source={require("../../assets/images/userAvatarTest.png")}
+                                        source={require("../../assets/images/teacher-avatar.png")}
                                         className = "w-5 h-5"    
                                     />
                                     <Text className='text-sm text-gray-400'>

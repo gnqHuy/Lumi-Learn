@@ -53,8 +53,10 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
 
         {/* avatar and change */}
         <View className="mt-[2rem]">
-            <Image source = {require("../../assets/images/userAvatarTest.png")} className = "w-[6rem] h-[6rem] relative left-[40%] border-gray-500 border-solid border-[1px] rounded-full"/>
-            <Text className = "text-xl text-center mt-[0.5rem]">Change avatar</Text>
+              <Image source={userProfile.role === "Teacher"
+                  ? require("../../assets/images/teacher-avatar.png")
+                  : require("../../assets/images/student-avatar.png")}
+                  className = "w-[6rem] h-[6rem] relative left-[40%] border-gray-500 border-solid border-[1px] rounded-full"/>
         </View>
 
         {/* username */}

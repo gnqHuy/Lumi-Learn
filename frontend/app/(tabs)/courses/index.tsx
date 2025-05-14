@@ -238,10 +238,6 @@ const MyCourseScreen = () => {
                     <View>
                         <Pressable
                             className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
-                            onPress={() => {
-                            setDisplaySearch(false);
-                            setDisplaySearchResult(false);
-                            }}
                             accessible={true}
                             accessibilityLabel="Back"
                             accessibilityRole="button"
@@ -250,6 +246,10 @@ const MyCourseScreen = () => {
                             <AntDesign
                             name="arrowleft"
                             size={24}
+                            onPress={() => {
+                                setDisplaySearch(false);
+                                setDisplaySearchResult(false);
+                            }}
                             />
                         </Pressable>
                         <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>

@@ -94,14 +94,14 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
   return (
     <ScrollView className = "mt-[4rem] animate-slideLeftFromRight h-full">
         {/* header */}
-        <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[2rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold text-cyan-700"
+        <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
+            <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"
                 accessible={true}
                 accessibilityLabel='Update Information'
                 accessibilityRole='header'
             >
                 Update information</Text>
-            <Pressable className = {!accessibleRender ? 'hidden' : "absolute left-8 top-1"} 
+            <Pressable className={!accessibleRender ? 'hidden' : " p-3 mb-2"}
                 onPress={() => {
                     setupDisplayChangeProfile(false);
                     setupDisplayInformation(true);
@@ -111,7 +111,7 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
                 accessibilityRole='button'
                 accessibilityHint='Double tab to return to Information page'
             >
-                <AntDesign name = "arrowleft" size = {24} />
+                <AntDesign name = "arrowleft" size = {24} color={'#155e75'}/> 
             </Pressable>
         </View>
 
@@ -226,15 +226,16 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* update button */}
             <View className = "mt-[3rem]">
-                <Pressable className = "w-[90%] relative self-start left-[5%] py-[1rem] rounded-2xl bg-cyan-800"
+                <TouchableOpacity className = "w-[90%] relative self-start left-[5%] py-[1rem] rounded-2xl bg-cyan-800"
                     onPress={handleUpdateProfile}
                     accessible={true}
                     accessibilityLabel='Update'
                     accessibilityRole='button'
                     accessibilityHint='Double tab to Update Information'
+                    activeOpacity={0.7}
                 >
                     <Text className = "text-center text-lg text-white">Update</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     </ScrollView>

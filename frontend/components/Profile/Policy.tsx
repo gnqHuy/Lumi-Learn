@@ -20,28 +20,28 @@ const Policy = ({ setupDisplayPolicy }: PolicyProps) => {
     }, []); 
 
   return (
-    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight h-full">
         {/* header */}
-        <View className = "w-[100vw] border-solid border-black border-b-[1px] pb-[1rem] mt-[1rem]">
-            <Text className = "text-center text-3xl font-bold"
+        <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
+            <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"
                 accessible={true}
                 accessibilityLabel='Policy'
                 accessibilityRole='header'
             >
                 Policy</Text>
-              <Pressable className={!accessibleRender ? 'hidden' : "absolute left-8 top-1"}
+            <Pressable className={!accessibleRender ? 'hidden' : " p-3 mb-2"}
                 onPress={() => setupDisplayPolicy(false)}
                 accessible={true}
                 accessibilityLabel='Back'
                 accessibilityRole='button'
                 accessibilityHint='Double tab to return to Profile page'
             >
-                <AntDesign name = "arrowleft" size = {24} />
+                <AntDesign name = "arrowleft" size = {24} color={'#155e75'}/> 
             </Pressable>
         </View>
 
         {/* paragraph 1 */}
-        <View className = "mt-[2rem] relative left-[5%] w-[90%]"
+        <View className = "mt-5 relative left-[5%] w-[90%]"
             accessible={true}
         >
             <Text className = "text-lg">At <Text className = "font-bold">Lumilearn</Text>, we believe that education should be accessible to everyone, regardless of physical ability. Our mission is to empower blind and visually impaired individuals by providing an intuitive, reliable, and fully accessible learning platform. Every feature is carefully designed to work seamlessly with screen readers, voice commands, and other assistive technologies.</Text>

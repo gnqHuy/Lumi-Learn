@@ -66,26 +66,27 @@ const CourseItem = (props: CourseItemProps) => {
                     id='course-overview'
                     className='flex-1 flex-col gap-3'
                 >
-                    <View className='flex-row items-center gap-2 justify-between pr-2'>
+                    <View className='flex-row items-center justify-between pr-2'>
                         <Text
                             id='course-name'
-                            className='text-gray-600 font-bold text-lg'
+                            className='text-gray-600 font-bold text-lg flex-1 pr-2'
+                            numberOfLines={11}
                         >
-                            {trim(props.courseName, 17)}
+                            {props.courseName}
                         </Text>
-                        <View className='flex-row items-center'>
-                            <Text className='text-sm text-gray-400 mr-2'>
-                                {props.rating}
-                            </Text>
-                            <AntDesign name='star' size={18} color={'#facc15'}/>
+
+                        <View className='flex-row items-center flex-shrink-0'>
+                            <Text className='text-sm text-gray-400 mr-1'>{props.rating}</Text>
+                            <AntDesign name='star' size={18} color={'#facc15'} />
                             <Text className='text-sm text-gray-400 ml-1'>
-                                {`(${props.numberOfRatings})`}
+                            ({props.numberOfRatings})
                             </Text>
                         </View>
                     </View>
+
                     <View className='flex-row gap-2 items-center ml-1'>
                         <Image 
-                            source={require("../../assets/images/userAvatarTest.png")}
+                            source={require('../../assets/images/teacher-avatar.png')}
                             className = "w-5 h-5"    
                         />
                         <Text

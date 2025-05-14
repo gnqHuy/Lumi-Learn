@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import CoursesPage from "./courses";
@@ -272,6 +273,7 @@ const HomePage = () => {
   const handleAutoFillAndSearchKeyword = (val: string) => {
     setKeyword(val);
     searchCourseByKeyword(val);
+    setSearchTrigger((prev) => !prev);
   } 
 
   // update recent search
@@ -340,7 +342,7 @@ const HomePage = () => {
   return (
     <View className="flex-1 bg-white">
       <StatusBar barStyle="dark-content"/>
-      <View className="flex-1 flex-col gap-3 mt-20 pb-4">
+      <View className="flex-1 flex-col gap-3 mt-[68px] pb-4">
         {/* username */}
         {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">
@@ -357,7 +359,7 @@ const HomePage = () => {
             <AntDesign
               name="arrowleft"
               size={24}
-              className="relative top-[0.3rem]"
+              className="relative top-[0.3rem] px-2"
             />
             <Text className = "text-3xl text-cyan-800 font-extrabold">Search</Text>
           </Pressable>
@@ -375,7 +377,7 @@ const HomePage = () => {
               accessible={true}
               accessibilityLabel={`Search Courses field: ${keyword} . ${isEditing ? 'Editing' : '. Double tab to edit'}`}
               placeholder="Find courses here"
-              className="font-semibold flex-1 h-full"
+              className="font-semibold flex-1 h-full relative top-[0.05rem]"
               style={{ textAlignVertical: "center" }}
               editable={displaySearch}
               placeholderTextColor={"gray"}
@@ -408,7 +410,7 @@ const HomePage = () => {
               />
             )}
           {/* filter  */}
-          <Pressable
+          <TouchableOpacity
             className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.5rem]"
             onPress={() => {
               setDisplaySearchFilter(true);
@@ -418,9 +420,10 @@ const HomePage = () => {
             accessibilityLabel="Filter"
             accessibilityRole="button"
             accessibilityHint="Double tab to open Course Filter"
+            activeOpacity={0.7}
           >
             <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         {/* Course joined */}
@@ -454,7 +457,7 @@ const HomePage = () => {
 
         {/* search filter */}
         {displaySearchFilter === true && (
-          <View className="absolute flex-1 left-0 top-40 z-[50]">
+          <View className="absolute flex-1 left-0 bottom-0 z-[50]">
             <SearchFilter 
               disableSearchFilter={disableSearchFilter} 
               setupDisplaySearch={setupDisplaySearch}

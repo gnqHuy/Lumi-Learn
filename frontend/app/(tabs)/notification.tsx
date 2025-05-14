@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ScrollView as ScrollViewType, AccessibilityInfo } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+  ScrollView as ScrollViewType,
+} from 'react-native';
 import NotificationItem from '@/components/Notification/NotificationItem';
 import { Notification } from '@/types/notification';
 import { GetNotification, markAllNotificationsAsRead } from '@/api/notification';
-import Toast from 'react-native-toast-message';
-import { notify } from 'react-native-notificated';
-import { DefaultVariants } from 'react-native-notificated/lib/typescript/defaultConfig/types';
 import { showNotification } from '@/components/Toast/Toast';
+import useNotificationStore from '@/zustand/notificationStore';
 
 const isToday = (dateString: string) => {
   const date = new Date(dateString);
@@ -21,20 +26,30 @@ const isToday = (dateString: string) => {
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showAllPrevious, setShowAllPrevious] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const scrollViewRef = useRef<ScrollViewType>(null);
+  const { setUnreadCount } = useNotificationStore();
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await GetNotification();
+      setNotifications(response.data);
+      const count = response.data.filter((n: { isRead: any; }) => !n.isRead).length;
+      setUnreadCount(count);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await GetNotification();
-        setNotifications(response.data);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      }
-    };
-
     fetchNotifications();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchNotifications();
+    setRefreshing(false);
+  };
 
   const handleDelete = (notificationId: string) => {
     setNotifications((prev) =>
@@ -45,9 +60,11 @@ const NotificationPage = () => {
   const handleMarkAllAsRead = async () => {
     try {
       await markAllNotificationsAsRead();
-      setNotifications((prev) =>
-        prev.map((n) => ({ ...n, isRead: true }))
-      );
+      setNotifications((prev) => {
+        const updated = prev.map((n) => ({ ...n, isRead: true }));
+        setUnreadCount(0);
+        return updated;
+      });
       showNotification('success', 'Success', 'All notifications have been marked as read.');
     } catch (error) {
       console.error('Error marking all as read:', error);
@@ -56,11 +73,14 @@ const NotificationPage = () => {
   };
 
   const handleMarkSingleAsRead = (notificationId: string) => {
-    setNotifications((prev) =>
-      prev.map((n) =>
+    setNotifications((prev) => {
+      const updated = prev.map((n) =>
         n.notificationId === notificationId ? { ...n, isRead: true } : n
-      )
-    );
+      );
+      const count = updated.filter((n) => !n.isRead).length;
+      setUnreadCount(count); 
+      return updated;
+    });
   };
 
   const todayNotifications = notifications.filter((n) => isToday(n.createdAt));
@@ -80,38 +100,36 @@ const NotificationPage = () => {
   };
 
   return (
-    <View className="flex-1 bg-white pt-20">
-      <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4"
-        accessibilityRole='header'
-      >
-        Notifications</Text>
+    <View className="flex-1 bg-white pt-[68px]">
+      <Text className="text-3xl text-cyan-800 font-extrabold ml-6 mb-4" accessibilityRole="header">
+        Notifications
+      </Text>
       {notifications.length === 0 && (
         <View className="flex-1 justify-center items-center">
-          <Text className="text-2xl text-gray-600 font-semibold">
-            You have no notifications
-          </Text>
+          <Text className="text-2xl text-gray-600 font-semibold">You have no notifications</Text>
         </View>
       )}
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         {todayNotifications.length > 0 && (
           <View className="w-[100%]">
-            <View className="flex-row justify-between items-center mb-2 mx-3">
-              <Text className="text-lg text-cyan-800 font-semibold"
-                accessible={true}
-                accessibilityRole='header'
-              >Today</Text>
+            <View className="flex-row justify-between items-center mb-2 mx-5">
+              <Text className="text-lg text-cyan-800 font-semibold" accessibilityRole="header">
+                Today
+              </Text>
               <TouchableOpacity
-                className="px-3 py-1 rounded-full hover:text-gray-400"
+                className="py-1 rounded-full"
                 onPress={handleMarkAllAsRead}
                 accessible={true}
-                accessibilityRole='button'
-                accessibilityHint='Double tab to mark all notifications as read'
+                accessibilityRole="button"
+                accessibilityHint="Double tap to mark all notifications as read"
               >
-                <Text className="text-cyan-800 font-medium text-sm">
-                  Mark all as read</Text>
+                <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
               </TouchableOpacity>
             </View>
 
@@ -128,18 +146,17 @@ const NotificationPage = () => {
 
         {previousNotifications.length > 0 && (
           <View className="w-[100%] mt-3">
-            <View className="flex-row justify-between items-center mb-2 mx-4">
-              <Text className="text-lg text-cyan-800 font-semibold"
-                accessibilityRole='header'
-              >
-                Earlier</Text>
+            <View className="flex-row justify-between items-center mb-2 mx-5">
+              <Text className="text-lg text-cyan-800 font-semibold" accessibilityRole="header">
+                Earlier
+              </Text>
               {todayNotifications.length === 0 && (
                 <TouchableOpacity
-                  className="px-3 py-1 rounded-full hover:text-gray-400"
+                  className="py-1 rounded-full"
                   onPress={handleMarkAllAsRead}
                   accessible={true}
-                  accessibilityRole='button'
-                  accessibilityHint='Double tab to mark all notifications as read'
+                  accessibilityRole="button"
+                  accessibilityHint="Double tap to mark all notifications as read"
                 >
                   <Text className="text-cyan-800 font-medium text-sm">Mark all as read</Text>
                 </TouchableOpacity>
@@ -168,9 +185,7 @@ const NotificationPage = () => {
           </View>
         )}
       </ScrollView>
-      {/* <Toast /> */}
     </View>
-    
   );
 };
 

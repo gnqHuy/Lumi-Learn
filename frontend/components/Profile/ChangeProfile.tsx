@@ -226,15 +226,16 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
 
             {/* update button */}
             <View className = "mt-[3rem]">
-                <Pressable className = "w-[90%] relative self-start left-[5%] py-[1rem] rounded-2xl bg-cyan-800"
+                <TouchableOpacity className = "w-[90%] relative self-start left-[5%] py-[1rem] rounded-2xl bg-cyan-800"
                     onPress={handleUpdateProfile}
                     accessible={true}
                     accessibilityLabel='Update'
                     accessibilityRole='button'
                     accessibilityHint='Double tab to Update Information'
+                    activeOpacity={0.7}
                 >
                     <Text className = "text-center text-lg text-white">Update</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     </ScrollView>

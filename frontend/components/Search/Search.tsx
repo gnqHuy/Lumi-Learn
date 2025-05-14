@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import AntDesgin from '@expo/vector-icons/AntDesign';
 import { Topic } from '@/types/topic';
 import { CourseItemProps } from '../Course/CourseItem';
@@ -21,7 +21,7 @@ type SearchInfo  = {
 const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses, handleAutoFillAndSearchKeyword}: SearchProps) => {
     const [option, setOption] = useState(1);
   return (
-    <ScrollView>
+    <ScrollView className = "h-full">
         {displaySearchResult === false &&
             <View className = "relative left-[4%] animate-slideLeftFromRight">
                 {/* recent searches */}
@@ -30,12 +30,21 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
                     <View className = "flex-col gap-8 mt-[1rem] relative left-[4%]">
                         {recentSearches.map((search, index) => {
                             return (
-                                <Pressable className = "flex-row" key = {index} onPress = {() => handleAutoFillAndSearchKeyword(search.content)}>
+                                <TouchableOpacity 
+                                    className = "flex-row" 
+                                    key = {index} 
+                                    onPress = {() => handleAutoFillAndSearchKeyword(search.content)}
+                                    activeOpacity={0.5}
+                                >
                                     <Text className = "text-lg">{search.content}</Text>
-                                    <Pressable className = "absolute right-14 z-[20]" onPress={() => deleteSearchHistory(search.content)}>
+                                    <TouchableOpacity
+                                        className = "absolute right-14 z-[20]" 
+                                        onPress={() => deleteSearchHistory(search.content)}
+                                        activeOpacity={0.7}
+                                    >
                                         <AntDesgin name = "close" size = {24}/>
-                                    </Pressable>
-                                </Pressable>
+                                    </TouchableOpacity>
+                                </TouchableOpacity>
                             )
                         })}
                     </View>

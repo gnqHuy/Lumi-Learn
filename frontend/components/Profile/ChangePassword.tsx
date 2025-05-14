@@ -2,7 +2,7 @@ import { changePasswordApi } from '@/api/userApi';
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { showNotification } from '../Toast/Toast';
 
@@ -65,7 +65,7 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
   }, []);
 
   return (
-    <ScrollView className = "mt-14 animate-slideLeftFromRight">
+    <ScrollView className = "mt-14 animate-slideLeftFromRight h-full">
         {/* header */}
         <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
             <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"
@@ -152,16 +152,17 @@ const ChangePassword = ({setupDisplayChangePassword}: ChangePasswordProps) => {
         </View>
 
         {/* comfirm button */}
-        <View className = "mt-[5rem]">
-            <Pressable className = "relative left-[5%] w-[90%] rounded-2xl py-[0.7rem] bg-cyan-800"
+        <View className = "mt-[3rem]">
+            <TouchableOpacity className = "relative left-[5%] w-[90%] rounded-2xl py-[1rem] bg-cyan-800"
               onPress = {handleChangePassword}
               accessible={true}
               accessibilityLabel='Confirm'
               accessibilityRole='button'
               accessibilityHint='Double tab to Update Change Password'
+              activeOpacity={0.7}
             >
                 <Text className = "text-xl text-center text-white">Confirm</Text>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     </ScrollView>
   )

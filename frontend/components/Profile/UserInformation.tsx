@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { AccessibilityInfo, findNodeHandle, Image, Pressable, Text, View } from 'react-native'
+import { AccessibilityInfo, findNodeHandle, Image, Pressable, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { User } from '@/types/user';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -52,7 +52,7 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
         </View>
 
         {/* avatar and change */}
-          <View className="mt-[2rem]">
+        <View className="mt-[2rem]">
             <Image source = {require("../../assets/images/userAvatarTest.png")} className = "w-[6rem] h-[6rem] relative left-[40%] border-gray-500 border-solid border-[1px] rounded-full"/>
             <Text className = "text-xl text-center mt-[0.5rem]">Change avatar</Text>
         </View>
@@ -75,7 +75,7 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
         </View>
 
         {/* full name */}
-          <View className="mt-[1.5rem] relative left-[5%]">
+        <View className="mt-[1.5rem] relative left-[5%]">
             <Text className = "text-lg font-bold"
                 accessible={false}
             >
@@ -87,10 +87,14 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                 accessibilityRole='button'
                 accessibilityHint='Double tab to open Update Information Page'
             >
-                <Pressable className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress = {handleDisplayChangeProfile}>
+                <TouchableOpacity
+                    className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" 
+                    onPress = {handleDisplayChangeProfile}
+                    activeOpacity={0.5}
+                >
                     <Text className = "text-lg">{userProfile?.name}</Text>
                     <Entypo name = "chevron-right" size = {20}/>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
 
@@ -107,7 +111,11 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                 accessibilityRole='button'
                 accessibilityHint='Double tab to open Update Information Page'
             >
-                <Pressable className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress = {handleDisplayChangeProfile}>
+                <TouchableOpacity 
+                    className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" 
+                    onPress = {handleDisplayChangeProfile}
+                    activeOpacity={0.5}
+                >
                     <Text className = "text-lg">{new Date(
                         new Date(userProfile.birthday).getUTCFullYear(), 
                         new Date(userProfile.birthday).getUTCMonth(), 
@@ -118,7 +126,7 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                         year: 'numeric'
                     }).replace(/ /g, ' ')}</Text>
                     <Entypo name = "chevron-right" size = {20}/>  
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
 
@@ -135,10 +143,14 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                 accessibilityRole='button'
                 accessibilityHint='Double tab to open Update Information Page'
             >
-                <Pressable className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress = {handleDisplayChangeProfile}>
+                <TouchableOpacity 
+                    className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" 
+                    onPress = {handleDisplayChangeProfile}
+                    activeOpacity={0.5}
+                >
                     <Text className = "text-lg">{userProfile?.email}</Text>
                     <Entypo name = "chevron-right" size = {20}/> 
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
 
@@ -155,10 +167,14 @@ const UserInformation = ({setupDisplayInformation, userProfile, setupDisplayChan
                 accessibilityRole='button'
                 accessibilityHint='Double tab to open Update Information Page'
             >
-                <Pressable className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" onPress = {handleDisplayChangeProfile}>
+                <TouchableOpacity 
+                    className = "w-[90%] border-solid border-black border-[1px] pl-[1rem] py-[0.7rem] rounded-2xl bg-slate-100 flex-row justify-between px-3" 
+                    onPress = {handleDisplayChangeProfile}
+                    activeOpacity={0.5}
+                >
                     <Text className = "text-lg">{userProfile?.phone}</Text>
                     <Entypo name = "chevron-right" size = {20}/>  
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     </ScrollView>

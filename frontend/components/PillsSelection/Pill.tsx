@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, findNodeHandle, Pressable, Text } from 'react-native';
+import { AccessibilityInfo, findNodeHandle, Pressable, Text, TouchableOpacity } from 'react-native';
 
 type PillProps = {
   value: string;
@@ -22,7 +22,7 @@ export const Pill: React.FC<PillProps> = ({
   borderStyle = undefined,
   onPress }) => {
   return (
-    <Pressable
+    <TouchableOpacity
       className={`rounded-full py-[0.6rem] px-[1rem] mr-2 mb-2 ${
         selected ? selectedColor : defaultColor
       } ${borderStyle}`}
@@ -33,8 +33,9 @@ export const Pill: React.FC<PillProps> = ({
         }, 100);
       }}
       accessibilityLabel={`${value}. ${selected ? 'Selected' : 'Unselected'} Filter option`}
+      activeOpacity={0.7}
     >
       <Text className={`${selected ? selectedTextColor : textColor}`}>{value}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };

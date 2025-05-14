@@ -34,48 +34,32 @@ const ChangeProfile = ({setupDisplayChangeProfile, setupDisplayInformation, user
     const [emailError, setEmailError] = useState("");
     const [phoneError, setPhoneError] = useState("");
 
-    // check empty
-    const checkInputEmpty = () => {
-        if (fullNameInput === "") {
-            setFullNameError("Full name cannot be empty");
-        }
-        if (emailInput === "") {
-            setEmailError("Email cannot be empty");
-        }
-        if (phoneInput === "") {
-            setPhoneError("Phone number cannot be empty");
-        }
-    }
-
     // handle update
     const handleUpdateProfile = () => {
-        checkInputEmpty();
-        if (fullNameInput && emailInput && phoneInput) {
-            if (fullNameInput === userProfile.name && birthdayInput === userProfile.birthday && emailInput === userProfile.email && phoneInput === userProfile.phone) {
-                setFullNameError("At least one prop must be different from old information");
-                setBirthdayError("At least one prop must be different from old information");
-                setEmailError("At least one prop must be different from old information");
-                setPhoneError("At least one prop must be different from old information");
-            } else {
-                // handle update
-                const payload = {
-                    email: emailInput, 
-                    phone: phoneInput, 
-                    birthday: new Date(
-                        new Date(birthdayInput).getFullYear(), 
-                        new Date(birthdayInput).getMonth(),
-                        new Date(birthdayInput).getDate() + 1
-                    ), 
-                    name: fullNameInput
-                }
-                updateProfileApi(payload).then((response) => {
-                    console.log("Update profile successfully!");
-                    showNotification('success', 'Profile Updated', 'Your profile has been updated successfully.');
-                    router.push('/(tabs)/profile');
-                    setupDisplayChangeProfile(false);
-                    resetProfile();
-                }).catch(err => console.error(err));
+        if (fullNameInput === userProfile.name && birthdayInput === userProfile.birthday && emailInput === userProfile.email && phoneInput === userProfile.phone) {
+            setFullNameError("At least one prop must be different from old information");
+            setBirthdayError("At least one prop must be different from old information");
+            setEmailError("At least one prop must be different from old information");
+            setPhoneError("At least one prop must be different from old information");
+        } else {
+            // handle update
+            const payload = {
+                email: emailInput, 
+                phone: phoneInput, 
+                birthday: new Date(
+                    new Date(birthdayInput).getFullYear(), 
+                    new Date(birthdayInput).getMonth(),
+                    new Date(birthdayInput).getDate() + 1
+                ), 
+                name: fullNameInput
             }
+            updateProfileApi(payload).then((response) => {
+                console.log("Update profile successfully!");
+                showNotification('success', 'Profile Updated', 'Your profile has been updated successfully.');
+                router.push('/(tabs)/profile');
+                setupDisplayChangeProfile(false);
+                resetProfile();
+            }).catch(err => console.error(err));
         }
     }
 

@@ -350,16 +350,16 @@ const HomePage = () => {
           </View>
         ) : (
           <Pressable
-            onPress={() => {
-              setDisplaySearch(false);
-              setDisplaySearchResult(false);
-            }}
             className = "relative left-[4%] flex-row mb-[0.5rem] gap-3"
           >
             <AntDesign
               name="arrowleft"
               size={24}
               className="relative top-[0.3rem] px-2"
+              onPress={() => {
+                setDisplaySearch(false);
+                setDisplaySearchResult(false);
+              }}
             />
             <Text className = "text-3xl text-cyan-800 font-extrabold">Search</Text>
           </Pressable>

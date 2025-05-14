@@ -53,7 +53,7 @@ const CourseItem = (props: CourseItemProps) => {
                 {/* Replace with real thumbnail image later */}
                 <Image
                     source={props.imgUrl 
-                        ? { uri: props.imgUrl }
+                        ? { uri: getCourseThumbnail(props.id) }
                         : require('../../assets/images/default-course.jpg')
                     }
                     className='w-[90px] h-[90px]'

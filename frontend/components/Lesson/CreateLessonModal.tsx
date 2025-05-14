@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { CreateLessonRequest } from '@/types/lesson';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { createLesson } from '@/api/lessonApi';
+import { showNotification } from '../Toast/Toast';
 
 export type CreateLessonModalProps = {
     onClose: (val: boolean) => void;
@@ -35,6 +36,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
         createLesson(createLessonRequest).then((res) => {
             setRefresh(true);
             onClose(false);
+            showNotification('success', 'Success', 'Lesson is created successfully!');
         }).catch((err) => {
             console.log(err.message);
         })

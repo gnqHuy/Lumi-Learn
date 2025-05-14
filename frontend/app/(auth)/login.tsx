@@ -134,6 +134,7 @@ const login = () => {
                     </Text>
                     <TextInput
                         id='password-input-field'
+                        secureTextEntry={true}
                         accessibilityLabel='Login Password field'
                         placeholder='Please enter your password'
                         placeholderTextColor={"#9CA3AF"}
@@ -175,6 +176,7 @@ const login = () => {
                     onPress={() => router.push("/(auth)/signup")}
                     accessibilityLabel="Don't have an account? Sign up"
                     accessibilityHint="Double Tab to Navigate to the sign up screen"
+                    underlayColor={"transparent"}
                 >
                     <Text className="text-sm color-slate-700">
                         Don't have an account?{" "}

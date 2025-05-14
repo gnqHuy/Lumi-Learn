@@ -7,6 +7,7 @@ import { GetAllTopics } from '@/api/topicApi';
 import { PillSelection } from '@/components/PillsSelection/PillSelection';
 import { createCourse } from '@/api/courseApi';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { showNotification } from '@/components/Toast/Toast';
 
 export type ReactNativeFile = {
   uri: string;
@@ -107,6 +108,7 @@ const CreateCoursePage = () => {
     createCourse(formData)
       .then((res) => {
         const courseId = res.data.id;
+        showNotification('success', 'Success', 'Course is created successfully!');
         router.push(`/(tabs)/courses/${courseId}`);
       })
       .catch((err) => {
@@ -153,7 +155,7 @@ const CreateCoursePage = () => {
               <TextInput
                 placeholder="Enter course title"
                 placeholderTextColor="#9CA3AF"
-                className={`w-full bg-blue-100 p-4 rounded-xl text-3xl font-semibold bg-transparent border-b-2 ${
+                className={`w-full p-4 rounded-xl text-3xl font-semibold bg-transparent border-b-2 ${
                   titleError ? 'border-red-500' : 'border-gray-400'
                 }`}
                 style={{ textAlignVertical: 'center', width: 'auto' }}
@@ -182,7 +184,7 @@ const CreateCoursePage = () => {
                 className={`w-full p-4 rounded-xl text-xl font-normal bg-transparent border-b-2 ${
                   descriptionError ? 'border-red-500' : 'border-gray-400'
                 }`}
-                style={{ textAlignVertical: 'center' }}
+                style={{ textAlignVertical: 'center', width: 'auto' }}
                 value={descriptionInput}
                 onChangeText={(text) => {
                   setDescriptionInput(text);

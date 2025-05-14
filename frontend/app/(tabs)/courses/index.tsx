@@ -240,14 +240,14 @@ const MyCourseScreen = () => {
                             setDisplaySearch(false);
                             setDisplaySearchResult(false);
                             }}
-                            className="relative left-[2%] flex-row mb-[0.5rem] gap-3"
+                            className="relative left-[1%] flex-row mb-[0.5rem] gap-3"
                         >
                             <AntDesign
                                 name="arrowleft"
                                 size={24}
-                                className = "relative top-[0.3rem]"
+                                className = "relative top-[0.3rem] px-2"
                             />
-                            <Text className = "text-3xl text-cyan-800 font-extrabold mb-[0.5rem]">Search</Text>
+                            <Text className = "text-3xl text-cyan-800 font-extrabold mb-[0.7rem]">Search</Text>
                         </Pressable>
                     </View>
                 }
@@ -282,12 +282,13 @@ const MyCourseScreen = () => {
                         )}
                     </Pressable>
                     {/* filter  */}
-                    <Pressable
+                    <TouchableOpacity
                         className="flex items-center justify-center p-[10px] bg-zinc-100 rounded-full z-[10] mt-[1.2rem] relative bottom-[0.45rem]"
                         onPress={() => setDisplaySearchFilter(true)}
+                        activeOpacity={0.7}
                     >
                         <AntDesign name="filter" color={"gray"} size={24} className = "relative top-[0.1rem]"/>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
 
 

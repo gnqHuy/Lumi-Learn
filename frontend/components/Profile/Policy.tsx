@@ -20,7 +20,7 @@ const Policy = ({ setupDisplayPolicy }: PolicyProps) => {
     }, []); 
 
   return (
-    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight">
+    <ScrollView className = "mt-[4rem] animate-slideLeftFromRight h-full">
         {/* header */}
         <View className="flex-row items-center bg-white justify-between mb-4 px-5 border-solid border-black border-b-[1px]">
             <Text className="text-[24px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3 mb-2"

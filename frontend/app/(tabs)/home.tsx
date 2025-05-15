@@ -39,9 +39,6 @@ import { showNotification } from "@/components/Toast/Toast";
 // import { REACT_APP_API_BASE_URL } from '';
 
 const HomePage = () => {
-  const username = "teacher";
-  const password = "string";
-  const [text, setText] = useState("");
   const authState = useAuthStore((state) => state.authState);
   const saveAuthState = useAuthStore((state) => state.saveAuthState);
   const filters = ["All", "New", "Popular", "Highest Rated"];
@@ -95,52 +92,27 @@ const HomePage = () => {
   //
   const [isEditing, setIsEditing] = useState(false); 
 
-  const handleOnClick = () => {
-    const request = {
-      username: username,
-      password: password,
-    };
-
-    logIn(request)
-      .then((res) => {
-        setText(res.data.user.username);
-      })
-      .catch((err) => {
-        setText(err.message);
+  useFocusEffect(
+    useCallback(() => {
+      getAllCourses().then((res) => {
+        const mappedCourses: CourseItemProps[] = res.data.map(
+          (course: any) => ({
+            id: course.id,
+            imgUrl: course.thumbnail,
+            courseName: course.title,
+            instructorName: course.instructor,
+            timestamp: new Date(course.timestamp),
+            rating: course.rating,
+            numberOfRatings: course.numberOfRatings,
+            numberOfLessons: course.numberOfLessons,
+            isUserEnrolled: course.isUserEnrolled,
+            topic: course.topic
+          })
+        );
+        setAllCourses(mappedCourses);
       });
-  };
 
-  // auth state 
-  useEffect(() => {
-    if (authState?.accessToken) {
-      setText(authState.accessToken);
-    }
-  }, [authState]);
-
-  // get all courses
-  useEffect(() => {
-    getAllCourses().then((res) => {
-      const mappedCourses: CourseItemProps[] = res.data.map(
-        (course: any) => ({
-          id: course.id,
-          imgUrl: course.thumbnail,
-          courseName: course.title,
-          instructorName: course.instructor,
-          timestamp: new Date(course.timestamp),
-          rating: course.rating,
-          numberOfRatings: course.numberOfRatings,
-          numberOfLessons: course.numberOfLessons,
-          isUserEnrolled: course.isUserEnrolled,
-          topic: course.topic
-        })
-      );
-      setAllCourses(mappedCourses);
-    })
-  }, [])
-
-  // get user's courses
-  useEffect(() => {
-    getMyCourses()
+      getMyCourses()
       .then((res) => {
         const mappedCourses: CourseItemProps[] = res.data.map(
           (course: any) => ({
@@ -188,7 +160,8 @@ const HomePage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }, [])
+  )
 
   // get search histories when change the router 
   useFocusEffect(

@@ -83,7 +83,7 @@ const CoursePreview = () => {
                     Rating: ${courseOverview.rating}/5, ${courseOverview.numberOfRatings} rate.`}
                 >
                     <View className='flex-row mb-2 justify-between'>
-                        <Text className="text-2xl font-bold text-cyan-800">{courseOverview?.title}</Text>
+                        <Text className="text-2xl w-4/5 font-bold text-cyan-800">{courseOverview?.title}</Text>
                         <View className="flex-row items-center mr-1">
                             <AntDesign name="star" size={16} color="#facc15" />
                             <Text className="text-base text-gray-600 font-medium ml-1">

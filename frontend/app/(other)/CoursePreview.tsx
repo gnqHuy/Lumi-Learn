@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ImageBackground, Pressable, StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { AccessibilityInfo, Dimensions, findNodeHandle, Image, ImageBackground, Pressable, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import useCourseStore from '@/zustand/courseStore'
@@ -55,7 +55,12 @@ const CoursePreview = () => {
     <View className="flex-1 bg-white">
         <ScrollView className='mt-14' showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
             <View className="px-5 flex-row items-center bg-white justify-between">
-                <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Preview</Text>
+                <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3"
+                    accessible={true}
+                    accessibilityRole='header'
+                    accessibilityLabel='Course Preview'
+                >
+                    Course Preview</Text>
                 <Pressable onPress={() => router.back()}
                     accessible={true}
                     accessibilityLabel='Back button. Double tab to return Home page.'

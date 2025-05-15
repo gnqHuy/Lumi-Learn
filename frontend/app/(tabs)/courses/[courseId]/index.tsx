@@ -159,8 +159,12 @@ const CourseOverviewPage = () => {
         keyboardShouldPersistTaps='handled'
     >
         <View className="px-5 flex-row items-center bg-white justify-between">
-            <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Details</Text>
-            <Pressable onPress={() => router.push('/(tabs)/courses')}
+            <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3"
+                accessible={true}
+                accessibilityRole='header'
+            >
+                Course Details</Text>
+            <Pressable onPress={() => router.push(`/(tabs)/courses`)}
                 accessible={true}
                 accessibilityLabel='Back button. Double tab to return Course page.'
                 className='p-3'

@@ -121,6 +121,7 @@ const QuizPage = () => {
         })
     }
 
+
     return (
         <View 
             id='quiz-screen'
@@ -134,9 +135,9 @@ const QuizPage = () => {
         : <>{quizDetail && currentQuestion ? (
             <>
             <View className="mt-14 px-4 mb-4 w-full flex-row relative items-center justify-center h-16 ">
-                <View className="absolute left-4 right-4 top-1 text-center items-center">
+                <View className="absolute left-8 right-8 top-1 text-center items-center">
                     <Text
-                        className="text-[22px] font-semibold text-cyan-800 text-center p-3"
+                        className="text-[20px] font-semibold text-cyan-800 text-center p-3"
                         accessible={true}
                         accessibilityLabel={`Quiz: ${quizDetail.title}`}
                         numberOfLines={1}

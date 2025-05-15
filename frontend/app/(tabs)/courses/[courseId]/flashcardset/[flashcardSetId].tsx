@@ -265,7 +265,7 @@ const FlashcardSetPage = () => {
                 <View className="flex-1 bg-white">
                     <View className="w-full h-full mt-14 px-5">
                         <View className="flex-row items-center bg-white justify-between mb-4">
-                            <Text className="text-[22px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3" numberOfLines={2}
+                            <Text className="text-[20px] font-bold text-cyan-800 absolute left-8 right-8 text-center p-3" numberOfLines={2}
                                 accessible={true}
                                 accessibilityLabel={`Flashcard set: ${flashcardSetTitle}`} 
                             >

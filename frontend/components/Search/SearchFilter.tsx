@@ -95,7 +95,7 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
             </Pressable>
         </View>
 
-        <ScrollView
+        <View
             className='flex-1'
         >
             <View className='flex-col items-center gap-5 pb-6'>
@@ -254,7 +254,7 @@ const SearchFilter = ({disableSearchFilter, setupDisplaySearch, setupDisplaySear
                     </Pressable>
                 </View>
             </View>
-        </ScrollView>
+        </View>
     </View>
   )
 }

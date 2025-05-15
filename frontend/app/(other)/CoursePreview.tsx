@@ -36,10 +36,10 @@ const CoursePreview = () => {
             courseId: selectedCourseId
         }
         JoinCourseApi(payload).then((res) => {
-            showNotification('success', 'Enrollment Successful', 'You have successfully joined the course.');
+            showNotification('success', 'Enrollment Successful!', 'You have successfully joined the course.');
             router.push(`/(tabs)/courses/${selectedCourseId}`);
         }).catch(err => 
-            showNotification('error', 'Enrollment Failed', 'An error occurred while trying to join the course. Please try again later.')
+            showNotification('error', 'Enrollment Failed!', 'An error occurred while trying to join the course. Please try again later.')
         );
     }
 

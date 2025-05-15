@@ -55,10 +55,10 @@ const CreateQuizScreen = () => {
         };
 
         createQuizWithContent(request).then(() => {
-            showNotification('success', 'Success', 'Quiz is created successfully!');
+            showNotification('success', 'Success!', 'Quiz is created successfully!');
             router.push(`/(tabs)/courses/${courseId}`);
         }).catch(err => {
-            showNotification('error', 'Error', err.message);
+            showNotification('error', 'Error!', err.message);
             console.log(err.message);
         });
     };

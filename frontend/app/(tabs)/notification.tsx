@@ -65,10 +65,10 @@ const NotificationPage = () => {
         setUnreadCount(0);
         return updated;
       });
-      showNotification('success', 'Success', 'All notifications have been marked as read.');
+      showNotification('success', 'Success!', 'All notifications have been marked as read.');
     } catch (error) {
       console.error('Error marking all as read:', error);
-      showNotification('error', 'Error !', 'Something is wrong');
+      showNotification('error', 'Error!', 'Something is wrong');
     }
   };
 
@@ -119,11 +119,11 @@ const NotificationPage = () => {
         {todayNotifications.length > 0 && (
           <View className="w-[100%]">
             <View className="flex-row justify-between items-center mb-2 mx-5">
-              <Text className="text-lg text-cyan-800 font-semibold" accessibilityRole="header">
+              <Text className="text-lg text-cyan-800 font-semibold p-1" accessibilityRole="header">
                 Today
               </Text>
               <TouchableOpacity
-                className="py-1 rounded-full"
+                className="p-2"
                 onPress={handleMarkAllAsRead}
                 accessible={true}
                 accessibilityRole="button"
@@ -147,12 +147,12 @@ const NotificationPage = () => {
         {previousNotifications.length > 0 && (
           <View className="w-[100%] mt-3">
             <View className="flex-row justify-between items-center mb-2 mx-5">
-              <Text className="text-lg text-cyan-800 font-semibold" accessibilityRole="header">
+              <Text className="text-lg text-cyan-800 font-semibold p-1" accessibilityRole="header">
                 Earlier
               </Text>
               {todayNotifications.length === 0 && (
                 <TouchableOpacity
-                  className="py-1 rounded-full"
+                  className="p-2"
                   onPress={handleMarkAllAsRead}
                   accessible={true}
                   accessibilityRole="button"

@@ -30,9 +30,9 @@ const AddValueModal: React.FC<AddValueModalProps> = ({ setShowModal, values, set
             setValueError(false);
             setValues([...values, valueInput]);
             setShowModal(false);
-            showNotification('success', 'Success', 'Topic is created successfully!');
+            showNotification('success', 'Success!', 'Topic is created successfully!');
         }).catch((err) => {
-            showNotification('error', 'Error', err.message);
+            showNotification('error', 'Error!', err.message);
             console.log(err.message);
         });
     }

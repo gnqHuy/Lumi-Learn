@@ -36,7 +36,7 @@ const CreateLessonModal: React.FC<CreateLessonModalProps> = ({ onClose, setRefre
         createLesson(createLessonRequest).then((res) => {
             setRefresh(true);
             onClose(false);
-            showNotification('success', 'Success', 'Lesson is created successfully!');
+            showNotification('success', 'Success!', 'Lesson is created successfully!');
         }).catch((err) => {
             console.log(err.message);
         })

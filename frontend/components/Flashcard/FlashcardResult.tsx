@@ -88,6 +88,7 @@ const FlashcardResultScreen: React.FC<FlashcardResultProps> = ({ known, learning
                 activeOpacity={0.7}
                 accessibilityLabel='Back to course'
                 accessibilityRole='button'
+                accessibilityHint='Double tab to return to Course Detail'
             >
                 <Text className='text-lg text-white font-semibold'>
                     Back to course

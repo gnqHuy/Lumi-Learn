@@ -1,4 +1,4 @@
-import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
+import { View, Text, TextInput, NativeSyntheticEvent, TextInputChangeEventData, TouchableOpacity, TouchableHighlight, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import useAuthStore, { AuthState } from '@/zustand/authStore';
 import { logIn, register } from '@/api/authApi';
@@ -98,6 +98,11 @@ const signup = () => {
     }
 
   return (
+    <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{flex: 1}}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+        >
     <View
         id='login-screen'
         className='flex-1 justify-center items-center'
@@ -262,6 +267,7 @@ const signup = () => {
             </View>
         </View>
     </View>
+    </KeyboardAvoidingView>
   )
 }
 

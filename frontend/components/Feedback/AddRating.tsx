@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { addFeedback } from '@/api/feedbackApi';
 import { AddFeedbackRequest } from '@/types/feedback';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { showNotification } from '../Toast/Toast';
 
 export type AddRatingProps = {
     size?: number;
@@ -38,6 +39,7 @@ const AddRating: React.FC<AddRatingProps> = ({ size = 26, courseId, rating, setR
 
         addFeedback(request).then(() => {
             setIsRatedByUser(true);
+            showNotification('success', 'Success!', 'Your rating has been submitted.');
             router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);

@@ -21,9 +21,9 @@ type SearchInfo  = {
 const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searchedCourses, handleAutoFillAndSearchKeyword}: SearchProps) => {
     const [option, setOption] = useState(1);
   return (
-    <ScrollView className = "h-full">
+    <ScrollView className = "h-full" keyboardShouldPersistTaps = 'always'>
         {displaySearchResult === false &&
-            <View className = "relative left-[4%] animate-slideLeftFromRight">
+            <ScrollView className = "relative left-[4%] animate-slideLeftFromRight" keyboardShouldPersistTaps = 'handled'>
                 {/* recent searches */}
                 <View className = "">
                     <Text className = "text-lg font-semibold py-1">Recent searches</Text>
@@ -60,7 +60,7 @@ const Search = ({recentSearches, deleteSearchHistory, displaySearchResult, searc
                         })}
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         }
 
         {displaySearchResult === true && 

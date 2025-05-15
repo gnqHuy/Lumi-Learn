@@ -8,6 +8,7 @@ import {
   Pressable,
   StatusBar,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import CoursesPage from "./courses";
@@ -209,6 +210,7 @@ const HomePage = () => {
 
   // delete search history
   const deleteSearchHistory = (content: string) => {
+    Keyboard.dismiss();
     deleteSearchHistoryByContent(content)
       .then((res) => {
         setSearchTrigger((prev) => !prev);
@@ -417,8 +419,8 @@ const HomePage = () => {
         </View>
 
         {/* Course joined */}
-        <ScrollView className="w-full">
-          <View className="flex-col gap-3 flex-1">
+        <ScrollView className="w-full" keyboardShouldPersistTaps = 'always'>
+          <ScrollView className="flex-col gap-3 flex-1" keyboardShouldPersistTaps = 'handled'>
             {(displaySearch === false && displaySearchResult === false && coursesJoined.length > 0) && (
               <CourseJoined courseJoined={coursesJoined} />
             )}
@@ -442,7 +444,7 @@ const HomePage = () => {
                 handleAutoFillAndSearchKeyword={handleAutoFillAndSearchKeyword}
               />
             )}
-          </View>
+          </ScrollView>
         </ScrollView>
 
         {/* search filter */}

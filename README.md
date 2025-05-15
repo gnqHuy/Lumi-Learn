@@ -3,7 +3,7 @@
 - Nodejs 20
 - MySQL
 - .NET 8
-## Cài đặt Backend
+## Cài đặt backend
 - Truy cập vào folder `backend`
 
 - Trong file `appsettings.json`, ở phần `ConnectionStrings`, sửa `userid` và `password` tương ứng với MySQL trên máy

@@ -71,7 +71,7 @@ const login = () => {
     >
     <View
         id='login-screen'
-        className='flex-1 justify-center items-center'
+        className='flex-1 bg-white justify-center items-center'
     >
         <View
             id='login-container'

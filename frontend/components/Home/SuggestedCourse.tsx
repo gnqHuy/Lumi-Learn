@@ -19,7 +19,7 @@ const SuggestedCourse = ({courses, filters, selectedFilter, setSelectedFilter}: 
     return (
         <View className = "flex-1 flex-col"> 
             {/* title */}
-            <View className = "w-full px-5 pb-3">
+            <View className = "w-full px-5 py-2 mb-1" accessible={true} accessibilityLabel='Choose your courses'>
                 <Text className = "text-xl text-cyan-800 font-bold">Choose your courses</Text>
             </View>
             {/* options filter */}

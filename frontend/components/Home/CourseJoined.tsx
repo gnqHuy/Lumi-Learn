@@ -28,7 +28,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
         <View className = "flex-col">
             {/* title */}
             <View className = "">
-                <Text className = "pl-[4%] text-xl text-cyan-800 font-bold">
+                <Text className = "pl-[4%] text-xl text-cyan-800 font-bold py-2">
                     Courses you've {isTeacherRole() ? 'created' : 'joined'}
                 </Text> 
             </View>
@@ -39,7 +39,7 @@ const CourseJoined = ({courseJoined}: CourseJoinedProps) => {
                 horizontal={true} showsHorizontalScrollIndicator={false} 
                 contentContainerStyle={{ paddingRight: 32 }}
             >
-                <View className = "flex-row gap-4 px-4 py-4">
+                <View className = "flex-row gap-4 px-4 py-2">
                 {courseJoined.map((course, index) => {
                     return (
                         <TouchableOpacity 

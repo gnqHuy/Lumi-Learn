@@ -178,6 +178,7 @@ const signup = () => {
                     </Text>
                     <TextInput
                         id='password-input-field'
+                        secureTextEntry={true}
                         accessibilityLabel='Sign Up Password field'
                         placeholder='Please enter your password'
                         placeholderTextColor={"#9CA3AF"}
@@ -207,6 +208,7 @@ const signup = () => {
                     </Text>
                     <TextInput
                         id='confirm-password-input-field'
+                        secureTextEntry={true}
                         accessibilityLabel='Sign Up Confirm Password field'
                         placeholder='Please re-enter your password'
                         placeholderTextColor={"#9CA3AF"}

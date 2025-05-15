@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Pressable } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Pressable, Keyboard } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CourseList from '@/components/Course/CourseList'
 import { CourseItemProps } from '@/components/Course/CourseItem'
@@ -64,24 +64,7 @@ const MyCourseScreen = () => {
 
     // get my courses
     useEffect(() => {
-        getMyCourses().then((res) => {
-            const mappedCourses: CourseItemProps[] = res.data.map((course: any) => ({
-                id: course.id,
-                imgUrl: course.thumbnail,
-                courseName: course.title,
-                instructorName: course.instructor,
-                timestamp: new Date(course.timestamp),
-                rating: course.rating,
-                numberOfRatings: course.numberOfRatings,
-                numberOfLessons: course.numberOfLessons,
-                isUserEnrolled: course.isUserEnrolled, 
-                topic: course.topic
-            }));
-
-            setCourses(mappedCourses);
-        }).catch((err) => {
-            console.log(err);
-        });
+        
     }, []);
 
     // filter courses
@@ -113,6 +96,24 @@ const MyCourseScreen = () => {
             getMySearchHistories().then((response) => {
             setRecentSearches(response.data);
             });
+            getMyCourses().then((res) => {
+            const mappedCourses: CourseItemProps[] = res.data.map((course: any) => ({
+                id: course.id,
+                imgUrl: course.thumbnail,
+                courseName: course.title,
+                instructorName: course.instructor,
+                timestamp: new Date(course.timestamp),
+                rating: course.rating,
+                numberOfRatings: course.numberOfRatings,
+                numberOfLessons: course.numberOfLessons,
+                isUserEnrolled: course.isUserEnrolled, 
+                topic: course.topic
+            }));
+
+            setCourses(mappedCourses);
+        }).catch((err) => {
+            console.log(err);
+        });
         }, [])
     );
 
@@ -129,6 +130,7 @@ const MyCourseScreen = () => {
 
     // delete search histories
     const deleteSearchHistory = (content: string) => {
+        Keyboard.dismiss();
         deleteSearchHistoryByContent(content)
           .then((res) => {
             setSearchTrigger((prev) => !prev);

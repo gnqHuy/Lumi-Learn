@@ -137,7 +137,7 @@ const CourseOverviewPage = () => {
         }
 
         updateCourse(updateRequest).then((res) => {
-            showNotification('success', 'Success!', 'Update course successfully');
+            showNotification('success', 'Success', 'Update course successfully');
             router.push(`/(tabs)/courses/${courseId}`);
         }).catch((err) => {
             console.log(err.message);
@@ -160,7 +160,7 @@ const CourseOverviewPage = () => {
     >
         <View className="px-5 flex-row items-center bg-white justify-between">
             <Text className="text-[20px] font-bold text-cyan-800 absolute left-4 right-4 text-center p-3">Course Details</Text>
-            <Pressable onPress={() => router.push(`/(tabs)/courses`)}
+            <Pressable onPress={() => router.push('/(tabs)/courses')}
                 accessible={true}
                 accessibilityLabel='Back button. Double tab to return Course page.'
                 className='p-3'
@@ -189,7 +189,6 @@ const CourseOverviewPage = () => {
                 resizeMode="cover"
                 />
             </TouchableOpacity>
-
             :
             <View className="mt-4 px-6">
                 <Image

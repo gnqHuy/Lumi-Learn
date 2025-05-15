@@ -252,7 +252,7 @@ const MyCourseScreen = () => {
                 {displaySearch === true && 
                     <View>
                         <Pressable
-                            className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
+                            className = "absolute left-[4%] flex-row gap-3 p-3 z-[10]"
                             accessible={true}
                             accessibilityLabel="Back"
                             accessibilityRole="button"
@@ -267,7 +267,7 @@ const MyCourseScreen = () => {
                             size={24}
                             />
                         </Pressable>
-                        <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
+                        <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-2">Search</Text>
                     </View>
                 }
 

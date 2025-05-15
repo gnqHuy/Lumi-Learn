@@ -32,7 +32,7 @@ const CourseItem = (props: CourseItemProps) => {
     return (
         <Pressable
             id='course-item-container'
-            className={`w-[90%] flex-row justify-center p-2 border-2 border-gray-100 rounded-2xl ${isPressed ? 'bg-slate-100' : 'bg-white'}`}
+            className={`w-[95%] flex-row justify-center p-2 border-2 border-gray-100 rounded-2xl ${isPressed ? 'bg-slate-100' : 'bg-white'}`}
             // style = {{boxShadow: "0px 4px 10px 1px rgba(53, 53, 53, 0.12)"}}
             onPress={() => {
                 setSelectedCourseId(props.id);
@@ -70,9 +70,9 @@ const CourseItem = (props: CourseItemProps) => {
                         <Text
                             id='course-name'
                             className='text-gray-600 font-bold text-lg flex-1 pr-2'
-                            numberOfLines={11}
+                            numberOfLines={1}
                         >
-                            {trim(props.courseName, 17)}
+                            {props.courseName}
                         </Text>
 
                         <View className='flex-row items-center flex-shrink-0'>

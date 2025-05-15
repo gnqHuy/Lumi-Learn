@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Pressable, TextInput, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -64,6 +64,11 @@ const CreateQuizScreen = () => {
     };
 
     return (
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1}}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+        >
         <View className='flex-col flex-1 items-center gap-4 px-6 py-2'>
             {/* Top nav */}
             <View className="flex-row mt-14 mb-4 items-center w-full">
@@ -94,7 +99,7 @@ const CreateQuizScreen = () => {
             </View>
 
             <ScrollView 
-                className='w-full' 
+                className='w-full mb-14' 
                 showsVerticalScrollIndicator={false}>
                 <View 
                     id='question-list-container'
@@ -121,14 +126,15 @@ const CreateQuizScreen = () => {
                 </View>
             </ScrollView>
 
-            <TouchableOpacity
-                className='bottom-4 z-10 flex justify-center items-center w-full py-4 bg-cyan-700 rounded-xl'
+        </View>
+        <TouchableOpacity
+                className='bottom-4 absolute z-10 flex justify-center items-center w-[86.5%] left-[6.75%] py-4 bg-cyan-700 rounded-xl'
                 activeOpacity={0.55}
                 onPress={handleCreateQuiz}
             >
                 <Text className='text-lg text-white font-semibold'>Create quiz</Text>
             </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
     );
 };
 

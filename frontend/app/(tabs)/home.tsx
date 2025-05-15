@@ -330,12 +330,16 @@ const HomePage = () => {
         {/* username */}
         {(displaySearch === false && displaySearchResult === false) ? (
           <View className="relative left-[5%]">
-            <Text className="text-3xl text-cyan-800 font-extrabold">{userProfile?.name || userProfile?.username}</Text>
+            <Text className="text-3xl text-cyan-800 font-extrabold"
+              accessible={true}
+              accessibilityLabel={`Home: ${userProfile?.name || userProfile?.username}`}
+            >
+              {userProfile?.name || userProfile?.username}</Text>
           </View>
         ) : (
           <View>
             <Pressable
-              className = "absolute left-[4%] flex-row gap-3 p-2 z-[10]"
+              className = "absolute left-[4%] flex-row gap-3 p-3 z-[10]"
               accessible={true}
               accessibilityLabel="Back"
               accessibilityRole="button"
@@ -350,7 +354,7 @@ const HomePage = () => {
                 size={24}
               />
             </Pressable>
-            <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-1">Search</Text>
+            <Text className = "text-3xl text-cyan-800 font-extrabold w-full text-center p-2">Search</Text>
           </View>
         )}
 

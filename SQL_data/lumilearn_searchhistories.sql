@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: lumilearn
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `searchhistories` (
 
 LOCK TABLES `searchhistories` WRITE;
 /*!40000 ALTER TABLE `searchhistories` DISABLE KEYS */;
-INSERT INTO `searchhistories` VALUES ('028039df-2399-48a2-bb62-86c98039161f','dotr','2025-04-28 13:45:54.164968'),('028039df-2399-48a2-bb62-86c98039161f','zz','2025-04-28 13:45:34.878602'),('028039df-2399-48a2-bb62-86c98039161f','zzzzz','2025-04-28 13:40:53.901373');
+INSERT INTO `searchhistories` VALUES ('028039df-2399-48a2-bb62-86c98039161f','Core','2025-05-15 22:08:47.467121'),('028039df-2399-48a2-bb62-86c98039161f','hhh','2025-05-15 18:35:08.249379'),('028039df-2399-48a2-bb62-86c98039161f','Mmmm','2025-05-15 18:46:03.807579'),('028039df-2399-48a2-bb62-86c98039161f','mnam','2025-05-15 19:31:19.093558'),('028039df-2399-48a2-bb62-86c98039161f','ph','2025-05-15 19:26:36.928040'),('581d5ef4-6f59-4abe-b876-f8fc5d18b542','phun','2025-05-15 19:36:05.058564'),('581d5ef4-6f59-4abe-b876-f8fc5d18b542','phy','2025-05-15 19:36:11.893539');
 /*!40000 ALTER TABLE `searchhistories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-08 13:53:57
+-- Dump completed on 2025-05-16  0:56:18

@@ -8,7 +8,6 @@ import useNotificationStore from "@/zustand/notificationStore";
 const AppLayout = () => {
   const authState = useAuthStore((state) => state.authState);
   const unreadCount = useNotificationStore((state) => state.unreadCount);
-  console.log("layout" + unreadCount)
 
   if (!authState?.user) {
     return <Redirect href="/(auth)/login" />;

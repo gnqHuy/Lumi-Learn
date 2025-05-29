@@ -49,9 +49,7 @@ Follow these steps to set up the Lumi Learn application locally.
     dotnet ef database update
     ```
 4.  Import the data from the `SQL_data` file into the newly created database.
-    (You might want to add more specific instructions here, e.g., "Using your preferred MySQL client, connect to the database and execute the script found in `path/to/your/SQL_data`.")
 5.  Execute the commands found in the `dotnet aws credential config.txt` file located on Google Drive.
-    (It's generally better to include the commands directly or explain the setup rather than linking to an external private file. If these are sensitive, provide guidance on what needs to be configured.)
 6.  Run the server using the following command:
     ```bash
     dotnet run

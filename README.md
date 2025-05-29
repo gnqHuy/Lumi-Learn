@@ -6,31 +6,6 @@ Lumi Learn is a mobile-first online learning platform designed for accessible an
 
 ## Demo
 
-## Table of Contents
-
-[Lumi Learn](#lumi-learn)
-- [Short Description/Overview](#short-descriptionoverview)
-- [Screenshots/GIFs/Demo](#screenshotsgifsdemo)
-- [Table of Contents](#table-of-contents)
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - [Backend Installation](#backend-installation)
-  - [Frontend Installation](#frontend-installation)
-- [Usage](#usage)
-- [Features](#features)
-- [Tech Stack/Built With](#tech-stackbuilt-with)
-- [Contributing](#contributing)
-- [Roadmap](#roadmap)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements/Credits](#acknowledgementscredits)
-
-## Requirements
-
-- Node.js 20
-- MySQL
-- .NET 8
-
 ## Installation
 
 Follow these steps to set up the Lumi Learn application locally.
@@ -103,7 +78,7 @@ To get started with Lumi Learn after installation, follow these general steps:
 - **Advanced Course Discovery:** Utilize a powerful search function and filtering options to efficiently find courses based on keywords, subjects, user ratings, or the number of lessons.
 - **Support for Multiple User Roles:** Caters to different user types including general learners, visually impaired learners, content contributors (instructors), supporters/volunteers, and administrators, each with relevant functionalities.
 
-## Tech Stack/Built With
+## Built With
 
 - **Backend:**
     - .NET 8

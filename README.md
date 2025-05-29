@@ -72,71 +72,49 @@ Follow these steps to set up the Lumi Learn application locally.
 
 ## Usage
 
-(Explain how to use the application after installation.
-- How does a user start interacting with it?
-- Are there default login credentials for testing?
-- Provide examples of main functionalities.)
+To get started with Lumi Learn after installation, follow these general steps:
+
+1.  **Launch the Application:** Open the Lumi Learn app on your mobile device.
+2.  **Account Access:**
+    * **New Users:** Register for a new account to access the platform's features.
+    * **Existing Users:** Log in using your credentials.
+3.  **General User Flow (Learners):**
+    * **Find Courses:** Navigate to the course discovery section. Use the search bar to look for specific topics or keywords. You can also apply filters (e.g., by subject, difficulty, rating) to narrow down your choices.
+    * **Enroll in a Course:** Once you find an interesting course, view its details (description, lesson, instructor information) and enroll to gain access to its content.
+    * **Engage with Content:** Access the enrolled course to study lessons, view learning materials (including flashcards), and participate in any interactive exercises.
+    * **Track Progress & Test Knowledge:** Complete quizzes and tests provided within the course to assess your understanding and track your learning progress.
+4.  **Content Creator Flow (Instructors):**
+    * **Navigate to Creation Tools:** After logging in, access the section for course creation.
+    * **Develop Course Material:** Input course details (title, description, target audience), upload or create lesson content, design flashcards, and set up quizzes. Ensure content is accessible.
+    * **Submit for Publication:** Once the course is complete, submit it for review by administrators before it becomes available to learners.
+5.  **Accessibility:**
+    * Visually impaired users can leverage built-in screen reader compatibility and other accessibility features for navigation and interaction with course content.
+  
 ## Features
 
-(List the key features of Lumi Learn. Use bullet points for clarity.)
-- Feature 1: (e.g., User Authentication)
-- Feature 2: (e.g., Course Management)
-- Feature 3: (e.g., Interactive Learning Modules)
-- ...
+- **User Authentication:** Secure login and registration for all user roles (learners, instructors, administrators).
+- **Accessible Learning for All:** Designed with robust accessibility features to strongly support visually impaired users, ensuring an inclusive experience alongside general users.
+- **Collaborative Content Creation:** Empowers instructors and community contributors to create, share, and manage diverse educational content, including courses, lessons, flashcards, and quizzes.
+- **Comprehensive Course Management:**
+    - For Instructors: Easily create detailed courses with rich content (text, audio descriptions), structure lessons, and submit them for platform review.
+    - For Learners: Intuitively search, filter (by topic, rating, etc.), and enroll in courses that align with their learning goals.
+- **Interactive Learning Modules:** Engage with learning materials through various formats, including detailed lesson content and interactive flashcards designed for effective knowledge acquisition and retention.
+- **Knowledge Assessment & Feedback:** Take quizzes and tests linked to lessons or entire courses to evaluate understanding, with mechanisms for receiving results and identifying areas for improvement.
+- **Advanced Course Discovery:** Utilize a powerful search function and filtering options to efficiently find courses based on keywords, subjects, user ratings, or the number of lessons.
+- **Support for Multiple User Roles:** Caters to different user types including general learners, visually impaired learners, content contributors (instructors), supporters/volunteers, and administrators, each with relevant functionalities.
 
 ## Tech Stack/Built With
 
 - **Backend:**
     - .NET 8
-    - Entity Framework Core (implied by `dotnet ef`)
+    - Entity Framework Core
     - MySQL
-    - (Any other relevant backend technologies, e.g., ASP.NET Core)
+    - ASP.NET Core
 - **Frontend:**
-    - Node.js (v20 for the development environment)
+    - React Native 
     - Expo
-    - (Specify the framework used with Expo, e.g., React Native)
-    - (Any other relevant frontend libraries, e.g., Redux, Axios)
+    - Typescript
 - **Database:**
     - MySQL
-- **Other Tools/Services:**
-    - (e.g., AWS services if `dotnet aws credential config.txt` implies usage)
-
-## Contributing
-
-We welcome contributions to Lumi Learn! If you'd like to contribute, please follow these steps:
-
-1.  Fork the Project.
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
-4.  Push to the Branch (`git push origin feature/AmazingFeature`).
-5.  Open a Pull Request.
-
-Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests to us. (You would need to create this file if you want detailed contribution guidelines).
-
-## Roadmap
-
-(Outline the future plans and features for Lumi Learn. This shows users and potential contributors where the project is heading.)
-- [ ] Feature A - In progress
-- [ ] Feature B - Planned for Q3
-- [ ] Enhancement C - Under consideration
-
-See the [open issues](link_to_your_issues_page) for a full list of proposed features (and known issues).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-(Make sure to add a `LICENSE` file to your repository. You can easily create one on GitHub when creating the repository or add it manually. The MIT license is a common choice.)
-
-## Contact
-
-Your Name / Organization Name – [@your_twitter_handle](https://twitter.com/your_twitter_handle) – your.email@example.com
-
-Project Link: [https://github.com/your_username/lumi-learn](https://github.com/your_username/lumi-learn)
-(Replace with your actual project link)
-
-## Acknowledgements/Credits
-
-(Give credit to any resources, libraries, or individuals that helped you or inspired you in this project.)
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc.
+- **Other Services:**
+    - AWS services

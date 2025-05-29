@@ -5,7 +5,8 @@
 Lumi Learn is a mobile-first online learning platform designed for accessible and effective knowledge sharing, especially supporting visually impaired users. It fosters a collaborative environment where anyone can contribute diverse educational content, aiming to build an inclusive learning ecosystem.
 
 ## Demo
-[Video Demo][https://drive.google.com/drive/folders/1cWGZR_exRaej8YTmivf7owkorkEZvnIq?usp=drive_link]
+[Video Demo](https://drive.google.com/drive/folders/1cWGZR_exRaej8YTmivf7owkorkEZvnIq?usp=drive_link)
+
 
 ## Installation
 

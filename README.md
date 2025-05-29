@@ -8,22 +8,22 @@ Lumi Learn is a mobile-first online learning platform designed for accessible an
 
 ## Table of Contents
 
-- [Lumi Learn](#lumi-learn)
-  - [Short Description/Overview](#short-descriptionoverview)
-  - [Screenshots/GIFs/Demo](#screenshotsgifsdemo)
-  - [Table of Contents](#table-of-contents)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-    - [Backend Installation](#backend-installation)
-    - [Frontend Installation](#frontend-installation)
-  - [Usage](#usage)
-  - [Features](#features)
-  - [Tech Stack/Built With](#tech-stackbuilt-with)
-  - [Contributing](#contributing)
-  - [Roadmap](#roadmap)
-  - [License](#license)
-  - [Contact](#contact)
-  - [Acknowledgements/Credits](#acknowledgementscredits)
+[Lumi Learn](#lumi-learn)
+- [Short Description/Overview](#short-descriptionoverview)
+- [Screenshots/GIFs/Demo](#screenshotsgifsdemo)
+- [Table of Contents](#table-of-contents)
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Backend Installation](#backend-installation)
+  - [Frontend Installation](#frontend-installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Tech Stack/Built With](#tech-stackbuilt-with)
+- [Contributing](#contributing)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements/Credits](#acknowledgementscredits)
 
 ## Requirements
 

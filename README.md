@@ -1,12 +1,11 @@
 # Lumi Learn
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ## Short Description/Overview
+## Overview
 
-(Provide a brief 1-3 sentence description of what Lumi Learn does, the problem it solves, and why it's useful. Highlight its key value proposition.)
+Lumi Learn is a mobile-first online learning platform designed for accessible and effective knowledge sharing, especially supporting visually impaired users. It fosters a collaborative environment where anyone can contribute diverse educational content, aiming to build an inclusive learning ecosystem.
 
-## Screenshots/GIFs/Demo
+## Demo
 
-(Consider adding a screenshot or a GIF here to give a visual representation of your application.)
 ## Table of Contents
 
 - [Lumi Learn](#lumi-learn)
